@@ -390,7 +390,7 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
         
         # Detection names - show counts with link to file
         if entry.new_names or entry.removed_names:
-            lines.append(f"#### 检测项变更 ([detections.txt](data/{entry.version_timestamp}.detections.txt))")
+            lines.append(f"#### 检测项变更 ([pset.txt](data/{entry.version_timestamp}.pset.txt))")
             lines.append("")
             if entry.new_names:
                 lines.append(f"- 新增: {len(entry.new_names):,}")
