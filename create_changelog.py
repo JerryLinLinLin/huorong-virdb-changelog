@@ -21,6 +21,7 @@ from typing import Optional, Set, List
 CLI_TOOL = Path(__file__).parent / "bin" / "huorong_virdb_cli-windows-x64.exe"
 VIRDB_DIR = Path(__file__).parent / "virdb"
 README_PATH = Path(__file__).parent / "README.md"
+HASHES_DIR = Path(__file__).parent / "hashes"
 
 
 @dataclass
@@ -38,6 +39,8 @@ class VirDBInfo:
     prop_patterns: int
     hwl_records: int
     virus_names: Set[str]
+    malware_hashes: Set[str]
+    whitelist_hashes: Set[str]
 
 
 @dataclass
@@ -49,7 +52,13 @@ class ChangelogEntry:
     folder_name: str
     new_names: List[str]
     removed_names: List[str]
+    new_malware_hashes: List[str]
+    removed_malware_hashes: List[str]
+    new_whitelist_hashes: List[str]
+    removed_whitelist_hashes: List[str]
     total_names: int
+    total_malware_hashes: int
+    total_whitelist_hashes: int
     stats: dict
 
 
@@ -125,6 +134,40 @@ def get_virus_names(virdb_path: Path) -> Set[str]:
     return set()
 
 
+def get_malware_hashes(virdb_path: Path) -> Set[str]:
+    """Extract all malware (blacklist) hashes from a virdb."""
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
+        temp_path = Path(f.name)
+    
+    try:
+        success, _ = run_cli(["malware-hashes", str(virdb_path), "-o", str(temp_path)])
+        if success and temp_path.exists():
+            with open(temp_path, 'r', encoding='utf-8') as f:
+                hashes = set(line.strip() for line in f if line.strip())
+                return hashes
+    finally:
+        if temp_path.exists():
+            temp_path.unlink()
+    return set()
+
+
+def get_whitelist_hashes(virdb_path: Path) -> Set[str]:
+    """Extract all whitelist hashes from a virdb."""
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
+        temp_path = Path(f.name)
+    
+    try:
+        success, _ = run_cli(["whitelist", str(virdb_path), "-o", str(temp_path)])
+        if success and temp_path.exists():
+            with open(temp_path, 'r', encoding='utf-8') as f:
+                hashes = set(line.strip() for line in f if line.strip())
+                return hashes
+    finally:
+        if temp_path.exists():
+            temp_path.unlink()
+    return set()
+
+
 def get_date_from_folder(folder_name: str) -> Optional[str]:
     """Extract date from folder name like 'sysdiag-all-x64-6.0.8.5-2025.12.25.1'."""
     import re
@@ -161,6 +204,16 @@ def load_virdb_info(virdb_path: Path) -> Optional[VirDBInfo]:
     virus_names = get_virus_names(virdb_path)
     print(f"    Found {len(virus_names):,} unique virus names")
     
+    # Get malware hashes (blacklist)
+    print(f"    Extracting malware hashes...")
+    malware_hashes = get_malware_hashes(virdb_path)
+    print(f"    Found {len(malware_hashes):,} malware hashes")
+    
+    # Get whitelist hashes
+    print(f"    Extracting whitelist hashes...")
+    whitelist_hashes = get_whitelist_hashes(virdb_path)
+    print(f"    Found {len(whitelist_hashes):,} whitelist hashes")
+    
     return VirDBInfo(
         path=virdb_path,
         folder_name=folder_name,
@@ -173,7 +226,9 @@ def load_virdb_info(virdb_path: Path) -> Optional[VirDBInfo]:
         prop_profiles=stats.get('prop_hash_records', 0),
         prop_patterns=stats.get('prop_pattern_entries', 0),
         hwl_records=stats.get('hwl_records', 0),
-        virus_names=virus_names
+        virus_names=virus_names,
+        malware_hashes=malware_hashes,
+        whitelist_hashes=whitelist_hashes
     )
 
 
@@ -183,13 +238,21 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
     
     for i, current in enumerate(versions):
         if i == 0:
-            # First version - all names are "new"
+            # First version - all are "new"
             new_names = sorted(current.virus_names)
             removed_names = []
+            new_malware_hashes = sorted(current.malware_hashes)
+            removed_malware_hashes = []
+            new_whitelist_hashes = sorted(current.whitelist_hashes)
+            removed_whitelist_hashes = []
         else:
             previous = versions[i - 1]
             new_names = sorted(current.virus_names - previous.virus_names)
             removed_names = sorted(previous.virus_names - current.virus_names)
+            new_malware_hashes = sorted(current.malware_hashes - previous.malware_hashes)
+            removed_malware_hashes = sorted(previous.malware_hashes - current.malware_hashes)
+            new_whitelist_hashes = sorted(current.whitelist_hashes - previous.whitelist_hashes)
+            removed_whitelist_hashes = sorted(previous.whitelist_hashes - current.whitelist_hashes)
         
         date_str = get_date_from_folder(current.folder_name) or current.version_datetime.strftime('%Y-%m-%d')
         
@@ -200,7 +263,13 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
             folder_name=current.folder_name,
             new_names=new_names,
             removed_names=removed_names,
+            new_malware_hashes=new_malware_hashes,
+            removed_malware_hashes=removed_malware_hashes,
+            new_whitelist_hashes=new_whitelist_hashes,
+            removed_whitelist_hashes=removed_whitelist_hashes,
             total_names=len(current.virus_names),
+            total_malware_hashes=len(current.malware_hashes),
+            total_whitelist_hashes=len(current.whitelist_hashes),
             stats={
                 'pset_records': current.pset_records,
                 'troj_hashes': current.troj_hashes,
@@ -213,6 +282,48 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
         entries.append(entry)
     
     return entries
+
+
+def write_hash_files(entries: List[ChangelogEntry]) -> None:
+    """Write hash changes to separate files in the hashes directory."""
+    HASHES_DIR.mkdir(parents=True, exist_ok=True)
+    
+    files_written = 0
+    
+    for entry in entries:
+        version = entry.version_timestamp
+        
+        # Write malware hashes (troj) file if there are changes
+        has_troj_changes = entry.new_malware_hashes or entry.removed_malware_hashes
+        if has_troj_changes:
+            troj_file = HASHES_DIR / f"{version}.troj.txt"
+            troj_lines = []
+            
+            for h in sorted(entry.new_malware_hashes):
+                troj_lines.append(f"[+] {h}")
+            for h in sorted(entry.removed_malware_hashes):
+                troj_lines.append(f"[-] {h}")
+            
+            with open(troj_file, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(troj_lines))
+            files_written += 1
+        
+        # Write whitelist hashes (hwl) file if there are changes
+        has_hwl_changes = entry.new_whitelist_hashes or entry.removed_whitelist_hashes
+        if has_hwl_changes:
+            hwl_file = HASHES_DIR / f"{version}.hwl.txt"
+            hwl_lines = []
+            
+            for h in sorted(entry.new_whitelist_hashes):
+                hwl_lines.append(f"[+] {h}")
+            for h in sorted(entry.removed_whitelist_hashes):
+                hwl_lines.append(f"[-] {h}")
+            
+            with open(hwl_file, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(hwl_lines))
+            files_written += 1
+    
+    print(f"  Written {files_written} hash files to {HASHES_DIR}")
 
 
 def format_readme(entries: List[ChangelogEntry]) -> str:
@@ -232,6 +343,8 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
         latest = entries[-1]
         lines.append(f"- **最新版本**: `{latest.version_timestamp}` ({latest.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
         lines.append(f"- **检测项总数**: {latest.total_names:,}")
+        lines.append(f"- **黑名单哈希总数**: {latest.total_malware_hashes:,}")
+        lines.append(f"- **白名单哈希总数**: {latest.total_whitelist_hashes:,}")
         lines.append(f"- **已跟踪版本数**: {len(entries)}")
         lines.append("")
         
@@ -244,6 +357,8 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
         lines.append(f"| TROJ 哈希 | {latest.stats['troj_hashes']:,} |")
         lines.append(f"| TROJ 名称 | {latest.stats['troj_names']:,} |")
         lines.append(f"| HWL 记录 | {latest.stats['hwl_records']:,} |")
+        lines.append(f"| 黑名单哈希 | {latest.total_malware_hashes:,} |")
+        lines.append(f"| 白名单哈希 | {latest.total_whitelist_hashes:,} |")
         lines.append("")
     
     lines.append("---")
@@ -267,7 +382,7 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
             lines.append("")
             lines.append("```")
             for name in entry.new_names:
-                lines.append(name)
+                lines.append(f"[+] {name}")
             lines.append("```")
             lines.append("")
             lines.append("</details>")
@@ -287,10 +402,30 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
             lines.append("")
             lines.append("```")
             for name in entry.removed_names:
-                lines.append(name)
+                lines.append(f"[-] {name}")
             lines.append("```")
             lines.append("")
             lines.append("</details>")
+            lines.append("")
+        
+        # Malware hashes (blacklist) - only show counts with link to file
+        if entry.new_malware_hashes or entry.removed_malware_hashes:
+            lines.append(f"#### 黑名单哈希变更 ([troj.txt](hashes/{entry.version_timestamp}.troj.txt))")
+            lines.append("")
+            if entry.new_malware_hashes:
+                lines.append(f"- 新增: {len(entry.new_malware_hashes):,}")
+            if entry.removed_malware_hashes:
+                lines.append(f"- 移除: {len(entry.removed_malware_hashes):,}")
+            lines.append("")
+        
+        # Whitelist hashes - only show counts with link to file
+        if entry.new_whitelist_hashes or entry.removed_whitelist_hashes:
+            lines.append(f"#### 白名单哈希变更 ([hwl.txt](hashes/{entry.version_timestamp}.hwl.txt))")
+            lines.append("")
+            if entry.new_whitelist_hashes:
+                lines.append(f"- 新增: {len(entry.new_whitelist_hashes):,}")
+            if entry.removed_whitelist_hashes:
+                lines.append(f"- 移除: {len(entry.removed_whitelist_hashes):,}")
             lines.append("")
         
         # Stats summary as table
@@ -299,6 +434,8 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
         lines.append("| 指标 | 数值 |")
         lines.append("|------|-----:|")
         lines.append(f"| 检测项总数 | {entry.total_names:,} |")
+        lines.append(f"| 黑名单哈希总数 | {entry.total_malware_hashes:,} |")
+        lines.append(f"| 白名单哈希总数 | {entry.total_whitelist_hashes:,} |")
         lines.append(f"| PSET 记录 | {entry.stats['pset_records']:,} |")
         lines.append(f"| TROJ 哈希 | {entry.stats['troj_hashes']:,} |")
         lines.append(f"| HWL 记录 | {entry.stats['hwl_records']:,} |")
@@ -386,6 +523,11 @@ def main():
     print(f"  Changelog entries: {len(entries)}")
     print(f"  Total new detections (across updates): {total_new:,}")
     print(f"  Total removed detections: {total_removed:,}")
+    print()
+    
+    # Write hash files
+    print("Writing hash files...")
+    write_hash_files(entries)
     print()
     
     # Write README
