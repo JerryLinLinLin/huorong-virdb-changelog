@@ -1,0 +1,68 @@
+name: Daily VirDB Update
+
+on:
+  schedule:
+    # Run daily at 7pm Beijing time (UTC+8) = 11:00 UTC
+    - cron: '0 11 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  update-changelog:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for git operations
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+      
+      - name: Install dependencies
+        run: uv sync
+      
+      - name: Run update changelog
+        run: uv run python update_changelog.py
+      
+      - name: Check for changes
+        id: check_changes
+        shell: pwsh
+        run: |
+          $status = git status --porcelain
+          if ($status) {
+            echo "has_changes=true" >> $env:GITHUB_OUTPUT
+            echo "Changes detected:"
+            git status --short
+          } else {
+            echo "has_changes=false" >> $env:GITHUB_OUTPUT
+            echo "No changes detected"
+          }
+      
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        shell: pwsh
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Add virdb folder and data files
+          git add virdb/
+          git add data/
+          git add README.md
+          
+          # Get current date for commit message
+          $date = Get-Date -Format "yyyy-MM-dd"
+          git commit -m "chore: update virdb changelog ($date)" -m "[skip ci] Automated daily update"
+          
+          git push origin main
