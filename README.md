@@ -1,9 +1,9 @@
-# 🛡️ Huorong Virus Database Changelog
+# Huorong Virus Database Changelog
 
 This repository tracks changes to the [Huorong Internet Security](https://www.huorong.cn/) virus database.
 Each update shows newly added detection entries compared to the previous version.
 
-## 📊 Overview
+## Overview
 
 - **Latest Version**: `1767443553` (2026-01-03 12:32:33 UTC)
 - **Total Detection Entries**: 66,406
@@ -22,13 +22,13 @@ Each update shows newly added detection entries compared to the previous version
 
 ---
 
-## 📝 Changelog
+## Changelog
 
-### 📅 2026-01-03
+### 2026-01-03
 
 **VirDB Version**: `1767443553` (2026-01-03 12:32:33 UTC)
 
-#### ✅ New Detection Entries (0)
+#### New Detection Entries (0)
 
 _No new entries in this version._
 
@@ -40,11 +40,11 @@ _No new entries in this version._
 
 ---
 
-### 📅 2026-01-02
+### 2026-01-02
 
 **VirDB Version**: `1767352866` (2026-01-02 11:21:06 UTC)
 
-#### ✅ New Detection Entries (0)
+#### New Detection Entries (0)
 
 _No new entries in this version._
 
@@ -56,11 +56,11 @@ _No new entries in this version._
 
 ---
 
-### 📅 2026-01-01
+### 2026-01-01
 
 **VirDB Version**: `1767267452` (2026-01-01 11:37:32 UTC)
 
-#### ✅ New Detection Entries (0)
+#### New Detection Entries (0)
 
 _No new entries in this version._
 
@@ -72,11 +72,11 @@ _No new entries in this version._
 
 ---
 
-### 📅 2025-12-31
+### 2025-12-31
 
 **VirDB Version**: `1767177959` (2025-12-31 10:45:59 UTC)
 
-#### ✅ New Detection Entries (62)
+#### New Detection Entries (62)
 
 <details>
 <summary>Click to expand</summary>
@@ -148,7 +148,7 @@ TrojanSpy/MSIL.Stealer.kt!submit
 
 </details>
 
-#### ❌ Removed Detection Entries (31)
+#### Removed Detection Entries (31)
 
 <details>
 <summary>Click to expand</summary>
@@ -197,11 +197,11 @@ TrojanDropper/Agent.ajw!submit
 
 ---
 
-### 📅 2025-12-30
+### 2025-12-30
 
 **VirDB Version**: `1767093364` (2025-12-30 11:16:04 UTC)
 
-#### ✅ New Detection Entries (91)
+#### New Detection Entries (91)
 
 <details>
 <summary>Click to expand</summary>
@@ -302,7 +302,7 @@ TrojanSpy/MSIL.Stealer.ks
 
 </details>
 
-#### ❌ Removed Detection Entries (55)
+#### Removed Detection Entries (55)
 
 <details>
 <summary>Click to expand</summary>
@@ -375,11 +375,11 @@ TrojanSpy/MSIL.Stealer.ks!submit
 
 ---
 
-### 📅 2025-12-29
+### 2025-12-29
 
 **VirDB Version**: `1767007867` (2025-12-29 11:31:07 UTC)
 
-#### ✅ New Detection Entries (105)
+#### New Detection Entries (105)
 
 <details>
 <summary>Click to expand</summary>
@@ -494,7 +494,7 @@ TrojanSpy/Python.SteamStealer.a
 
 </details>
 
-#### ❌ Removed Detection Entries (60)
+#### Removed Detection Entries (60)
 
 <details>
 <summary>Click to expand</summary>
@@ -572,11 +572,11 @@ TrojanSpy/Python.SteamStealer.a!submit
 
 ---
 
-### 📅 2025-12-28
+### 2025-12-28
 
 **VirDB Version**: `1766920695` (2025-12-28 11:18:15 UTC)
 
-#### ✅ New Detection Entries (0)
+#### New Detection Entries (0)
 
 _No new entries in this version._
 
@@ -588,11 +588,11 @@ _No new entries in this version._
 
 ---
 
-### 📅 2025-12-27
+### 2025-12-27
 
 **VirDB Version**: `1766836824` (2025-12-27 12:00:24 UTC)
 
-#### ✅ New Detection Entries (0)
+#### New Detection Entries (0)
 
 _No new entries in this version._
 
@@ -604,11 +604,11 @@ _No new entries in this version._
 
 ---
 
-### 📅 2025-12-26
+### 2025-12-26
 
 **VirDB Version**: `1766750454` (2025-12-26 12:00:54 UTC)
 
-#### ✅ New Detection Entries (108)
+#### New Detection Entries (108)
 
 <details>
 <summary>Click to expand</summary>
@@ -726,7 +726,7 @@ TrojanSpy/Python.SteamStealer.a!submit
 
 </details>
 
-#### ❌ Removed Detection Entries (53)
+#### Removed Detection Entries (53)
 
 <details>
 <summary>Click to expand</summary>
@@ -797,11 +797,11 @@ TrojanDropper/Maloader.l!submit
 
 ---
 
-### 📅 2025-12-25
+### 2025-12-25
 
 **VirDB Version**: `1766655657` (2025-12-25 09:40:57 UTC)
 
-#### ✅ New Detection Entries (66,239)
+#### New Detection Entries (66,239)
 
 <details>
 <summary>Click to expand</summary>
@@ -67058,10 +67058,10 @@ Worm/eiram.a
 
 ---
 
-## 🔧 Tools Used
+## Tools Used
 
 - [huorong_virdb_cli](https://github.com/AuroraTea/huorong-virdb-cli) - Huorong VirDB extraction tool
 
-## 📄 License
+## License
 
 This changelog is provided for informational purposes. Huorong virus database is property of Huorong.

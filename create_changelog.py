@@ -220,12 +220,12 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
     lines = []
     
     # Header
-    lines.append("# 🛡️ Huorong Virus Database Changelog")
+    lines.append("# Huorong Virus Database Changelog")
     lines.append("")
     lines.append("This repository tracks changes to the [Huorong Internet Security](https://www.huorong.cn/) virus database.")
     lines.append("Each update shows newly added detection entries compared to the previous version.")
     lines.append("")
-    lines.append("## 📊 Overview")
+    lines.append("## Overview")
     lines.append("")
     
     if entries:
@@ -250,19 +250,19 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
     
     lines.append("---")
     lines.append("")
-    lines.append("## 📝 Changelog")
+    lines.append("## Changelog")
     lines.append("")
     
     # Changelog entries (newest first)
     for entry in reversed(entries):
-        lines.append(f"### 📅 {entry.date}")
+        lines.append(f"### {entry.date}")
         lines.append("")
         lines.append(f"**VirDB Version**: `{entry.version_timestamp}` ({entry.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
         lines.append("")
         
         # New detections
         if entry.new_names:
-            lines.append(f"#### ✅ New Detection Entries ({len(entry.new_names):,})")
+            lines.append(f"#### New Detection Entries ({len(entry.new_names):,})")
             lines.append("")
             lines.append("<details>")
             lines.append("<summary>Click to expand</summary>")
@@ -275,14 +275,14 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
             lines.append("</details>")
             lines.append("")
         else:
-            lines.append("#### ✅ New Detection Entries (0)")
+            lines.append("#### New Detection Entries (0)")
             lines.append("")
             lines.append("_No new entries in this version._")
             lines.append("")
         
         # Removed detections (if any)
         if entry.removed_names:
-            lines.append(f"#### ❌ Removed Detection Entries ({len(entry.removed_names):,})")
+            lines.append(f"#### Removed Detection Entries ({len(entry.removed_names):,})")
             lines.append("")
             lines.append("<details>")
             lines.append("<summary>Click to expand</summary>")
@@ -306,11 +306,11 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
         lines.append("")
     
     # Footer
-    lines.append("## 🔧 Tools Used")
+    lines.append("## Tools Used")
     lines.append("")
     lines.append("- [huorong_virdb_cli](https://github.com/AuroraTea/huorong-virdb-cli) - Huorong VirDB extraction tool")
     lines.append("")
-    lines.append("## 📄 License")
+    lines.append("## License")
     lines.append("")
     lines.append("This changelog is provided for informational purposes. Huorong virus database is property of Huorong.")
     lines.append("")
