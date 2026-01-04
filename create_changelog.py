@@ -220,49 +220,49 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
     lines = []
     
     # Header
-    lines.append("# Huorong Virus Database Changelog")
+    lines.append("# 火绒病毒库更新日志")
     lines.append("")
-    lines.append("This repository tracks changes to the [Huorong Internet Security](https://www.huorong.cn/) virus database.")
-    lines.append("Each update shows newly added detection entries compared to the previous version.")
+    lines.append("本仓库跟踪[火绒安全软件](https://www.huorong.cn/)病毒库的变更。")
+    lines.append("每次更新显示与上一版本相比新增的检测项。")
     lines.append("")
-    lines.append("## Overview")
+    lines.append("## 概览")
     lines.append("")
     
     if entries:
         latest = entries[-1]
-        lines.append(f"- **Latest Version**: `{latest.version_timestamp}` ({latest.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
-        lines.append(f"- **Total Detection Entries**: {latest.total_names:,}")
-        lines.append(f"- **Versions Tracked**: {len(entries)}")
+        lines.append(f"- **最新版本**: `{latest.version_timestamp}` ({latest.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
+        lines.append(f"- **检测项总数**: {latest.total_names:,}")
+        lines.append(f"- **已跟踪版本数**: {len(entries)}")
         lines.append("")
         
         # Statistics table
-        lines.append("### Database Statistics (Latest)")
+        lines.append("### 数据库统计（最新版本）")
         lines.append("")
-        lines.append("| Category | Count |")
-        lines.append("|----------|------:|")
-        lines.append(f"| PSET Records | {latest.stats['pset_records']:,} |")
-        lines.append(f"| TROJ Hashes | {latest.stats['troj_hashes']:,} |")
-        lines.append(f"| TROJ Names | {latest.stats['troj_names']:,} |")
-        lines.append(f"| PROP Behavior Profiles | {latest.stats['prop_profiles']:,} |")
-        lines.append(f"| PROP Pattern Entries | {latest.stats['prop_patterns']:,} |")
-        lines.append(f"| HWL Records | {latest.stats['hwl_records']:,} |")
+        lines.append("| 类别 | 数量 |")
+        lines.append("|------|-----:|")
+        lines.append(f"| PSET 记录 | {latest.stats['pset_records']:,} |")
+        lines.append(f"| TROJ 哈希 | {latest.stats['troj_hashes']:,} |")
+        lines.append(f"| TROJ 名称 | {latest.stats['troj_names']:,} |")
+        lines.append(f"| PROP 行为特征 | {latest.stats['prop_profiles']:,} |")
+        lines.append(f"| PROP 模式条目 | {latest.stats['prop_patterns']:,} |")
+        lines.append(f"| HWL 记录 | {latest.stats['hwl_records']:,} |")
         lines.append("")
     
     lines.append("---")
     lines.append("")
-    lines.append("## Changelog")
+    lines.append("## 更新日志")
     lines.append("")
     
     # Changelog entries (newest first)
     for entry in reversed(entries):
         lines.append(f"### {entry.date}")
         lines.append("")
-        lines.append(f"**VirDB Version**: `{entry.version_timestamp}` ({entry.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
+        lines.append(f"**版本**: `{entry.version_timestamp}` ({entry.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
         lines.append("")
         
         # New detections
         if entry.new_names:
-            lines.append(f"#### New Detection Entries ({len(entry.new_names):,})")
+            lines.append(f"#### 新增检测项 ({len(entry.new_names):,})")
             lines.append("")
             lines.append("<details>")
             lines.append("<summary>Click to expand</summary>")
@@ -275,14 +275,14 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
             lines.append("</details>")
             lines.append("")
         else:
-            lines.append("#### New Detection Entries (0)")
+            lines.append("#### 新增检测项 (0)")
             lines.append("")
-            lines.append("_No new entries in this version._")
+            lines.append("_此版本无新增条目。_")
             lines.append("")
         
         # Removed detections (if any)
         if entry.removed_names:
-            lines.append(f"#### Removed Detection Entries ({len(entry.removed_names):,})")
+            lines.append(f"#### 移除检测项 ({len(entry.removed_names):,})")
             lines.append("")
             lines.append("<details>")
             lines.append("<summary>Click to expand</summary>")
@@ -295,24 +295,27 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
             lines.append("</details>")
             lines.append("")
         
-        # Stats summary
-        lines.append("**Statistics**:")
-        lines.append(f"- Total Detection Entries: {entry.total_names:,}")
-        lines.append(f"- PSET Records: {entry.stats['pset_records']:,}")
-        lines.append(f"- TROJ Hashes: {entry.stats['troj_hashes']:,}")
-        lines.append(f"- HWL Records: {entry.stats['hwl_records']:,}")
+        # Stats summary as table
+        lines.append("**统计**:")
+        lines.append("")
+        lines.append("| 指标 | 数值 |")
+        lines.append("|------|-----:|")
+        lines.append(f"| 检测项总数 | {entry.total_names:,} |")
+        lines.append(f"| PSET 记录 | {entry.stats['pset_records']:,} |")
+        lines.append(f"| TROJ 哈希 | {entry.stats['troj_hashes']:,} |")
+        lines.append(f"| HWL 记录 | {entry.stats['hwl_records']:,} |")
         lines.append("")
         lines.append("---")
         lines.append("")
     
     # Footer
-    lines.append("## Tools Used")
+    lines.append("## 使用工具")
     lines.append("")
-    lines.append("- [huorong_virdb_cli](https://github.com/AuroraTea/huorong-virdb-cli) - Huorong VirDB extraction tool")
+    lines.append("- [huorong_virdb_cli](https://github.com/AuroraTea/huorong-virdb-cli) - 火绒病毒库提取工具")
     lines.append("")
-    lines.append("## License")
+    lines.append("## 许可协议")
     lines.append("")
-    lines.append("This changelog is provided for informational purposes. Huorong virus database is property of Huorong.")
+    lines.append("本更新日志仅供参考。火绒病毒库为火绒安全软件所有。")
     lines.append("")
     
     return "\n".join(lines)

@@ -1,82 +1,91 @@
-# Huorong Virus Database Changelog
+# 火绒病毒库更新日志
 
-This repository tracks changes to the [Huorong Internet Security](https://www.huorong.cn/) virus database.
-Each update shows newly added detection entries compared to the previous version.
+本仓库跟踪[火绒安全软件](https://www.huorong.cn/)病毒库的变更。
+每次更新显示与上一版本相比新增的检测项。
 
-## Overview
+## 概览
 
-- **Latest Version**: `1767443553` (2026-01-03 12:32:33 UTC)
-- **Total Detection Entries**: 66,406
-- **Versions Tracked**: 10
+- **最新版本**: `1767443553` (2026-01-03 12:32:33 UTC)
+- **检测项总数**: 66,406
+- **已跟踪版本数**: 10
 
-### Database Statistics (Latest)
+### 数据库统计（最新版本）
 
-| Category | Count |
-|----------|------:|
-| PSET Records | 71,134 |
-| TROJ Hashes | 187,044 |
-| TROJ Names | 2,791 |
-| PROP Behavior Profiles | 259 |
-| PROP Pattern Entries | 109,872 |
-| HWL Records | 142,021 |
+| 类别 | 数量 |
+|------|-----:|
+| PSET 记录 | 71,134 |
+| TROJ 哈希 | 187,044 |
+| TROJ 名称 | 2,791 |
+| PROP 行为特征 | 259 |
+| PROP 模式条目 | 109,872 |
+| HWL 记录 | 142,021 |
 
 ---
 
-## Changelog
+## 更新日志
 
 ### 2026-01-03
 
-**VirDB Version**: `1767443553` (2026-01-03 12:32:33 UTC)
+**版本**: `1767443553` (2026-01-03 12:32:33 UTC)
 
-#### New Detection Entries (0)
+#### 新增检测项 (0)
 
-_No new entries in this version._
+_此版本无新增条目。_
 
-**Statistics**:
-- Total Detection Entries: 66,406
-- PSET Records: 71,134
-- TROJ Hashes: 187,044
-- HWL Records: 142,021
+**统计**:
+
+| 指标 | 数值 |
+|------|-----:|
+| 检测项总数 | 66,406 |
+| PSET 记录 | 71,134 |
+| TROJ 哈希 | 187,044 |
+| HWL 记录 | 142,021 |
 
 ---
 
 ### 2026-01-02
 
-**VirDB Version**: `1767352866` (2026-01-02 11:21:06 UTC)
+**版本**: `1767352866` (2026-01-02 11:21:06 UTC)
 
-#### New Detection Entries (0)
+#### 新增检测项 (0)
 
-_No new entries in this version._
+_此版本无新增条目。_
 
-**Statistics**:
-- Total Detection Entries: 66,406
-- PSET Records: 71,134
-- TROJ Hashes: 187,003
-- HWL Records: 142,021
+**统计**:
+
+| 指标 | 数值 |
+|------|-----:|
+| 检测项总数 | 66,406 |
+| PSET 记录 | 71,134 |
+| TROJ 哈希 | 187,003 |
+| HWL 记录 | 142,021 |
 
 ---
 
 ### 2026-01-01
 
-**VirDB Version**: `1767267452` (2026-01-01 11:37:32 UTC)
+**版本**: `1767267452` (2026-01-01 11:37:32 UTC)
 
-#### New Detection Entries (0)
+#### 新增检测项 (0)
 
-_No new entries in this version._
+_此版本无新增条目。_
 
-**Statistics**:
-- Total Detection Entries: 66,406
-- PSET Records: 71,134
-- TROJ Hashes: 186,943
-- HWL Records: 142,021
+**统计**:
+
+| 指标 | 数值 |
+|------|-----:|
+| 检测项总数 | 66,406 |
+| PSET 记录 | 71,134 |
+| TROJ 哈希 | 186,943 |
+| HWL 记录 | 142,021 |
 
 ---
 
 ### 2025-12-31
 
-**VirDB Version**: `1767177959` (2025-12-31 10:45:59 UTC)
+**版本**: `1767177959` (2025-12-31 10:45:59 UTC)
 
-#### New Detection Entries (62)
+#### 新增检测项 (62)
 
 <details>
 <summary>Click to expand</summary>
@@ -148,7 +157,7 @@ TrojanSpy/MSIL.Stealer.kt!submit
 
 </details>
 
-#### Removed Detection Entries (31)
+#### 移除检测项 (31)
 
 <details>
 <summary>Click to expand</summary>
@@ -189,19 +198,22 @@ TrojanDropper/Agent.ajw!submit
 
 </details>
 
-**Statistics**:
-- Total Detection Entries: 66,406
-- PSET Records: 71,134
-- TROJ Hashes: 186,859
-- HWL Records: 142,017
+**统计**:
+
+| 指标 | 数值 |
+|------|-----:|
+| 检测项总数 | 66,406 |
+| PSET 记录 | 71,134 |
+| TROJ 哈希 | 186,859 |
+| HWL 记录 | 142,017 |
 
 ---
 
 ### 2025-12-30
 
-**VirDB Version**: `1767093364` (2025-12-30 11:16:04 UTC)
+**版本**: `1767093364` (2025-12-30 11:16:04 UTC)
 
-#### New Detection Entries (91)
+#### 新增检测项 (91)
 
 <details>
 <summary>Click to expand</summary>
@@ -302,7 +314,7 @@ TrojanSpy/MSIL.Stealer.ks
 
 </details>
 
-#### Removed Detection Entries (55)
+#### 移除检测项 (55)
 
 <details>
 <summary>Click to expand</summary>
@@ -367,19 +379,22 @@ TrojanSpy/MSIL.Stealer.ks!submit
 
 </details>
 
-**Statistics**:
-- Total Detection Entries: 66,375
-- PSET Records: 71,103
-- TROJ Hashes: 186,829
-- HWL Records: 142,017
+**统计**:
+
+| 指标 | 数值 |
+|------|-----:|
+| 检测项总数 | 66,375 |
+| PSET 记录 | 71,103 |
+| TROJ 哈希 | 186,829 |
+| HWL 记录 | 142,017 |
 
 ---
 
 ### 2025-12-29
 
-**VirDB Version**: `1767007867` (2025-12-29 11:31:07 UTC)
+**版本**: `1767007867` (2025-12-29 11:31:07 UTC)
 
-#### New Detection Entries (105)
+#### 新增检测项 (105)
 
 <details>
 <summary>Click to expand</summary>
@@ -494,7 +509,7 @@ TrojanSpy/Python.SteamStealer.a
 
 </details>
 
-#### Removed Detection Entries (60)
+#### 移除检测项 (60)
 
 <details>
 <summary>Click to expand</summary>
@@ -564,51 +579,60 @@ TrojanSpy/Python.SteamStealer.a!submit
 
 </details>
 
-**Statistics**:
-- Total Detection Entries: 66,339
-- PSET Records: 71,066
-- TROJ Hashes: 186,752
-- HWL Records: 142,017
+**统计**:
+
+| 指标 | 数值 |
+|------|-----:|
+| 检测项总数 | 66,339 |
+| PSET 记录 | 71,066 |
+| TROJ 哈希 | 186,752 |
+| HWL 记录 | 142,017 |
 
 ---
 
 ### 2025-12-28
 
-**VirDB Version**: `1766920695` (2025-12-28 11:18:15 UTC)
+**版本**: `1766920695` (2025-12-28 11:18:15 UTC)
 
-#### New Detection Entries (0)
+#### 新增检测项 (0)
 
-_No new entries in this version._
+_此版本无新增条目。_
 
-**Statistics**:
-- Total Detection Entries: 66,294
-- PSET Records: 71,018
-- TROJ Hashes: 186,671
-- HWL Records: 142,016
+**统计**:
+
+| 指标 | 数值 |
+|------|-----:|
+| 检测项总数 | 66,294 |
+| PSET 记录 | 71,018 |
+| TROJ 哈希 | 186,671 |
+| HWL 记录 | 142,016 |
 
 ---
 
 ### 2025-12-27
 
-**VirDB Version**: `1766836824` (2025-12-27 12:00:24 UTC)
+**版本**: `1766836824` (2025-12-27 12:00:24 UTC)
 
-#### New Detection Entries (0)
+#### 新增检测项 (0)
 
-_No new entries in this version._
+_此版本无新增条目。_
 
-**Statistics**:
-- Total Detection Entries: 66,294
-- PSET Records: 71,018
-- TROJ Hashes: 186,560
-- HWL Records: 142,015
+**统计**:
+
+| 指标 | 数值 |
+|------|-----:|
+| 检测项总数 | 66,294 |
+| PSET 记录 | 71,018 |
+| TROJ 哈希 | 186,560 |
+| HWL 记录 | 142,015 |
 
 ---
 
 ### 2025-12-26
 
-**VirDB Version**: `1766750454` (2025-12-26 12:00:54 UTC)
+**版本**: `1766750454` (2025-12-26 12:00:54 UTC)
 
-#### New Detection Entries (108)
+#### 新增检测项 (108)
 
 <details>
 <summary>Click to expand</summary>
@@ -726,7 +750,7 @@ TrojanSpy/Python.SteamStealer.a!submit
 
 </details>
 
-#### Removed Detection Entries (53)
+#### 移除检测项 (53)
 
 <details>
 <summary>Click to expand</summary>
@@ -789,19 +813,22 @@ TrojanDropper/Maloader.l!submit
 
 </details>
 
-**Statistics**:
-- Total Detection Entries: 66,294
-- PSET Records: 71,018
-- TROJ Hashes: 186,462
-- HWL Records: 142,015
+**统计**:
+
+| 指标 | 数值 |
+|------|-----:|
+| 检测项总数 | 66,294 |
+| PSET 记录 | 71,018 |
+| TROJ 哈希 | 186,462 |
+| HWL 记录 | 142,015 |
 
 ---
 
 ### 2025-12-25
 
-**VirDB Version**: `1766655657` (2025-12-25 09:40:57 UTC)
+**版本**: `1766655657` (2025-12-25 09:40:57 UTC)
 
-#### New Detection Entries (66,239)
+#### 新增检测项 (66,239)
 
 <details>
 <summary>Click to expand</summary>
@@ -67050,18 +67077,21 @@ Worm/eiram.a
 
 </details>
 
-**Statistics**:
-- Total Detection Entries: 66,239
-- PSET Records: 70,957
-- TROJ Hashes: 186,310
-- HWL Records: 142,015
+**统计**:
+
+| 指标 | 数值 |
+|------|-----:|
+| 检测项总数 | 66,239 |
+| PSET 记录 | 70,957 |
+| TROJ 哈希 | 186,310 |
+| HWL 记录 | 142,015 |
 
 ---
 
-## Tools Used
+## 使用工具
 
-- [huorong_virdb_cli](https://github.com/AuroraTea/huorong-virdb-cli) - Huorong VirDB extraction tool
+- [huorong_virdb_cli](https://github.com/AuroraTea/huorong-virdb-cli) - 火绒病毒库提取工具
 
-## License
+## 许可协议
 
-This changelog is provided for informational purposes. Huorong virus database is property of Huorong.
+本更新日志仅供参考。火绒病毒库为火绒安全软件所有。
