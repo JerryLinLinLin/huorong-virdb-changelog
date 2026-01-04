@@ -198,11 +198,24 @@ def get_virus_category(virus_name: str) -> str:
     return virus_name
 
 
-def get_category_distribution(virus_names: Set[str]) -> dict:
-    """Get distribution of virus names by category."""
+def get_category_distribution(virus_names: Set[str], top_n: int = 10) -> dict:
+    """Get distribution of virus names by category, limited to top N with Others."""
     from collections import Counter
     categories = [get_virus_category(name) for name in virus_names]
-    return dict(Counter(categories).most_common())
+    counter = Counter(categories)
+    
+    # Get top N categories
+    top_categories = counter.most_common(top_n)
+    
+    # Calculate "Other" count
+    top_count = sum(count for _, count in top_categories)
+    other_count = len(categories) - top_count
+    
+    result = dict(top_categories)
+    if other_count > 0:
+        result["Other"] = other_count
+    
+    return result
 
 
 def load_virdb_info(virdb_path: Path) -> Optional[VirDBInfo]:
@@ -400,7 +413,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
             lines.append("")
             lines.append("```mermaid")
             lines.append("pie showData")
-            lines.append("    title 检测项分类分布")
+            lines.append("    title By Category")
             for category, count in distribution.items():
                 lines.append(f'    "{category}" : {count}')
             lines.append("```")
