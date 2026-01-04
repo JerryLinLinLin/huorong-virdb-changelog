@@ -1,0 +1,55 @@
+{
+  "source": ".\\virdb\\sysdiag-all-x64-6.0.8.5-2025.12.25.1",
+  "statistics": {
+    "files": 5,
+    "pset_records": 70957,
+    "troj_names": 2789,
+    "troj_hashes": 186310,
+    "prop_hash_records": 259,
+    "prop_pattern_entries": 109596,
+    "hwl_records": 142015
+  },
+  "files": [
+    {
+      "file": "crithash.db.vfs",
+      "db_name": "DB::RAW",
+      "db_type": "UNKNOWN",
+      "size": 6380907
+    },
+    {
+      "file": "hwl.db.vfs",
+      "db_name": "DB::HWL",
+      "db_type": "HWL",
+      "size": 3413779,
+      "record_count": 142015
+    },
+    {
+      "file": "prop.db.vfs",
+      "db_name": "DB::PROP",
+      "db_type": "PROP",
+      "size": 7005591,
+      "statistics": {
+        "hash_record_count": 259,
+        "pattern_entry_count": 109596,
+        "total_hash_patterns": 3673,
+        "total_entry_patterns": 139208,
+        "total_patterns": 142881
+      }
+    },
+    {
+      "file": "pset.db.vfs",
+      "db_name": "DB::PSET",
+      "db_type": "PSET",
+      "size": 6393801,
+      "record_count": 70957
+    },
+    {
+      "file": "troj.db.vfs",
+      "db_name": "DB::TROJ",
+      "db_type": "TROJ",
+      "size": 4592397,
+      "hash_record_count": 186310,
+      "name_count": 2789
+    }
+  ]
+}

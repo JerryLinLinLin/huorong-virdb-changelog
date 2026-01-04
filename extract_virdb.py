@@ -40,16 +40,18 @@ BASES_PATH = "dist-tree-main/bases"
 
 def find_7z() -> Optional[Path]:
     """
-    Find 7z executable on the system.
+    Find system-installed 7z executable on Windows.
+    
+    Checks common installation paths including GitHub Actions Windows environment
+    where 7-Zip is pre-installed at C:\\Program Files\\7-Zip\\7z.exe.
     
     Returns:
-        Path to 7z executable, or None if not found.
+        Path to 7z.exe, or None if not found.
     """
-    # Common locations for 7z
+    # Common locations for 7z on Windows (including GitHub Actions)
     possible_paths = [
         Path(r"C:\Program Files\7-Zip\7z.exe"),
         Path(r"C:\Program Files (x86)\7-Zip\7z.exe"),
-        Path(r"C:\7-Zip\7z.exe"),
     ]
     
     # Check if 7z is in PATH
@@ -80,7 +82,7 @@ def run_7z(args: List[str], cwd: Optional[Path] = None) -> tuple[bool, str]:
     """
     seven_zip = find_7z()
     if not seven_zip:
-        return False, "7z not found. Please install 7-Zip."
+        return False, "7-Zip not found. Please install 7-Zip from https://www.7-zip.org/"
     
     try:
         cmd = [str(seven_zip)] + args
@@ -191,12 +193,11 @@ def extract_vfs_from_installer(
             if success:
                 extracted_vfs = temp_path / vfs_file
                 if extracted_vfs.exists():
-                    # Remove .vfs extension and copy to output
-                    output_name = vfs_file.replace(".vfs", "")
-                    output_file = output_dir / output_name
+                    # Copy to output, keeping .db.vfs extension
+                    output_file = output_dir / vfs_file
                     shutil.copy2(extracted_vfs, output_file)
-                    result.extracted_files.append(output_name)
-                    print(f"  Extracted: {vfs_file} -> {output_name}")
+                    result.extracted_files.append(vfs_file)
+                    print(f"  Extracted: {vfs_file}")
     
     if result.extracted_files:
         result.success = True
@@ -309,7 +310,9 @@ if __name__ == "__main__":
     if seven_zip:
         print(f"Found 7z: {seven_zip}")
     else:
-        print("ERROR: 7z not found! Please install 7-Zip.")
+        print("ERROR: 7-Zip not found!")
+        print("Please install 7-Zip from https://www.7-zip.org/")
+        print("On GitHub Actions Windows, 7-Zip should be pre-installed.")
         exit(1)
     
     print()
