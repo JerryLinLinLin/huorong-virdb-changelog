@@ -17,7 +17,7 @@
 
 ```mermaid
 pie showData
-    title By Category
+    title Top 10
     "Trojan" : 23706
     "TrojanDownloader" : 9720
     "Backdoor" : 6455
@@ -853,6 +853,10 @@ pie showData
 ### 2025-12-25
 
 **版本**: `1766655657` (2025-12-25 09:40:57 UTC)
+
+#### 检测项变更 ([pset.txt](data/1766655657.pset.txt))
+
+新增: 66,239
 
 #### 黑名单哈希变更 ([troj.txt](data/1766655657.troj.txt))
 

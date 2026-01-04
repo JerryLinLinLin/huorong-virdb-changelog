@@ -413,7 +413,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
             lines.append("")
             lines.append("```mermaid")
             lines.append("pie showData")
-            lines.append("    title By Category")
+            lines.append("    title Top 10")
             for category, count in distribution.items():
                 lines.append(f'    "{category}" : {count}')
             lines.append("```")
@@ -435,30 +435,42 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
         lines.append(f"**版本**: `{entry.version_timestamp}` ({entry.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
         lines.append("")
         
-        # Detection names - show with foldable details (skip oldest entry)
+        # Detection names - show with foldable details (oldest entry shows only counts, no details)
         is_oldest = entry.version_timestamp == oldest_version
-        if not is_oldest and (entry.new_names or entry.removed_names):
+        if entry.new_names or entry.removed_names:
             lines.append(f"#### 检测项变更 ([pset.txt](data/{entry.version_timestamp}.pset.txt))")
             lines.append("")
-            lines.append("<details>")
-            lines.append("<summary>")
-            summary_parts = []
-            if entry.new_names:
-                summary_parts.append(f"新增: {len(entry.new_names):,}")
-            if entry.removed_names:
-                summary_parts.append(f"移除: {len(entry.removed_names):,}")
-            lines.append(" | ".join(summary_parts))
-            lines.append("</summary>")
-            lines.append("")
-            lines.append("```")
-            for name in entry.new_names:
-                lines.append(f"[+] {name}")
-            for name in entry.removed_names:
-                lines.append(f"[-] {name}")
-            lines.append("```")
-            lines.append("")
-            lines.append("</details>")
-            lines.append("")
+            
+            if is_oldest:
+                # Oldest entry: just show counts without foldable details
+                summary_parts = []
+                if entry.new_names:
+                    summary_parts.append(f"新增: {len(entry.new_names):,}")
+                if entry.removed_names:
+                    summary_parts.append(f"移除: {len(entry.removed_names):,}")
+                lines.append(" | ".join(summary_parts))
+                lines.append("")
+            else:
+                # Other entries: show foldable details
+                lines.append("<details>")
+                lines.append("<summary>")
+                summary_parts = []
+                if entry.new_names:
+                    summary_parts.append(f"新增: {len(entry.new_names):,}")
+                if entry.removed_names:
+                    summary_parts.append(f"移除: {len(entry.removed_names):,}")
+                lines.append(" | ".join(summary_parts))
+                lines.append("</summary>")
+                lines.append("")
+                lines.append("```")
+                for name in entry.new_names:
+                    lines.append(f"[+] {name}")
+                for name in entry.removed_names:
+                    lines.append(f"[-] {name}")
+                lines.append("```")
+                lines.append("")
+                lines.append("</details>")
+                lines.append("")
         
         # Malware hashes (blacklist) - only show counts with link to file
         if entry.new_malware_hashes or entry.removed_malware_hashes:
