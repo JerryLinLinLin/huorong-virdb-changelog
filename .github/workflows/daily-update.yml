@@ -65,4 +65,4 @@ jobs:
           $date = Get-Date -Format "yyyy-MM-dd"
           git commit -m "chore: update virdb changelog ($date)" -m "[skip ci] Automated daily update"
           
-          git push origin main
+          git push origin master
