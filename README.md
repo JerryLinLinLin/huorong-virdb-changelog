@@ -1,7 +1,7 @@
 # 火绒病毒库更新日志
 
 本仓库跟踪[火绒安全软件](https://www.huorong.cn/)病毒库的变更。
-每次更新显示与上一版本相比新增的检测项。
+每次更新显示与上一版本相比新增的检测项/报毒名(pset.txt),黑名单哈希(troj.txt) 和白名单哈希 (hwl.txt)。
 
 ## 概览
 
@@ -278,10 +278,6 @@
 | HWL 记录 | 142,015 |
 
 ---
-
-## 使用工具
-
-- [huorong_virdb_cli](https://github.com/AuroraTea/huorong-virdb-cli) - 火绒病毒库提取工具
 
 ## 许可协议
 
