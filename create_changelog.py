@@ -409,7 +409,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
         # Add pie chart for virus category distribution
         if latest_virus_names:
             distribution = get_category_distribution(latest_virus_names)
-            lines.append("### 检测项分类分布")
+            lines.append("## 检测项分类分布")
             lines.append("")
             lines.append("```mermaid")
             lines.append("pie showData")
