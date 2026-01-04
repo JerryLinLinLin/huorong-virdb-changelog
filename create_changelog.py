@@ -21,7 +21,7 @@ from typing import Optional, Set, List
 CLI_TOOL = Path(__file__).parent / "bin" / "huorong_virdb_cli-windows-x64.exe"
 VIRDB_DIR = Path(__file__).parent / "virdb"
 README_PATH = Path(__file__).parent / "README.md"
-HASHES_DIR = Path(__file__).parent / "hashes"
+DATA_DIR = Path(__file__).parent / "data"
 
 
 @dataclass
@@ -284,19 +284,34 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
     return entries
 
 
-def write_hash_files(entries: List[ChangelogEntry]) -> None:
-    """Write hash changes to separate files in the hashes directory."""
-    HASHES_DIR.mkdir(parents=True, exist_ok=True)
+def write_data_files(entries: List[ChangelogEntry]) -> None:
+    """Write detection and hash changes to separate files in the data directory."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
     
     files_written = 0
     
     for entry in entries:
         version = entry.version_timestamp
         
+        # Write detection names file if there are changes
+        has_detection_changes = entry.new_names or entry.removed_names
+        if has_detection_changes:
+            detection_file = DATA_DIR / f"{version}.pset.txt"
+            detection_lines = []
+            
+            for name in sorted(entry.new_names):
+                detection_lines.append(f"[+] {name}")
+            for name in sorted(entry.removed_names):
+                detection_lines.append(f"[-] {name}")
+            
+            with open(detection_file, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(detection_lines))
+            files_written += 1
+        
         # Write malware hashes (troj) file if there are changes
         has_troj_changes = entry.new_malware_hashes or entry.removed_malware_hashes
         if has_troj_changes:
-            troj_file = HASHES_DIR / f"{version}.troj.txt"
+            troj_file = DATA_DIR / f"{version}.troj.txt"
             troj_lines = []
             
             for h in sorted(entry.new_malware_hashes):
@@ -311,7 +326,7 @@ def write_hash_files(entries: List[ChangelogEntry]) -> None:
         # Write whitelist hashes (hwl) file if there are changes
         has_hwl_changes = entry.new_whitelist_hashes or entry.removed_whitelist_hashes
         if has_hwl_changes:
-            hwl_file = HASHES_DIR / f"{version}.hwl.txt"
+            hwl_file = DATA_DIR / f"{version}.hwl.txt"
             hwl_lines = []
             
             for h in sorted(entry.new_whitelist_hashes):
@@ -323,7 +338,7 @@ def write_hash_files(entries: List[ChangelogEntry]) -> None:
                 f.write('\n'.join(hwl_lines))
             files_written += 1
     
-    print(f"  Written {files_written} hash files to {HASHES_DIR}")
+    print(f"  Written {files_written} data files to {DATA_DIR}")
 
 
 def format_readme(entries: List[ChangelogEntry]) -> str:
@@ -373,44 +388,19 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
         lines.append(f"**版本**: `{entry.version_timestamp}` ({entry.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
         lines.append("")
         
-        # New detections
-        if entry.new_names:
-            lines.append(f"#### 新增检测项 ({len(entry.new_names):,})")
+        # Detection names - show counts with link to file
+        if entry.new_names or entry.removed_names:
+            lines.append(f"#### 检测项变更 ([detections.txt](data/{entry.version_timestamp}.detections.txt))")
             lines.append("")
-            lines.append("<details>")
-            lines.append("<summary>Click to expand</summary>")
-            lines.append("")
-            lines.append("```")
-            for name in entry.new_names:
-                lines.append(f"[+] {name}")
-            lines.append("```")
-            lines.append("")
-            lines.append("</details>")
-            lines.append("")
-        else:
-            lines.append("#### 新增检测项 (0)")
-            lines.append("")
-            lines.append("_此版本无新增条目。_")
-            lines.append("")
-        
-        # Removed detections (if any)
-        if entry.removed_names:
-            lines.append(f"#### 移除检测项 ({len(entry.removed_names):,})")
-            lines.append("")
-            lines.append("<details>")
-            lines.append("<summary>Click to expand</summary>")
-            lines.append("")
-            lines.append("```")
-            for name in entry.removed_names:
-                lines.append(f"[-] {name}")
-            lines.append("```")
-            lines.append("")
-            lines.append("</details>")
+            if entry.new_names:
+                lines.append(f"- 新增: {len(entry.new_names):,}")
+            if entry.removed_names:
+                lines.append(f"- 移除: {len(entry.removed_names):,}")
             lines.append("")
         
         # Malware hashes (blacklist) - only show counts with link to file
         if entry.new_malware_hashes or entry.removed_malware_hashes:
-            lines.append(f"#### 黑名单哈希变更 ([troj.txt](hashes/{entry.version_timestamp}.troj.txt))")
+            lines.append(f"#### 黑名单哈希变更 ([troj.txt](data/{entry.version_timestamp}.troj.txt))")
             lines.append("")
             if entry.new_malware_hashes:
                 lines.append(f"- 新增: {len(entry.new_malware_hashes):,}")
@@ -420,7 +410,7 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
         
         # Whitelist hashes - only show counts with link to file
         if entry.new_whitelist_hashes or entry.removed_whitelist_hashes:
-            lines.append(f"#### 白名单哈希变更 ([hwl.txt](hashes/{entry.version_timestamp}.hwl.txt))")
+            lines.append(f"#### 白名单哈希变更 ([hwl.txt](data/{entry.version_timestamp}.hwl.txt))")
             lines.append("")
             if entry.new_whitelist_hashes:
                 lines.append(f"- 新增: {len(entry.new_whitelist_hashes):,}")
@@ -525,9 +515,9 @@ def main():
     print(f"  Total removed detections: {total_removed:,}")
     print()
     
-    # Write hash files
-    print("Writing hash files...")
-    write_hash_files(entries)
+    # Write data files
+    print("Writing data files...")
+    write_data_files(entries)
     print()
     
     # Write README
