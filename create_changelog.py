@@ -243,8 +243,6 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
         lines.append(f"| PSET 记录 | {latest.stats['pset_records']:,} |")
         lines.append(f"| TROJ 哈希 | {latest.stats['troj_hashes']:,} |")
         lines.append(f"| TROJ 名称 | {latest.stats['troj_names']:,} |")
-        lines.append(f"| PROP 行为特征 | {latest.stats['prop_profiles']:,} |")
-        lines.append(f"| PROP 模式条目 | {latest.stats['prop_patterns']:,} |")
         lines.append(f"| HWL 记录 | {latest.stats['hwl_records']:,} |")
         lines.append("")
     
