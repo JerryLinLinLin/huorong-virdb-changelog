@@ -13,6 +13,43 @@
 - **白名单哈希总数**: 142,021
 - **已跟踪版本数**: 10
 
+### 检测项分类分布
+
+```mermaid
+pie showData
+    title 检测项分类分布
+    "Trojan" : 23706
+    "TrojanDownloader" : 9720
+    "Backdoor" : 6455
+    "TrojanSpy" : 6063
+    "OMacro" : 3392
+    "Virus" : 2819
+    "TrojanDropper" : 2663
+    "Adware" : 2345
+    "VirTool" : 2292
+    "Ransom" : 1982
+    "Worm" : 1398
+    "HackTool" : 1262
+    "Exploit" : 773
+    "Rootkit" : 608
+    "Joke" : 297
+    "Rogue" : 277
+    "TrojanClicker" : 221
+    "TrojanProxy" : 55
+    "Bootkit" : 45
+    "Constructor" : 17
+    "TEST" : 5
+    "Hacktool" : 3
+    "RootKit" : 2
+    "DOC" : 1
+    "HTML" : 1
+    "PDF" : 1
+    "Joker" : 1
+    "TrojanDownlaoder" : 1
+    "PHP" : 1
+```
+
+
 ---
 
 ## 更新日志

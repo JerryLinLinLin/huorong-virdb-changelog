@@ -177,6 +177,34 @@ def get_date_from_folder(folder_name: str) -> Optional[str]:
     return None
 
 
+def get_virus_category(virus_name: str) -> str:
+    """
+    Extract category from virus name.
+    
+    Examples:
+        Trojan/Injector.atw -> Trojan
+        HEUR:Backdoor/CobaltStrike.bc -> Backdoor
+        HVM:TrojanDownloader/Agent.cd -> TrojanDownloader
+        ADV:Adware/Agent.a -> Adware
+    """
+    # Remove prefix like HEUR:, HVM:, ADV:, etc.
+    if ':' in virus_name:
+        virus_name = virus_name.split(':', 1)[1]
+    
+    # Get category (part before /)
+    if '/' in virus_name:
+        return virus_name.split('/')[0]
+    
+    return virus_name
+
+
+def get_category_distribution(virus_names: Set[str]) -> dict:
+    """Get distribution of virus names by category."""
+    from collections import Counter
+    categories = [get_virus_category(name) for name in virus_names]
+    return dict(Counter(categories).most_common())
+
+
 def load_virdb_info(virdb_path: Path) -> Optional[VirDBInfo]:
     """Load all information about a virus database."""
     folder_name = virdb_path.name
@@ -341,7 +369,7 @@ def write_data_files(entries: List[ChangelogEntry]) -> None:
     print(f"  Written {files_written} data files to {DATA_DIR}")
 
 
-def format_readme(entries: List[ChangelogEntry]) -> str:
+def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = None) -> str:
     """Generate the README.md content."""
     lines = []
     
@@ -363,6 +391,20 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
         lines.append(f"- **黑名单哈希总数**: {latest.total_malware_hashes:,}")
         lines.append(f"- **白名单哈希总数**: {latest.total_whitelist_hashes:,}")
         lines.append(f"- **已跟踪版本数**: {len(entries)}")
+        lines.append("")
+        
+        # Add pie chart for virus category distribution
+        if latest_virus_names:
+            distribution = get_category_distribution(latest_virus_names)
+            lines.append("### 检测项分类分布")
+            lines.append("")
+            lines.append("```mermaid")
+            lines.append("pie showData")
+            lines.append("    title 检测项分类分布")
+            for category, count in distribution.items():
+                lines.append(f'    "{category}" : {count}')
+            lines.append("```")
+            lines.append("")
         lines.append("")
     
     lines.append("---")
@@ -529,7 +571,8 @@ def main():
     
     # Write README
     print("Writing README.md...")
-    readme_content = format_readme(entries)
+    latest_virus_names = versions[-1].virus_names if versions else set()
+    readme_content = format_readme(entries, latest_virus_names)
     
     with open(README_PATH, 'w', encoding='utf-8') as f:
         f.write(readme_content)
