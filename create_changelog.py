@@ -351,7 +351,7 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
     lines.append("本仓库跟踪[火绒安全软件](https://www.huorong.cn/)病毒库的变更。")
     lines.append("每次更新显示与上一版本相比新增的检测项/报毒名(pset.txt), 黑名单哈希(troj.txt)和白名单哈希(hwl.txt)。")
     lines.append("")
-    lines.append("> **免责声明**：本项目非火绒官方出品，仅供学习和技术交流使用。作者不对使用本工具造成的任何后果负责。")
+    lines.append("> **免责声明**：本项目非火绒官方出品，仅供学习和技术交流使用。作者不对使用本项目造成的任何后果负责。")
     lines.append("")
     lines.append("## 概览")
     lines.append("")
@@ -409,20 +409,24 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
         if entry.new_malware_hashes or entry.removed_malware_hashes:
             lines.append(f"#### 黑名单哈希变更 ([troj.txt](data/{entry.version_timestamp}.troj.txt))")
             lines.append("")
+            troj_parts = []
             if entry.new_malware_hashes:
-                lines.append(f"- 新增: {len(entry.new_malware_hashes):,}")
+                troj_parts.append(f"新增: {len(entry.new_malware_hashes):,}")
             if entry.removed_malware_hashes:
-                lines.append(f"- 移除: {len(entry.removed_malware_hashes):,}")
+                troj_parts.append(f"移除: {len(entry.removed_malware_hashes):,}")
+            lines.append(" | ".join(troj_parts))
             lines.append("")
         
         # Whitelist hashes - only show counts with link to file
         if entry.new_whitelist_hashes or entry.removed_whitelist_hashes:
             lines.append(f"#### 白名单哈希变更 ([hwl.txt](data/{entry.version_timestamp}.hwl.txt))")
             lines.append("")
+            hwl_parts = []
             if entry.new_whitelist_hashes:
-                lines.append(f"- 新增: {len(entry.new_whitelist_hashes):,}")
+                hwl_parts.append(f"新增: {len(entry.new_whitelist_hashes):,}")
             if entry.removed_whitelist_hashes:
-                lines.append(f"- 移除: {len(entry.removed_whitelist_hashes):,}")
+                hwl_parts.append(f"移除: {len(entry.removed_whitelist_hashes):,}")
+            lines.append(" | ".join(hwl_parts))
             lines.append("")
         
         # Stats summary as table
