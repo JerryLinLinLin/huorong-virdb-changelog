@@ -349,7 +349,9 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
     lines.append("# 火绒病毒库更新日志")
     lines.append("")
     lines.append("本仓库跟踪[火绒安全软件](https://www.huorong.cn/)病毒库的变更。")
-    lines.append("每次更新显示与上一版本相比新增的检测项/报毒名(pset.txt),黑名单哈希(troj.txt) 和白名单哈希 (hwl.txt)。")
+    lines.append("每次更新显示与上一版本相比新增的检测项/报毒名(pset.txt), 黑名单哈希(troj.txt)和白名单哈希(hwl.txt)。")
+    lines.append("")
+    lines.append("> **免责声明**：本项目非火绒官方出品，仅供学习和技术交流使用。作者不对使用本工具造成的任何后果负责。")
     lines.append("")
     lines.append("## 概览")
     lines.append("")
@@ -362,19 +364,6 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
         lines.append(f"- **白名单哈希总数**: {latest.total_whitelist_hashes:,}")
         lines.append(f"- **已跟踪版本数**: {len(entries)}")
         lines.append("")
-        
-        # Statistics table
-        lines.append("### 数据库统计（最新版本）")
-        lines.append("")
-        lines.append("| 类别 | 数量 |")
-        lines.append("|------|-----:|")
-        lines.append(f"| PSET 记录 | {latest.stats['pset_records']:,} |")
-        lines.append(f"| TROJ 哈希 | {latest.stats['troj_hashes']:,} |")
-        lines.append(f"| TROJ 名称 | {latest.stats['troj_names']:,} |")
-        lines.append(f"| HWL 记录 | {latest.stats['hwl_records']:,} |")
-        lines.append(f"| 黑名单哈希 | {latest.total_malware_hashes:,} |")
-        lines.append(f"| 白名单哈希 | {latest.total_whitelist_hashes:,} |")
-        lines.append("")
     
     lines.append("---")
     lines.append("")
@@ -382,20 +371,38 @@ def format_readme(entries: List[ChangelogEntry]) -> str:
     lines.append("")
     
     # Changelog entries (newest first)
-    for entry in reversed(entries):
+    reversed_entries = list(reversed(entries))
+    oldest_version = entries[0].version_timestamp if entries else None
+    
+    for entry in reversed_entries:
         lines.append(f"### {entry.date}")
         lines.append("")
         lines.append(f"**版本**: `{entry.version_timestamp}` ({entry.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
         lines.append("")
         
-        # Detection names - show counts with link to file
-        if entry.new_names or entry.removed_names:
+        # Detection names - show with foldable details (skip oldest entry)
+        is_oldest = entry.version_timestamp == oldest_version
+        if not is_oldest and (entry.new_names or entry.removed_names):
             lines.append(f"#### 检测项变更 ([pset.txt](data/{entry.version_timestamp}.pset.txt))")
             lines.append("")
+            lines.append("<details>")
+            lines.append("<summary>")
+            summary_parts = []
             if entry.new_names:
-                lines.append(f"- 新增: {len(entry.new_names):,}")
+                summary_parts.append(f"新增: {len(entry.new_names):,}")
             if entry.removed_names:
-                lines.append(f"- 移除: {len(entry.removed_names):,}")
+                summary_parts.append(f"移除: {len(entry.removed_names):,}")
+            lines.append(" | ".join(summary_parts))
+            lines.append("</summary>")
+            lines.append("")
+            lines.append("```")
+            for name in entry.new_names:
+                lines.append(f"[+] {name}")
+            for name in entry.removed_names:
+                lines.append(f"[-] {name}")
+            lines.append("```")
+            lines.append("")
+            lines.append("</details>")
             lines.append("")
         
         # Malware hashes (blacklist) - only show counts with link to file
