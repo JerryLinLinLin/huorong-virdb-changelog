@@ -389,8 +389,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
     # Header
     lines.append("# 火绒病毒库更新日志")
     lines.append("")
-    lines.append("本仓库跟踪[火绒安全软件](https://www.huorong.cn/)病毒库的变更。")
-    lines.append("每次更新显示与上一版本相比新增的检测项/报毒名(pset.txt), 黑名单哈希(troj.txt)和白名单哈希(hwl.txt)。")
+    lines.append("本仓库跟踪[火绒安全软件](https://www.huorong.cn/)病毒库的变更，通过读取`pset.db``troj.db``hwl.db`自动生成与上一版本相比新增的检测项/报毒名, 黑名单哈希和白名单哈希。")
     lines.append("")
     lines.append("> **免责声明**：本项目非火绒官方出品，仅供学习和技术交流使用。作者不对使用本项目造成的任何后果负责。")
     lines.append("")
