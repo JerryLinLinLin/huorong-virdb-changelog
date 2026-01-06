@@ -52,6 +52,8 @@ class ChangelogEntry:
     folder_name: str
     new_names: List[str]
     removed_names: List[str]
+    new_names_telemetry: List[str]  # Names containing !submit
+    removed_names_telemetry: List[str]  # Names containing !submit
     new_malware_hashes: List[str]
     removed_malware_hashes: List[str]
     new_whitelist_hashes: List[str]
@@ -60,6 +62,31 @@ class ChangelogEntry:
     total_malware_hashes: int
     total_whitelist_hashes: int
     stats: dict
+
+
+def is_telemetry_name(name: str) -> bool:
+    """Check if a detection name is a telemetry detection (contains !submit)."""
+    return '!submit' in name.lower()
+
+
+def split_names_by_telemetry(names: List[str]) -> tuple[List[str], List[str]]:
+    """
+    Split detection names into regular and telemetry categories.
+    
+    Args:
+        names: List of detection names.
+        
+    Returns:
+        Tuple of (regular_names, telemetry_names).
+    """
+    regular = []
+    telemetry = []
+    for name in names:
+        if is_telemetry_name(name):
+            telemetry.append(name)
+        else:
+            regular.append(name)
+    return regular, telemetry
 
 
 def run_cli(args: List[str]) -> tuple[bool, str]:
@@ -280,20 +307,24 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
     for i, current in enumerate(versions):
         if i == 0:
             # First version - all are "new"
-            new_names = sorted(current.virus_names)
-            removed_names = []
+            all_new_names = sorted(current.virus_names)
+            all_removed_names = []
             new_malware_hashes = sorted(current.malware_hashes)
             removed_malware_hashes = []
             new_whitelist_hashes = sorted(current.whitelist_hashes)
             removed_whitelist_hashes = []
         else:
             previous = versions[i - 1]
-            new_names = sorted(current.virus_names - previous.virus_names)
-            removed_names = sorted(previous.virus_names - current.virus_names)
+            all_new_names = sorted(current.virus_names - previous.virus_names)
+            all_removed_names = sorted(previous.virus_names - current.virus_names)
             new_malware_hashes = sorted(current.malware_hashes - previous.malware_hashes)
             removed_malware_hashes = sorted(previous.malware_hashes - current.malware_hashes)
             new_whitelist_hashes = sorted(current.whitelist_hashes - previous.whitelist_hashes)
             removed_whitelist_hashes = sorted(previous.whitelist_hashes - current.whitelist_hashes)
+        
+        # Split names into regular and telemetry
+        new_names, new_names_telemetry = split_names_by_telemetry(all_new_names)
+        removed_names, removed_names_telemetry = split_names_by_telemetry(all_removed_names)
         
         date_str = get_date_from_folder(current.folder_name) or current.version_datetime.strftime('%Y-%m-%d')
         
@@ -304,6 +335,8 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
             folder_name=current.folder_name,
             new_names=new_names,
             removed_names=removed_names,
+            new_names_telemetry=new_names_telemetry,
+            removed_names_telemetry=removed_names_telemetry,
             new_malware_hashes=new_malware_hashes,
             removed_malware_hashes=removed_malware_hashes,
             new_whitelist_hashes=new_whitelist_hashes,
@@ -334,15 +367,17 @@ def write_data_files(entries: List[ChangelogEntry]) -> None:
     for entry in entries:
         version = entry.version_timestamp
         
-        # Write detection names file if there are changes
-        has_detection_changes = entry.new_names or entry.removed_names
+        # Write detection names file if there are changes (include both regular and telemetry)
+        all_new_names = entry.new_names + entry.new_names_telemetry
+        all_removed_names = entry.removed_names + entry.removed_names_telemetry
+        has_detection_changes = all_new_names or all_removed_names
         if has_detection_changes:
             detection_file = DATA_DIR / f"{version}.pset.txt"
             detection_lines = []
             
-            for name in sorted(entry.new_names):
+            for name in sorted(all_new_names):
                 detection_lines.append(f"[+] {name}")
-            for name in sorted(entry.removed_names):
+            for name in sorted(all_removed_names):
                 detection_lines.append(f"[-] {name}")
             
             with open(detection_file, 'w', encoding='utf-8') as f:
@@ -436,40 +471,78 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
         
         # Detection names - show with foldable details (oldest entry shows only counts, no details)
         is_oldest = entry.version_timestamp == oldest_version
-        if entry.new_names or entry.removed_names:
+        has_regular_changes = entry.new_names or entry.removed_names
+        has_telemetry_changes = entry.new_names_telemetry or entry.removed_names_telemetry
+        
+        if has_regular_changes or has_telemetry_changes:
             lines.append(f"#### 检测项变更 ([pset.txt](data/{entry.version_timestamp}.pset.txt))")
             lines.append("")
             
-            if is_oldest:
-                # Oldest entry: just show counts without foldable details
-                summary_parts = []
-                if entry.new_names:
-                    summary_parts.append(f"新增: {len(entry.new_names):,}")
-                if entry.removed_names:
-                    summary_parts.append(f"移除: {len(entry.removed_names):,}")
-                lines.append(" | ".join(summary_parts))
-                lines.append("")
-            else:
-                # Other entries: show foldable details
-                lines.append("<details>")
-                lines.append("<summary>")
-                summary_parts = []
-                if entry.new_names:
-                    summary_parts.append(f"新增: {len(entry.new_names):,}")
-                if entry.removed_names:
-                    summary_parts.append(f"移除: {len(entry.removed_names):,}")
-                lines.append(" | ".join(summary_parts))
-                lines.append("</summary>")
-                lines.append("")
-                lines.append("```")
-                for name in entry.new_names:
-                    lines.append(f"[+] {name}")
-                for name in entry.removed_names:
-                    lines.append(f"[-] {name}")
-                lines.append("```")
-                lines.append("")
-                lines.append("</details>")
-                lines.append("")
+            # Regular definitions (正式定义)
+            if has_regular_changes:
+                if is_oldest:
+                    # Oldest entry: just show counts without foldable details
+                    summary_parts = []
+                    if entry.new_names:
+                        summary_parts.append(f"新增正式定义: {len(entry.new_names):,}")
+                    if entry.removed_names:
+                        summary_parts.append(f"移除正式定义: {len(entry.removed_names):,}")
+                    lines.append(" | ".join(summary_parts))
+                    lines.append("")
+                else:
+                    # Other entries: show foldable details
+                    lines.append("<details>")
+                    lines.append("<summary>")
+                    summary_parts = []
+                    if entry.new_names:
+                        summary_parts.append(f"新增正式定义: {len(entry.new_names):,}")
+                    if entry.removed_names:
+                        summary_parts.append(f"移除正式定义: {len(entry.removed_names):,}")
+                    lines.append(" | ".join(summary_parts))
+                    lines.append("</summary>")
+                    lines.append("")
+                    lines.append("```")
+                    for name in entry.new_names:
+                        lines.append(f"[+] {name}")
+                    for name in entry.removed_names:
+                        lines.append(f"[-] {name}")
+                    lines.append("```")
+                    lines.append("")
+                    lines.append("</details>")
+                    lines.append("")
+            
+            # Telemetry definitions (遥测定义)
+            if has_telemetry_changes:
+                if is_oldest:
+                    # Oldest entry: just show counts without foldable details
+                    summary_parts = []
+                    if entry.new_names_telemetry:
+                        summary_parts.append(f"新增遥测定义: {len(entry.new_names_telemetry):,}")
+                    if entry.removed_names_telemetry:
+                        summary_parts.append(f"移除遥测定义: {len(entry.removed_names_telemetry):,}")
+                    lines.append(" | ".join(summary_parts))
+                    lines.append("")
+                else:
+                    # Other entries: show foldable details
+                    lines.append("<details>")
+                    lines.append("<summary>")
+                    summary_parts = []
+                    if entry.new_names_telemetry:
+                        summary_parts.append(f"新增遥测定义: {len(entry.new_names_telemetry):,}")
+                    if entry.removed_names_telemetry:
+                        summary_parts.append(f"移除遥测定义: {len(entry.removed_names_telemetry):,}")
+                    lines.append(" | ".join(summary_parts))
+                    lines.append("</summary>")
+                    lines.append("")
+                    lines.append("```")
+                    for name in entry.new_names_telemetry:
+                        lines.append(f"[+] {name}")
+                    for name in entry.removed_names_telemetry:
+                        lines.append(f"[-] {name}")
+                    lines.append("```")
+                    lines.append("")
+                    lines.append("</details>")
+                    lines.append("")
         
         # Malware hashes (blacklist) - only show counts with link to file
         if entry.new_malware_hashes or entry.removed_malware_hashes:

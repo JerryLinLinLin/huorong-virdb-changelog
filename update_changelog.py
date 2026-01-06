@@ -42,6 +42,7 @@ from create_changelog import (
     get_date_from_folder,
     get_virus_category,
     get_category_distribution,
+    split_names_by_telemetry,
 )
 
 
@@ -202,19 +203,23 @@ def generate_single_changelog_entry(
     """Generate a changelog entry comparing current to previous version."""
     if previous is None:
         # First version - all are "new"
-        new_names = sorted(current.virus_names)
-        removed_names = []
+        all_new_names = sorted(current.virus_names)
+        all_removed_names = []
         new_malware_hashes = sorted(current.malware_hashes)
         removed_malware_hashes = []
         new_whitelist_hashes = sorted(current.whitelist_hashes)
         removed_whitelist_hashes = []
     else:
-        new_names = sorted(current.virus_names - previous.virus_names)
-        removed_names = sorted(previous.virus_names - current.virus_names)
+        all_new_names = sorted(current.virus_names - previous.virus_names)
+        all_removed_names = sorted(previous.virus_names - current.virus_names)
         new_malware_hashes = sorted(current.malware_hashes - previous.malware_hashes)
         removed_malware_hashes = sorted(previous.malware_hashes - current.malware_hashes)
         new_whitelist_hashes = sorted(current.whitelist_hashes - previous.whitelist_hashes)
         removed_whitelist_hashes = sorted(previous.whitelist_hashes - current.whitelist_hashes)
+    
+    # Split names into regular and telemetry
+    new_names, new_names_telemetry = split_names_by_telemetry(all_new_names)
+    removed_names, removed_names_telemetry = split_names_by_telemetry(all_removed_names)
     
     date_str = get_date_from_folder(current.folder_name) or current.version_datetime.strftime('%Y-%m-%d')
     
@@ -225,6 +230,8 @@ def generate_single_changelog_entry(
         folder_name=current.folder_name,
         new_names=new_names,
         removed_names=removed_names,
+        new_names_telemetry=new_names_telemetry,
+        removed_names_telemetry=removed_names_telemetry,
         new_malware_hashes=new_malware_hashes,
         removed_malware_hashes=removed_malware_hashes,
         new_whitelist_hashes=new_whitelist_hashes,
@@ -250,14 +257,18 @@ def write_single_data_file(entry: ChangelogEntry) -> None:
     version = entry.version_timestamp
     files_written = 0
     
+    # Combine regular and telemetry names for data files
+    all_new_names = entry.new_names + entry.new_names_telemetry
+    all_removed_names = entry.removed_names + entry.removed_names_telemetry
+    
     # Write detection names file if there are changes
-    if entry.new_names or entry.removed_names:
+    if all_new_names or all_removed_names:
         detection_file = DATA_DIR / f"{version}.pset.txt"
         detection_lines = []
         
-        for name in sorted(entry.new_names):
+        for name in sorted(all_new_names):
             detection_lines.append(f"[+] {name}")
-        for name in sorted(entry.removed_names):
+        for name in sorted(all_removed_names):
             detection_lines.append(f"[-] {name}")
         
         with open(detection_file, 'w', encoding='utf-8') as f:
@@ -374,8 +385,10 @@ def update_changelog(new_virdb_path: Path) -> bool:
     # Generate the new changelog entry
     new_entry = generate_single_changelog_entry(new_virdb, previous_virdb)
     
-    print(f"  New detections: {len(new_entry.new_names):,}")
-    print(f"  Removed detections: {len(new_entry.removed_names):,}")
+    print(f"  New regular detections: {len(new_entry.new_names):,}")
+    print(f"  Removed regular detections: {len(new_entry.removed_names):,}")
+    print(f"  New telemetry detections: {len(new_entry.new_names_telemetry):,}")
+    print(f"  Removed telemetry detections: {len(new_entry.removed_names_telemetry):,}")
     print(f"  New malware hashes: {len(new_entry.new_malware_hashes):,}")
     print(f"  New whitelist hashes: {len(new_entry.new_whitelist_hashes):,}")
     print()
@@ -404,41 +417,77 @@ def format_single_changelog_entry(entry: ChangelogEntry, is_oldest: bool = False
     lines.append(f"**版本**: `{entry.version_timestamp}` ({entry.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
     lines.append("")
     
-    # Detection names - show with foldable details
-    if entry.new_names or entry.removed_names:
+    # Detection names - show with foldable details (separate regular and telemetry)
+    has_regular = entry.new_names or entry.removed_names
+    has_telemetry = entry.new_names_telemetry or entry.removed_names_telemetry
+    
+    if has_regular or has_telemetry:
         lines.append(f"#### 检测项变更 ([pset.txt](data/{entry.version_timestamp}.pset.txt))")
         lines.append("")
         
         if is_oldest:
             # Oldest entry: just show counts without foldable details
-            summary_parts = []
-            if entry.new_names:
-                summary_parts.append(f"新增: {len(entry.new_names):,}")
-            if entry.removed_names:
-                summary_parts.append(f"移除: {len(entry.removed_names):,}")
-            lines.append(" | ".join(summary_parts))
-            lines.append("")
+            if has_regular:
+                summary_parts = []
+                if entry.new_names:
+                    summary_parts.append(f"新增: {len(entry.new_names):,}")
+                if entry.removed_names:
+                    summary_parts.append(f"移除: {len(entry.removed_names):,}")
+                lines.append(f"**正式定义**: {' | '.join(summary_parts)}")
+                lines.append("")
+            if has_telemetry:
+                summary_parts = []
+                if entry.new_names_telemetry:
+                    summary_parts.append(f"新增: {len(entry.new_names_telemetry):,}")
+                if entry.removed_names_telemetry:
+                    summary_parts.append(f"移除: {len(entry.removed_names_telemetry):,}")
+                lines.append(f"**遥测定义**: {' | '.join(summary_parts)}")
+                lines.append("")
         else:
             # Other entries: show foldable details
-            lines.append("<details>")
-            lines.append("<summary>")
-            summary_parts = []
-            if entry.new_names:
-                summary_parts.append(f"新增: {len(entry.new_names):,}")
-            if entry.removed_names:
-                summary_parts.append(f"移除: {len(entry.removed_names):,}")
-            lines.append(" | ".join(summary_parts))
-            lines.append("</summary>")
-            lines.append("")
-            lines.append("```")
-            for name in entry.new_names:
-                lines.append(f"[+] {name}")
-            for name in entry.removed_names:
-                lines.append(f"[-] {name}")
-            lines.append("```")
-            lines.append("")
-            lines.append("</details>")
-            lines.append("")
+            # Regular definitions section
+            if has_regular:
+                lines.append("<details>")
+                lines.append("<summary>")
+                summary_parts = []
+                if entry.new_names:
+                    summary_parts.append(f"新增正式定义: {len(entry.new_names):,}")
+                if entry.removed_names:
+                    summary_parts.append(f"移除正式定义: {len(entry.removed_names):,}")
+                lines.append(" | ".join(summary_parts))
+                lines.append("</summary>")
+                lines.append("")
+                lines.append("```")
+                for name in entry.new_names:
+                    lines.append(f"[+] {name}")
+                for name in entry.removed_names:
+                    lines.append(f"[-] {name}")
+                lines.append("```")
+                lines.append("")
+                lines.append("</details>")
+                lines.append("")
+            
+            # Telemetry definitions section
+            if has_telemetry:
+                lines.append("<details>")
+                lines.append("<summary>")
+                summary_parts = []
+                if entry.new_names_telemetry:
+                    summary_parts.append(f"新增遥测定义: {len(entry.new_names_telemetry):,}")
+                if entry.removed_names_telemetry:
+                    summary_parts.append(f"移除遥测定义: {len(entry.removed_names_telemetry):,}")
+                lines.append(" | ".join(summary_parts))
+                lines.append("</summary>")
+                lines.append("")
+                lines.append("```")
+                for name in entry.new_names_telemetry:
+                    lines.append(f"[+] {name}")
+                for name in entry.removed_names_telemetry:
+                    lines.append(f"[-] {name}")
+                lines.append("```")
+                lines.append("")
+                lines.append("</details>")
+                lines.append("")
     
     # Malware hashes (blacklist)
     if entry.new_malware_hashes or entry.removed_malware_hashes:
