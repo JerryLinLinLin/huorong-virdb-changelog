@@ -250,12 +250,57 @@ def generate_single_changelog_entry(
     )
 
 
-def write_single_data_file(entry: ChangelogEntry) -> None:
-    """Write data files for a single changelog entry."""
+def compress_with_7z(file_path: Path) -> bool:
+    """
+    Compress a file using 7z and remove the original.
+    
+    Args:
+        file_path: Path to the file to compress.
+        
+    Returns:
+        True if successful, False otherwise.
+    """
+    import subprocess
+    
+    seven_zip = find_7z()
+    if not seven_zip:
+        print(f"    WARNING: 7z not found, skipping compression for {file_path.name}")
+        return False
+    
+    archive_path = file_path.with_suffix(file_path.suffix + '.7z')
+    
+    try:
+        result = subprocess.run(
+            [str(seven_zip), 'a', '-mx=9', str(archive_path), str(file_path)],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        if result.returncode == 0 and archive_path.exists():
+            # Remove original file after successful compression
+            file_path.unlink()
+            return True
+        else:
+            print(f"    WARNING: Failed to compress {file_path.name}")
+            return False
+    except Exception as e:
+        print(f"    WARNING: Compression error for {file_path.name}: {e}")
+        return False
+
+
+def write_single_data_file(entry: ChangelogEntry, virdb: VirDBInfo) -> None:
+    """Write data files for a single changelog entry.
+    
+    Creates two types of files:
+    - Incremental files (*.txt): Changes compared to previous version
+    - Full snapshot files (*.full.txt.7z): Complete list of all items (compressed)
+    """
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     
     version = entry.version_timestamp
-    files_written = 0
+    incremental_files = 0
+    full_files = 0
     
     # Combine regular and telemetry names for data files
     all_new_names = entry.new_names + entry.new_names_telemetry
@@ -273,8 +318,17 @@ def write_single_data_file(entry: ChangelogEntry) -> None:
         
         with open(detection_file, 'w', encoding='utf-8') as f:
             f.write('\n'.join(detection_lines))
-        files_written += 1
+        incremental_files += 1
         print(f"    Written: {detection_file.name}")
+    
+    # Write full detection names snapshot (compressed)
+    if virdb.virus_names:
+        full_pset_file = DATA_DIR / f"{version}.pset.full.txt"
+        with open(full_pset_file, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(sorted(virdb.virus_names)))
+        if compress_with_7z(full_pset_file):
+            full_files += 1
+            print(f"    Written: {full_pset_file.name}.7z")
     
     # Write malware hashes (troj) file if there are changes
     if entry.new_malware_hashes or entry.removed_malware_hashes:
@@ -288,8 +342,17 @@ def write_single_data_file(entry: ChangelogEntry) -> None:
         
         with open(troj_file, 'w', encoding='utf-8') as f:
             f.write('\n'.join(troj_lines))
-        files_written += 1
+        incremental_files += 1
         print(f"    Written: {troj_file.name}")
+    
+    # Write full malware hashes snapshot (compressed)
+    if virdb.malware_hashes:
+        full_troj_file = DATA_DIR / f"{version}.troj.full.txt"
+        with open(full_troj_file, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(sorted(virdb.malware_hashes)))
+        if compress_with_7z(full_troj_file):
+            full_files += 1
+            print(f"    Written: {full_troj_file.name}.7z")
     
     # Write whitelist hashes (hwl) file if there are changes
     if entry.new_whitelist_hashes or entry.removed_whitelist_hashes:
@@ -303,10 +366,19 @@ def write_single_data_file(entry: ChangelogEntry) -> None:
         
         with open(hwl_file, 'w', encoding='utf-8') as f:
             f.write('\n'.join(hwl_lines))
-        files_written += 1
+        incremental_files += 1
         print(f"    Written: {hwl_file.name}")
     
-    print(f"  Written {files_written} data files")
+    # Write full whitelist hashes snapshot (compressed)
+    if virdb.whitelist_hashes:
+        full_hwl_file = DATA_DIR / f"{version}.hwl.full.txt"
+        with open(full_hwl_file, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(sorted(virdb.whitelist_hashes)))
+        if compress_with_7z(full_hwl_file):
+            full_files += 1
+            print(f"    Written: {full_hwl_file.name}.7z")
+    
+    print(f"  Written {incremental_files} incremental + {full_files} compressed full snapshot files")
 
 
 def update_changelog(new_virdb_path: Path) -> bool:
@@ -395,7 +467,7 @@ def update_changelog(new_virdb_path: Path) -> bool:
     
     # Write data files for the new entry only
     print("Writing data files for new entry...")
-    write_single_data_file(new_entry)
+    write_single_data_file(new_entry, new_virdb)
     print()
     
     # Update README.md incrementally
