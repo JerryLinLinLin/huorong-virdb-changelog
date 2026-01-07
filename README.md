@@ -6,28 +6,28 @@
 
 ## 概览
 
-- **最新版本**: `1767697383` (2026-01-06 11:03:03 UTC)
-- **检测项总数**: 66,477
-- **黑名单哈希总数**: 186,970
+- **最新版本**: `1767782775` (2026-01-07 10:46:15 UTC)
+- **检测项总数**: 66,554
+- **黑名单哈希总数**: 187,020
 - **白名单哈希总数**: 142,021
-- **已跟踪版本数**: 13
+- **已跟踪版本数**: 14
 
 ## 检测项分类分布
 
 ```mermaid
 pie showData
     title Top 10
-    "Trojan" : 23742
-    "TrojanDownloader" : 9726
-    "Backdoor" : 6461
-    "TrojanSpy" : 6069
+    "Trojan" : 23778
+    "TrojanDownloader" : 9734
+    "Backdoor" : 6467
+    "TrojanSpy" : 6070
     "OMacro" : 3392
     "Virus" : 2820
-    "TrojanDropper" : 2673
+    "TrojanDropper" : 2688
     "Adware" : 2345
-    "VirTool" : 2292
-    "Ransom" : 1984
-    "Other" : 4973
+    "VirTool" : 2298
+    "Ransom" : 1985
+    "Other" : 4977
 ```
 
 
@@ -35,6 +35,216 @@ pie showData
 
 ## 更新日志
 
+### 2026-01-07
+
+**版本**: `1767782775` (2026-01-07 10:46:15 UTC)
+
+#### 检测项变更 ([pset.txt](data/1767782775.pset.txt))
+
+<details>
+<summary>
+新增正式定义: 77
+</summary>
+
+```
+[+] Backdoor/Agent.ra
+[+] Backdoor/Linux.Gafgyt.by
+[+] Backdoor/Lotok.nz
+[+] Backdoor/W64.Agent.k
+[+] Backdoor/Xkcp.a
+[+] Exploit/VulnDriver.s
+[+] HEUR:Backdoor/Linux.Mirai.ku
+[+] HEUR:Trojan/BAT.Loader.j
+[+] HEUR:Trojan/BAT.Loader.k
+[+] HEUR:Trojan/Injector.co
+[+] HEUR:Trojan/JS.Obfuscated.db
+[+] HEUR:Trojan/KillMBR.cm
+[+] HEUR:Trojan/KillWin.f
+[+] HEUR:Trojan/Runner.fm
+[+] HEUR:TrojanDownloader/Agent.blo
+[+] HEUR:TrojanDownloader/VBS.Agent.gc
+[+] HVM:TrojanDropper/W64.Agent.bz
+[+] Hacktool/ConnectWise
+[+] Rootkit/W64.Agent.l
+[+] Trojan/Agent.clo
+[+] Trojan/BAT.Loader.i
+[+] Trojan/BAT.Pwrsvc.bv
+[+] Trojan/DDOS.ae
+[+] Trojan/DLLHijack.x
+[+] Trojan/DllHijack.x
+[+] Trojan/FakeApp.aax
+[+] Trojan/FakeApp.aay
+[+] Trojan/FakeApp.aaz
+[+] Trojan/FakeApp.aba
+[+] Trojan/FakeApp.abc
+[+] Trojan/FakeApp.abd
+[+] Trojan/FakeApp.abe
+[+] Trojan/FakeApp.abf
+[+] Trojan/FakeApp.zi
+[+] Trojan/HiJack.yj
+[+] Trojan/JS.Obfuscated.da
+[+] Trojan/KillAV.dc
+[+] Trojan/Linux.Mirai.fq
+[+] Trojan/Linux.Mirai.fv
+[+] Trojan/Linux.Mirai.gc
+[+] Trojan/Linux.Mirai.gd
+[+] Trojan/Linux.Mirai.ge
+[+] Trojan/Linux.Mirai.gf
+[+] Trojan/Loader.mo
+[+] Trojan/Loader.mp
+[+] Trojan/MSIL.Injector.qg
+[+] Trojan/MSIL.Obfuscated.jv
+[+] Trojan/NSIS.Injector.f
+[+] Trojan/Runner.fl
+[+] Trojan/ShellLoader.aha
+[+] Trojan/ShellLoader.ahb
+[+] Trojan/ShellLoader.ahc
+[+] Trojan/ShellcodeRunner.b
+[+] Trojan/W64.Injector.bz
+[+] Trojan/W64.Injector.ca
+[+] TrojanDownloader/Agent.bln
+[+] TrojanDownloader/Agent.blo
+[+] TrojanDownloader/BAT.Agent.gb
+[+] TrojanDownloader/Linux.Agent.dp
+[+] TrojanDownloader/Linux.Mozi.c
+[+] TrojanDownloader/Maloader.bn
+[+] TrojanDropper/Agent.akf
+[+] TrojanDropper/Agent.akg
+[+] TrojanDropper/Agent.akh
+[+] TrojanDropper/Agent.aki
+[+] TrojanDropper/Agent.akj
+[+] TrojanDropper/BAT.Agent.bm
+[+] TrojanDropper/Maloader.m
+[+] TrojanSpy/MSIL.ClipBanker.av
+[+] TrojanSpy/Stealer.th
+[+] TrojanSpy/W64.ClipBanker.e
+[+] TrojanSpy/W64.PwStealer.d
+[+] TrojanSpy/W64.Stealer.x
+[+] Virus/MAYA.FuckVirus.a
+[+] Worm/Autorun.ha
+[+] Worm/Autorun.hb
+[+] Worm/Phorpiex.o
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 47 | 移除遥测定义: 47
+</summary>
+
+```
+[+] Backdoor/Lotok.ob!submit
+[+] Backdoor/W64.Agent.l!submit
+[+] Backdoor/W64.Agent.m!submit
+[+] HEUR:Backdoor/MSIL.Bladabindi.bc!submit
+[+] HEUR:Backdoor/MSIL.Bladabindi.bd!submit
+[+] HEUR:Trojan/Injector.cp!submit
+[+] HEUR:Trojan/JS.Agent.gr!submit
+[+] HEUR:Trojan/KillWin.dj!submit
+[+] HVM:Backdoor/Lotok.bx!submit
+[+] HVM:Trojan/Injector.ah!submit
+[+] HVM:Trojan/Injector.cn!submit
+[+] HVM:Trojan/SelfDel.e!submit
+[+] Ransom/LockFile.ri!submit
+[+] Trojan/Agent.clp!submit
+[+] Trojan/BAT.Loader.j!submit
+[+] Trojan/FakeApp.aar!submit
+[+] Trojan/FakeApp.abg!submit
+[+] Trojan/FakeApp.abh!submit
+[+] Trojan/FakeApp.abi!submit
+[+] Trojan/Linux.Mirai.gg!submit
+[+] Trojan/Linux.Mirai.gh!submit
+[+] Trojan/Loader.mq!submit
+[+] Trojan/Loader.mr!submit
+[+] Trojan/Obfuscated.ns!submit
+[+] Trojan/Python.DDos.h!submit
+[+] Trojan/ShellLoader.ahd!submit
+[+] Trojan/ShellLoader.ahe!submit
+[+] TrojanDownloader/PS.Agent.fa!submit
+[+] TrojanDownloader/PS.Agent.fb!submit
+[+] TrojanDownloader/VBS.Agent.kb!submit
+[+] TrojanDownloader/W64.Agent.cn!submit
+[+] TrojanDropper/Agent.akk!submit
+[+] TrojanDropper/Agent.akl!submit
+[+] TrojanDropper/Agent.akm!submit
+[+] TrojanDropper/Agent.akn!submit
+[+] TrojanDropper/Agent.ako!submit
+[+] TrojanDropper/MSIL.Agent.jx!submit
+[+] TrojanDropper/Python.Agent.n!submit
+[+] TrojanDropper/VBS.Agent.ef!submit
+[+] TrojanDropper/W64.Agent.bz!submit
+[+] TrojanSpy/Python.Rodico.a!submit
+[+] VirTool/Obfuscator.aw!submit
+[+] VirTool/Obfuscator.ay!submit
+[+] VirTool/Obfuscator.ba!submit
+[+] VirTool/Obfuscator.bb!submit
+[+] VirTool/Obfuscator.be!submit
+[+] VirTool/Obfuscator.db!submit
+[-] Backdoor/Agent.ra!submit
+[-] Backdoor/Linux.Gafgyt.by!submit
+[-] Backdoor/Lotok.nz!submit
+[-] Backdoor/W64.Agent.k!submit
+[-] Backdoor/Xkcp.a!submit
+[-] HEUR:Backdoor/Linux.Mirai.ku!submit
+[-] HEUR:Trojan/BAT.Loader.k!submit
+[-] HEUR:Trojan/Injector.co!submit
+[-] HEUR:TrojanDownloader/Agent.blo!submit
+[-] HVM:Trojan/Hook.a!submit
+[-] Rootkit/W64.Agent.l!submit
+[-] Trojan/BAT.Loader.i!submit
+[-] Trojan/FakeApp.aax!submit
+[-] Trojan/FakeApp.aay!submit
+[-] Trojan/FakeApp.aaz!submit
+[-] Trojan/FakeApp.aba!submit
+[-] Trojan/FakeApp.abc!submit
+[-] Trojan/FakeApp.abd!submit
+[-] Trojan/FakeApp.abe!submit
+[-] Trojan/FakeApp.zi!submit
+[-] Trojan/Linux.Mirai.fq!submit
+[-] Trojan/Linux.Mirai.fv!submit
+[-] Trojan/Linux.Mirai.gc!submit
+[-] Trojan/Linux.Mirai.gd!submit
+[-] Trojan/Linux.Mirai.ge!submit
+[-] Trojan/Linux.Mirai.gf!submit
+[-] Trojan/Loader.mo!submit
+[-] Trojan/MSIL.Injector.qg!submit
+[-] Trojan/MSIL.Obfuscated.jv!submit
+[-] Trojan/NSIS.Injector.f!submit
+[-] Trojan/Runner.fl!submit
+[-] Trojan/ShellLoader.aha!submit
+[-] Trojan/ShellLoader.ahb!submit
+[-] Trojan/ShellcodeRunner.b!submit
+[-] Trojan/W64.Injector.bz!submit
+[-] TrojanDownloader/Agent.bln!submit
+[-] TrojanDownloader/Linux.Agent.dp!submit
+[-] TrojanDownloader/Linux.Mozi.c!submit
+[-] TrojanDropper/Agent.akf!submit
+[-] TrojanDropper/Agent.akg!submit
+[-] TrojanSpy/MSIL.ClipBanker.av!submit
+[-] TrojanSpy/Stealer.th!submit
+[-] TrojanSpy/W64.ClipBanker.e!submit
+[-] TrojanSpy/W64.PwStealer.d!submit
+[-] TrojanSpy/W64.Stealer.x!submit
+[-] Virus/MAYA.FuckVirus.a!submit
+[-] Worm/Autorun.ha!submit
+```
+
+</details>
+
+#### 黑名单哈希变更 ([troj.txt](data/1767782775.troj.txt))
+
+新增: 50
+
+**统计**:
+
+| 指标 | 数值 |
+|------|-----:|
+| 检测项总数 | 66,554 |
+| 黑名单哈希总数 | 187,020 |
+| 白名单哈希总数 | 142,021 |
+
+---
 ### 2026-01-06
 
 **版本**: `1767697383` (2026-01-06 11:03:03 UTC)
