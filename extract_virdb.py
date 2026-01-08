@@ -30,6 +30,7 @@ TARGET_VFS_FILES = [
     "troj.db.vfs",
     "hwl.db.vfs",
     "crithash.db.vfs",
+    "behav.db.vfs",
 ]
 
 # Path inside the installer to the vdb zip
