@@ -6,10 +6,10 @@
 
 ## 概览
 
-- **最新版本**: `1767782775` (2026-01-07 10:46:15 UTC)
-- **特征项总数**: 66,554
-- **行为特征项总数**: 903
-- **黑名单哈希总数**: 187,020
+- **最新版本**: `1767870070` (2026-01-08 11:01:10 UTC)
+- **特征项总数**: 66,584
+- **行为特征项总数**: 904
+- **黑名单哈希总数**: 187,084
 - **白名单哈希总数**: 142,021
 - **已跟踪版本数**: 15
 
@@ -18,17 +18,17 @@
 ```mermaid
 pie showData
     title Top 10
-    "Trojan" : 23778
-    "TrojanDownloader" : 9734
-    "Backdoor" : 6467
-    "TrojanSpy" : 6070
+    "Trojan" : 23787
+    "TrojanDownloader" : 9738
+    "Backdoor" : 6472
+    "TrojanSpy" : 6072
     "OMacro" : 3392
     "Virus" : 2820
-    "TrojanDropper" : 2688
+    "TrojanDropper" : 2695
     "Adware" : 2345
     "VirTool" : 2298
     "Ransom" : 1985
-    "Other" : 4977
+    "Other" : 4980
 ```
 
 
@@ -36,6 +36,169 @@ pie showData
 
 ## 更新日志
 
+<details>
+<summary><b>1767870070</b> - 2026-01-08 11:01:10 UTC</summary>
+
+#### 特征项变更 ([pset.txt](data/1767870070.pset.txt))
+
+<details>
+<summary>
+新增正式定义: 41 | 移除正式定义: 1
+</summary>
+
+```
+[+] Backdoor/Lotok.ob
+[+] Backdoor/W64.AdaptixC2.b
+[+] Backdoor/W64.Agent.l
+[+] Backdoor/W64.Agent.m
+[+] HEUR:Backdoor/MSIL.Bladabindi.bc
+[+] HEUR:Backdoor/MSIL.Bladabindi.bd
+[+] HEUR:Trojan/Injector.cp
+[+] HVM:Backdoor/Lotok.bx
+[+] Ransom/LockFile.ri
+[+] Trojan/Agent.clp
+[+] Trojan/BAT.Loader.j
+[+] Trojan/FakeApp.abg
+[+] Trojan/FakeApp.abh
+[+] Trojan/FakeApp.abi
+[+] Trojan/Linux.Mirai.gg
+[+] Trojan/Linux.Mirai.gh
+[+] Trojan/Loader.mq
+[+] Trojan/Loader.mr
+[+] Trojan/Obfuscated.ns
+[+] Trojan/Python.DDos.h
+[+] Trojan/ShellLoader.ahd
+[+] Trojan/ShellLoader.ahe
+[+] TrojanDownloader/PS.Agent.fa
+[+] TrojanDownloader/PS.Agent.fb
+[+] TrojanDownloader/VBS.Agent.kb
+[+] TrojanDownloader/W64.Agent.cn
+[+] TrojanDropper/Agent.akk
+[+] TrojanDropper/Agent.akn
+[+] TrojanDropper/Agent.ako
+[+] TrojanDropper/MSIL.Agent.jx
+[+] TrojanDropper/Python.Agent.n
+[+] TrojanDropper/VBS.Agent.ef
+[+] TrojanDropper/W64.Agent.bz
+[+] TrojanSpy/HTML.Stealer.c
+[+] TrojanSpy/Python.Rodico.a
+[+] VirTool/Obfuscator.aw
+[+] VirTool/Obfuscator.ay
+[+] VirTool/Obfuscator.ba
+[+] VirTool/Obfuscator.bb
+[+] VirTool/Obfuscator.be
+[+] VirTool/Obfuscator.db
+[-] Backdoor/W64.AdaptixC2.a
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 33 | 移除遥测定义: 43
+</summary>
+
+```
+[+] Backdoor/Agent.rb!submit
+[+] Backdoor/Lotok.oa!submit
+[+] Backdoor/Lotok.oc!submit
+[+] Backdoor/Python.Agent.n!submit
+[+] Backdoor/Remcos.ax!submit
+[+] Exploit/HTML.CVE-2025-54100.a!submit
+[+] HEUR:TrojanDropper/Agent.ar!submit
+[+] HVM:Backdoor/Lotok.cd!submit
+[+] HVM:TrojanDropper/W64.Agent.ca!submit
+[+] HackTool/Rdp2Tcp.a!submit
+[+] Trojan/AutoIt.Runner.g!submit
+[+] Trojan/Barys.c!submit
+[+] Trojan/FakeApp.abj!submit
+[+] Trojan/FakeApp.abk!submit
+[+] Trojan/HTML.Phishing.hd!submit
+[+] Trojan/MSIL.CoinStealer.g!submit
+[+] Trojan/MSIL.Obfuscated.jw!submit
+[+] Trojan/PS.Loader.m!submit
+[+] Trojan/ShellLoader.ahf!submit
+[+] Trojan/StrongPity.c!submit
+[+] Trojan/W64.Agent.gj!submit
+[+] TrojanDownloader/Agent.blp!submit
+[+] TrojanDownloader/HTML.Agent.bg!submit
+[+] TrojanDownloader/MSIL.Agent.ajj!submit
+[+] TrojanDownloader/VBS.Agent.kc!submit
+[+] TrojanDropper/Agent.akp!submit
+[+] TrojanDropper/Agent.akq!submit
+[+] TrojanDropper/Agent.akr!submit
+[+] TrojanDropper/Agent.aks!submit
+[+] TrojanDropper/Agent.akt!submit
+[+] TrojanSpy/Banker.hm!submit
+[+] TrojanSpy/Zbot.dj!submit
+[+] Worm/Autorun.hc!submit
+[-] Backdoor/Lotok.ob!submit
+[-] Backdoor/W64.AdaptixC2.b!submit
+[-] Backdoor/W64.Agent.l!submit
+[-] Backdoor/W64.Agent.m!submit
+[-] HEUR:Backdoor/MSIL.Bladabindi.bc!submit
+[-] HEUR:Backdoor/MSIL.Bladabindi.bd!submit
+[-] HEUR:Trojan/BAT.Loader.j!submit
+[-] HEUR:Trojan/Injector.cp!submit
+[-] HEUR:Trojan/KillWin.dj!submit
+[-] HVM:Backdoor/Lotok.bx!submit
+[-] Ransom/LockFile.ri!submit
+[-] Trojan/Agent.clp!submit
+[-] Trojan/BAT.Loader.j!submit
+[-] Trojan/FakeApp.abg!submit
+[-] Trojan/FakeApp.abh!submit
+[-] Trojan/FakeApp.abi!submit
+[-] Trojan/Linux.Mirai.gg!submit
+[-] Trojan/Linux.Mirai.gh!submit
+[-] Trojan/Loader.mq!submit
+[-] Trojan/Loader.mr!submit
+[-] Trojan/Obfuscated.ns!submit
+[-] Trojan/Python.DDos.h!submit
+[-] Trojan/ShellLoader.ahd!submit
+[-] Trojan/ShellLoader.ahe!submit
+[-] TrojanDownloader/PS.Agent.fa!submit
+[-] TrojanDownloader/PS.Agent.fb!submit
+[-] TrojanDownloader/VBS.Agent.kb!submit
+[-] TrojanDownloader/W64.Agent.cn!submit
+[-] TrojanDropper/Agent.akk!submit
+[-] TrojanDropper/Agent.akn!submit
+[-] TrojanDropper/Agent.ako!submit
+[-] TrojanDropper/MSIL.Agent.jx!submit
+[-] TrojanDropper/Python.Agent.n!submit
+[-] TrojanDropper/VBS.Agent.ef!submit
+[-] TrojanDropper/W64.Agent.bz!submit
+[-] TrojanSpy/HTML.Stealer.c!submit
+[-] TrojanSpy/Python.Rodico.a!submit
+[-] VirTool/Obfuscator.aw!submit
+[-] VirTool/Obfuscator.ay!submit
+[-] VirTool/Obfuscator.ba!submit
+[-] VirTool/Obfuscator.bb!submit
+[-] VirTool/Obfuscator.be!submit
+[-] VirTool/Obfuscator.db!submit
+```
+
+</details>
+
+#### 行为特征项变更 ([behav.txt](data/1767870070.behav.txt))
+
+<details>
+<summary>
+新增: 2 | 移除: 1
+</summary>
+
+```
+[+] Backdoor/Lotok.DA!submit
+[+] Software:GM/NN.A#NN加速器
+[-] Software:GM/NN.A#NN加速器!submit
+```
+
+</details>
+
+#### 黑名单哈希变更 ([troj.txt](data/1767870070.troj.txt))
+
+新增: 64
+
+</details>
 <details>
 <summary><b>1767782775</b> - 2026-01-07 10:46:15 UTC</summary>
 
