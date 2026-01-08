@@ -497,7 +497,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
     # Header
     lines.append("# 火绒病毒库更新日志")
     lines.append("")
-    lines.append("本仓库跟踪[火绒安全软件](https://www.huorong.cn/)病毒库的变更，通过读取`pset.db,troj.db,hwl.db`自动生成与上一版本相比新增的检测项/报毒名, 黑名单哈希和白名单哈希。")
+    lines.append("本仓库跟踪[火绒安全软件](https://www.huorong.cn/)病毒库的变更，通过读取`pset.db,troj.db,hwl.db`自动生成与上一版本相比新增的特征项/报毒名, 黑名单哈希和白名单哈希。")
     lines.append("")
     lines.append("> **免责声明**：本项目非火绒官方出品，仅供学习和技术交流使用。作者不对使用本项目造成的任何后果负责。")
     lines.append("")
@@ -507,7 +507,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
     if entries:
         latest = entries[-1]
         lines.append(f"- **最新版本**: `{latest.version_timestamp}` ({latest.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
-        lines.append(f"- **检测项总数**: {latest.total_names:,}")
+        lines.append(f"- **特征项总数**: {latest.total_names:,}")
         lines.append(f"- **黑名单哈希总数**: {latest.total_malware_hashes:,}")
         lines.append(f"- **白名单哈希总数**: {latest.total_whitelist_hashes:,}")
         lines.append(f"- **已跟踪版本数**: {len(entries)}")
@@ -516,7 +516,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
         # Add pie chart for virus category distribution
         if latest_virus_names:
             distribution = get_category_distribution(latest_virus_names)
-            lines.append("## 检测项分类分布")
+            lines.append("## 特征项分类分布")
             lines.append("")
             lines.append("```mermaid")
             lines.append("pie showData")
@@ -548,9 +548,9 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
         has_telemetry_changes = entry.new_names_telemetry or entry.removed_names_telemetry
         
         if has_regular_changes or has_telemetry_changes:
-            lines.append(f"#### 检测项变更 ([pset.txt](data/{entry.version_timestamp}.pset.txt))")
+            lines.append(f"#### 特征项变更 ([pset.txt](data/{entry.version_timestamp}.pset.txt))")
             lines.append("")
-            
+
             # Regular definitions (正式定义)
             if has_regular_changes:
                 if is_oldest:
@@ -646,7 +646,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
         lines.append("")
         lines.append("| 指标 | 数值 |")
         lines.append("|------|-----:|")
-        lines.append(f"| 检测项总数 | {entry.total_names:,} |")
+        lines.append(f"| 特征项总数 | {entry.total_names:,} |")
         lines.append(f"| 黑名单哈希总数 | {entry.total_malware_hashes:,} |")
         lines.append(f"| 白名单哈希总数 | {entry.total_whitelist_hashes:,} |")
         lines.append("")

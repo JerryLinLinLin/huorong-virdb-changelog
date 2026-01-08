@@ -494,7 +494,7 @@ def format_single_changelog_entry(entry: ChangelogEntry, is_oldest: bool = False
     has_telemetry = entry.new_names_telemetry or entry.removed_names_telemetry
     
     if has_regular or has_telemetry:
-        lines.append(f"#### 检测项变更 ([pset.txt](data/{entry.version_timestamp}.pset.txt))")
+        lines.append(f"#### 特征项变更 ([pset.txt](data/{entry.version_timestamp}.pset.txt))")
         lines.append("")
         
         if is_oldest:
@@ -590,7 +590,7 @@ def format_single_changelog_entry(entry: ChangelogEntry, is_oldest: bool = False
     lines.append("")
     lines.append("| 指标 | 数值 |")
     lines.append("|------|-----:|")
-    lines.append(f"| 检测项总数 | {entry.total_names:,} |")
+    lines.append(f"| 特征项总数 | {entry.total_names:,} |")
     lines.append(f"| 黑名单哈希总数 | {entry.total_malware_hashes:,} |")
     lines.append(f"| 白名单哈希总数 | {entry.total_whitelist_hashes:,} |")
     lines.append("")
@@ -635,13 +635,13 @@ def update_readme_incrementally(
         content
     )
     
-    # Update 检测项总数
+    # Update 特征项总数
     content = re.sub(
-        r'- \*\*检测项总数\*\*: [\d,]+',
-        f'- **检测项总数**: {new_entry.total_names:,}',
+        r'- \*\*特征项总数\*\*: [\d,]+',
+        f'- **特征项总数**: {new_entry.total_names:,}',
         content
     )
-    
+
     # Update 黑名单哈希总数
     content = re.sub(
         r'- \*\*黑名单哈希总数\*\*: [\d,]+',
