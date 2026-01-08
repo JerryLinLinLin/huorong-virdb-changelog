@@ -484,9 +484,9 @@ def format_single_changelog_entry(entry: ChangelogEntry, is_oldest: bool = False
     """Format a single changelog entry for insertion into README."""
     lines = []
     
-    lines.append(f"### {entry.date}")
-    lines.append("")
-    lines.append(f"**版本**: `{entry.version_timestamp}` ({entry.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
+    # Start foldable entry
+    lines.append("<details>")
+    lines.append(f"<summary><b>{entry.version_timestamp}</b> - {entry.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')}</summary>")
     lines.append("")
     
     # Detection names - show with foldable details (separate regular and telemetry)
@@ -585,7 +585,7 @@ def format_single_changelog_entry(entry: ChangelogEntry, is_oldest: bool = False
         lines.append(" | ".join(hwl_parts))
         lines.append("")
     
-    lines.append("---")
+    lines.append("</details>")
     lines.append("")
     
     return "\n".join(lines)

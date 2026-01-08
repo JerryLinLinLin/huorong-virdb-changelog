@@ -537,9 +537,9 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
     oldest_version = entries[0].version_timestamp if entries else None
     
     for entry in reversed_entries:
-        lines.append(f"### {entry.date}")
-        lines.append("")
-        lines.append(f"**版本**: `{entry.version_timestamp}` ({entry.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
+        # Start foldable entry
+        lines.append("<details>")
+        lines.append(f"<summary><b>{entry.version_timestamp}</b> - {entry.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')}</summary>")
         lines.append("")
         
         # Detection names - show with foldable details (oldest entry shows only counts, no details)
@@ -641,7 +641,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
             lines.append(" | ".join(hwl_parts))
             lines.append("")
         
-        lines.append("---")
+        lines.append("</details>")
         lines.append("")
     
     # Footer
