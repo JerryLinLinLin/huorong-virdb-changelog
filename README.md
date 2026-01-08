@@ -408,11 +408,6 @@ pie showData
 </details>
 
 <details>
-<summary><b>1767577713</b> - 2026-01-05 01:48:33 UTC</summary>
-
-</details>
-
-<details>
 <summary><b>1767527465</b> - 2026-01-04 11:51:05 UTC</summary>
 
 #### 特征项变更 ([pset.txt](data/1767527465.pset.txt))
