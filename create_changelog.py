@@ -641,15 +641,6 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
             lines.append(" | ".join(hwl_parts))
             lines.append("")
         
-        # Stats summary as table
-        lines.append("**统计**:")
-        lines.append("")
-        lines.append("| 指标 | 数值 |")
-        lines.append("|------|-----:|")
-        lines.append(f"| 特征项总数 | {entry.total_names:,} |")
-        lines.append(f"| 黑名单哈希总数 | {entry.total_malware_hashes:,} |")
-        lines.append(f"| 白名单哈希总数 | {entry.total_whitelist_hashes:,} |")
-        lines.append("")
         lines.append("---")
         lines.append("")
     
