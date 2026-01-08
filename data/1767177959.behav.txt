@@ -1,0 +1,7 @@
+[+] ADV:Ransom/Genalocker.ZDA!submit
+[+] Backdoor/Lotok.QDA
+[+] Backdoor/Lotok.QDB
+[+] TrojanDropper/MalSetup.P
+[-] ADV:Ransom/Genalocker.ZCA!submit
+[-] Backdoor/Lotok.QDA!submit
+[-] Backdoor/Lotok.QDB!submit

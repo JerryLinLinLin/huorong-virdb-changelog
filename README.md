@@ -8,9 +8,10 @@
 
 - **最新版本**: `1767782775` (2026-01-07 10:46:15 UTC)
 - **特征项总数**: 66,554
+- **行为特征项总数**: 903
 - **黑名单哈希总数**: 187,020
 - **白名单哈希总数**: 142,021
-- **已跟踪版本数**: 14
+- **已跟踪版本数**: 15
 
 ## 特征项分类分布
 
@@ -231,12 +232,26 @@ pie showData
 
 </details>
 
+#### 行为特征项变更 ([behav.txt](data/1767782775.behav.txt))
+
+<details>
+<summary>
+新增: 2 | 移除: 1
+</summary>
+
+```
+[+] Software:GM/NN.A#NN加速器!submit
+[+] Software:OS/Gooxion.AA#固信终端
+[-] Software:OS/Gooxion.AA#固信终端安全!submit
+```
+
+</details>
+
 #### 黑名单哈希变更 ([troj.txt](data/1767782775.troj.txt))
 
 新增: 50
 
 </details>
-
 <details>
 <summary><b>1767697383</b> - 2026-01-06 11:03:03 UTC</summary>
 
@@ -393,6 +408,11 @@ pie showData
 </details>
 
 <details>
+<summary><b>1767577713</b> - 2026-01-05 01:48:33 UTC</summary>
+
+</details>
+
+<details>
 <summary><b>1767527465</b> - 2026-01-04 11:51:05 UTC</summary>
 
 #### 特征项变更 ([pset.txt](data/1767527465.pset.txt))
@@ -521,6 +541,21 @@ pie showData
 [-] TrojanDropper/W64.Agent.bw!submit
 [-] TrojanSpy/KeyLogger.fc!submit
 [-] TrojanSpy/MSIL.Stealer.kt!submit
+```
+
+</details>
+
+#### 行为特征项变更 ([behav.txt](data/1767527465.behav.txt))
+
+<details>
+<summary>
+新增: 2 | 移除: 1
+</summary>
+
+```
+[+] Backdoor/Lotok.P
+[+] TrojanDropper/MalSetup.OB!submit
+[-] Backdoor/Lotok.ZAB!submit
 ```
 
 </details>
@@ -676,6 +711,25 @@ pie showData
 [-] TrojanDownloader/PS.Agent.ey!submit
 [-] TrojanDownloader/PS.Agent.ez!submit
 [-] TrojanDropper/Agent.ajw!submit
+```
+
+</details>
+
+#### 行为特征项变更 ([behav.txt](data/1767177959.behav.txt))
+
+<details>
+<summary>
+新增: 4 | 移除: 3
+</summary>
+
+```
+[+] ADV:Ransom/Genalocker.ZDA!submit
+[+] Backdoor/Lotok.QDA
+[+] Backdoor/Lotok.QDB
+[+] TrojanDropper/MalSetup.P
+[-] ADV:Ransom/Genalocker.ZCA!submit
+[-] Backdoor/Lotok.QDA!submit
+[-] Backdoor/Lotok.QDB!submit
 ```
 
 </details>
@@ -853,6 +907,25 @@ pie showData
 [-] TrojanDropper/Agent.aju!submit
 [-] TrojanDropper/Agent.ajv!submit
 [-] TrojanSpy/MSIL.Stealer.ks!submit
+```
+
+</details>
+
+#### 行为特征项变更 ([behav.txt](data/1767093364.behav.txt))
+
+<details>
+<summary>
+新增: 5 | 移除: 2
+</summary>
+
+```
+[+] ADV:Ransom/Genalocker.ZCA!submit
+[+] ADV:Ransom/Genalocker.ZCB!submit
+[+] Backdoor/Lotok.QDA!submit
+[+] Backdoor/Lotok.QDB!submit
+[+] TrojanDropper/MalSetup.PA!submit
+[-] ADV:Ransom/Genalocker.ZBA!submit
+[-] ADV:Ransom/Genalocker.ZBB!submit
 ```
 
 </details>
@@ -1049,6 +1122,20 @@ pie showData
 [-] TrojanSpy/Delf.ad!submit
 [-] TrojanSpy/MSIL.Agent.da!submit
 [-] TrojanSpy/Python.SteamStealer.a!submit
+```
+
+</details>
+
+#### 行为特征项变更 ([behav.txt](data/1767007867.behav.txt))
+
+<details>
+<summary>
+新增: 1 | 移除: 1
+</summary>
+
+```
+[+] TrojanDropper/MalSetup.OA!submit
+[-] TrojanDropper/MalSetup.O!submit
 ```
 
 </details>
@@ -1271,6 +1358,19 @@ pie showData
 
 </details>
 
+#### 行为特征项变更 ([behav.txt](data/1766750454.behav.txt))
+
+<details>
+<summary>
+新增: 1
+</summary>
+
+```
+[+] Software:OS/Gooxion.AA#固信终端安全!submit
+```
+
+</details>
+
 #### 黑名单哈希变更 ([troj.txt](data/1766750454.troj.txt))
 
 新增: 152
@@ -1285,6 +1385,10 @@ pie showData
 新增正式定义: 65,358
 
 新增遥测定义: 881
+
+#### 行为特征项变更 ([behav.txt](data/1766655657.behav.txt))
+
+新增: 896
 
 #### 黑名单哈希变更 ([troj.txt](data/1766655657.troj.txt))
 

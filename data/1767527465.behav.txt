@@ -1,0 +1,3 @@
+[+] Backdoor/Lotok.P
+[+] TrojanDropper/MalSetup.OB!submit
+[-] Backdoor/Lotok.ZAB!submit

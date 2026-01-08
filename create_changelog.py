@@ -11,6 +11,7 @@ This is a one-time initialization script to create the initial changelog.
 import subprocess
 import json
 import tempfile
+import os
 from pathlib import Path
 from datetime import datetime, timezone
 from dataclasses import dataclass
@@ -19,8 +20,9 @@ from typing import Optional, Set, List
 from extract_virdb import find_7z
 
 
-# CLI tool path
+# CLI tool paths
 CLI_TOOL = Path(__file__).parent / "bin" / "huorong_virdb_cli-windows-x64.exe"
+BEHAV_CLI_TOOL = Path(__file__).parent / "bin" / "huorong_behavdb_cli.exe"
 VIRDB_DIR = Path(__file__).parent / "virdb"
 README_PATH = Path(__file__).parent / "README.md"
 DATA_DIR = Path(__file__).parent / "data"
@@ -43,6 +45,7 @@ class VirDBInfo:
     virus_names: Set[str]
     malware_hashes: Set[str]
     whitelist_hashes: Set[str]
+    behavior_names: Set[str]
 
 
 @dataclass
@@ -60,9 +63,12 @@ class ChangelogEntry:
     removed_malware_hashes: List[str]
     new_whitelist_hashes: List[str]
     removed_whitelist_hashes: List[str]
+    new_behavior_names: List[str]
+    removed_behavior_names: List[str]
     total_names: int
     total_malware_hashes: int
     total_whitelist_hashes: int
+    total_behavior_names: int
     stats: dict
 
 
@@ -234,6 +240,61 @@ def get_whitelist_hashes(virdb_path: Path) -> Set[str]:
     return set()
 
 
+def run_behav_cli(args: List[str]) -> tuple[bool, str]:
+    """
+    Run the huorong_behavdb_cli tool.
+    
+    Args:
+        args: Command line arguments.
+        
+    Returns:
+        Tuple of (success, output/error).
+    """
+    if not BEHAV_CLI_TOOL.exists():
+        return False, f"Behavior CLI tool not found: {BEHAV_CLI_TOOL}"
+    
+    try:
+        cmd = [str(BEHAV_CLI_TOOL)] + args
+        # Set env vars to disable rich fancy output (avoids Unicode errors on Windows)
+        env = os.environ.copy()
+        env['NO_COLOR'] = '1'
+        env['TERM'] = 'dumb'
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=300,
+            env=env
+        )
+        return True, result.stdout
+    except subprocess.TimeoutExpired:
+        return False, "Command timed out"
+    except Exception as e:
+        return False, str(e)
+
+
+def get_behavior_names(virdb_path: Path) -> Set[str]:
+    """Extract all behavior signature names from a virdb (behav.db.vfs)."""
+    behav_db_path = virdb_path / "behav.db.vfs"
+    if not behav_db_path.exists():
+        print(f"    WARNING: behav.db.vfs not found in {virdb_path.name}")
+        return set()
+    
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
+        temp_path = Path(f.name)
+    
+    try:
+        success, _ = run_behav_cli(["names", str(behav_db_path), "-o", str(temp_path)])
+        if success and temp_path.exists():
+            with open(temp_path, 'r', encoding='utf-8') as f:
+                names = set(line.strip() for line in f if line.strip())
+                return names
+    finally:
+        if temp_path.exists():
+            temp_path.unlink()
+    return set()
+
+
 def get_date_from_folder(folder_name: str) -> Optional[str]:
     """Extract date from folder name like 'sysdiag-all-x64-6.0.8.5-2025.12.25.1'."""
     import re
@@ -321,6 +382,11 @@ def load_virdb_info(virdb_path: Path) -> Optional[VirDBInfo]:
     whitelist_hashes = get_whitelist_hashes(virdb_path)
     print(f"    Found {len(whitelist_hashes):,} whitelist hashes")
     
+    # Get behavior names
+    print(f"    Extracting behavior names...")
+    behavior_names = get_behavior_names(virdb_path)
+    print(f"    Found {len(behavior_names):,} behavior names")
+    
     return VirDBInfo(
         path=virdb_path,
         folder_name=folder_name,
@@ -335,7 +401,8 @@ def load_virdb_info(virdb_path: Path) -> Optional[VirDBInfo]:
         hwl_records=stats.get('hwl_records', 0),
         virus_names=virus_names,
         malware_hashes=malware_hashes,
-        whitelist_hashes=whitelist_hashes
+        whitelist_hashes=whitelist_hashes,
+        behavior_names=behavior_names
     )
 
 
@@ -352,6 +419,8 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
             removed_malware_hashes = []
             new_whitelist_hashes = sorted(current.whitelist_hashes)
             removed_whitelist_hashes = []
+            new_behavior_names = sorted(current.behavior_names)
+            removed_behavior_names = []
         else:
             previous = versions[i - 1]
             all_new_names = sorted(current.virus_names - previous.virus_names)
@@ -360,6 +429,8 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
             removed_malware_hashes = sorted(previous.malware_hashes - current.malware_hashes)
             new_whitelist_hashes = sorted(current.whitelist_hashes - previous.whitelist_hashes)
             removed_whitelist_hashes = sorted(previous.whitelist_hashes - current.whitelist_hashes)
+            new_behavior_names = sorted(current.behavior_names - previous.behavior_names)
+            removed_behavior_names = sorted(previous.behavior_names - current.behavior_names)
         
         # Split names into regular and telemetry
         new_names, new_names_telemetry = split_names_by_telemetry(all_new_names)
@@ -380,9 +451,12 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
             removed_malware_hashes=removed_malware_hashes,
             new_whitelist_hashes=new_whitelist_hashes,
             removed_whitelist_hashes=removed_whitelist_hashes,
+            new_behavior_names=new_behavior_names,
+            removed_behavior_names=removed_behavior_names,
             total_names=len(current.virus_names),
             total_malware_hashes=len(current.malware_hashes),
             total_whitelist_hashes=len(current.whitelist_hashes),
+            total_behavior_names=len(current.behavior_names),
             stats={
                 'pset_records': current.pset_records,
                 'troj_hashes': current.troj_hashes,
@@ -439,6 +513,29 @@ def write_data_files(entries: List[ChangelogEntry], versions: List[VirDBInfo]) -
             with open(full_pset_file, 'w', encoding='utf-8') as f:
                 f.write('\n'.join(sorted(virdb.virus_names)))
             if compress_with_7z(full_pset_file):
+                full_files += 1
+        
+        # Write behavior names (behav) file if there are changes
+        has_behav_changes = entry.new_behavior_names or entry.removed_behavior_names
+        if has_behav_changes:
+            behav_file = DATA_DIR / f"{version}.behav.txt"
+            behav_lines = []
+            
+            for name in sorted(entry.new_behavior_names):
+                behav_lines.append(f"[+] {name}")
+            for name in sorted(entry.removed_behavior_names):
+                behav_lines.append(f"[-] {name}")
+            
+            with open(behav_file, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(behav_lines))
+            incremental_files += 1
+        
+        # Write full behavior names snapshot (compressed)
+        if virdb and virdb.behavior_names:
+            full_behav_file = DATA_DIR / f"{version}.behav.full.txt"
+            with open(full_behav_file, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(sorted(virdb.behavior_names)))
+            if compress_with_7z(full_behav_file):
                 full_files += 1
         
         # Write malware hashes (troj) file if there are changes
@@ -508,6 +605,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
         latest = entries[-1]
         lines.append(f"- **最新版本**: `{latest.version_timestamp}` ({latest.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
         lines.append(f"- **特征项总数**: {latest.total_names:,}")
+        lines.append(f"- **行为特征项总数**: {latest.total_behavior_names:,}")
         lines.append(f"- **黑名单哈希总数**: {latest.total_malware_hashes:,}")
         lines.append(f"- **白名单哈希总数**: {latest.total_whitelist_hashes:,}")
         lines.append(f"- **已跟踪版本数**: {len(entries)}")
@@ -616,6 +714,43 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
                     lines.append("")
                     lines.append("</details>")
                     lines.append("")
+        
+        # Behavior signatures - show with foldable details
+        has_behavior_changes = entry.new_behavior_names or entry.removed_behavior_names
+        if has_behavior_changes:
+            lines.append(f"#### 行为特征项变更 ([behav.txt](data/{entry.version_timestamp}.behav.txt))")
+            lines.append("")
+            
+            if is_oldest:
+                # Oldest entry: just show counts without foldable details
+                summary_parts = []
+                if entry.new_behavior_names:
+                    summary_parts.append(f"新增: {len(entry.new_behavior_names):,}")
+                if entry.removed_behavior_names:
+                    summary_parts.append(f"移除: {len(entry.removed_behavior_names):,}")
+                lines.append(" | ".join(summary_parts))
+                lines.append("")
+            else:
+                # Other entries: show foldable details
+                lines.append("<details>")
+                lines.append("<summary>")
+                summary_parts = []
+                if entry.new_behavior_names:
+                    summary_parts.append(f"新增: {len(entry.new_behavior_names):,}")
+                if entry.removed_behavior_names:
+                    summary_parts.append(f"移除: {len(entry.removed_behavior_names):,}")
+                lines.append(" | ".join(summary_parts))
+                lines.append("</summary>")
+                lines.append("")
+                lines.append("```")
+                for name in entry.new_behavior_names:
+                    lines.append(f"[+] {name}")
+                for name in entry.removed_behavior_names:
+                    lines.append(f"[-] {name}")
+                lines.append("```")
+                lines.append("")
+                lines.append("</details>")
+                lines.append("")
         
         # Malware hashes (blacklist) - only show counts with link to file
         if entry.new_malware_hashes or entry.removed_malware_hashes:

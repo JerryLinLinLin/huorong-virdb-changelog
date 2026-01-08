@@ -1,0 +1,2 @@
+[+] TrojanDropper/MalSetup.OA!submit
+[-] TrojanDropper/MalSetup.O!submit
