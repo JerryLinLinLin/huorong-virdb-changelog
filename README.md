@@ -6,26 +6,26 @@
 
 ## 概览
 
-- **最新版本**: `1768128066` (2026-01-11 10:41:06 UTC)
-- **特征项总数**: 66,624
-- **关键哈希特征项总数**: 80,501
-- **行为特征项总数**: 904
-- **黑名单哈希总数**: 187,382
-- **白名单哈希总数**: 141,859
-- **已跟踪版本数**: 18
+- **最新版本**: `1768217225` (2026-01-12 11:27:05 UTC)
+- **特征项总数**: 66,666
+- **关键哈希特征项总数**: 80,537
+- **行为特征项总数**: 906
+- **黑名单哈希总数**: 187,424
+- **白名单哈希总数**: 141,861
+- **已跟踪版本数**: 19
 
 ## 特征项分类分布
 
 ```mermaid
 pie showData
     title Top 10
-    "Trojan" : 23802
-    "TrojanDownloader" : 9745
-    "Backdoor" : 6482
-    "TrojanSpy" : 6076
+    "Trojan" : 23829
+    "TrojanDownloader" : 9750
+    "Backdoor" : 6485
+    "TrojanSpy" : 6080
     "OMacro" : 3392
     "Virus" : 2820
-    "TrojanDropper" : 2695
+    "TrojanDropper" : 2698
     "Adware" : 2345
     "VirTool" : 2298
     "Ransom" : 1986
@@ -37,6 +37,258 @@ pie showData
 
 ## 更新日志
 
+<details>
+<summary><b>1768217225</b> - 2026-01-12 11:27:05 UTC</summary>
+
+#### 特征项变更 ([pset.txt](data/1768217225.pset.txt))
+
+<details>
+<summary>
+新增正式定义: 36
+</summary>
+
+```
+[+] Backdoor/Agent.rc
+[+] Backdoor/CobaltStrike.oz
+[+] Backdoor/Ghost.ca
+[+] Backdoor/Linux.Sliver.b
+[+] Backdoor/Lotok.of
+[+] Backdoor/Lotok.oh
+[+] HEUR:Worm/BAT.Autorun.f
+[+] HackTool/Linux.BotWarden.a
+[+] Ransom/Cerber.ak
+[+] Trojan/Agent.clq
+[+] Trojan/DLLHijack.y
+[+] Trojan/FakeApp.abl
+[+] Trojan/GenCBL.a
+[+] Trojan/GenCBL.b
+[+] Trojan/HTML.Phishing.he
+[+] Trojan/Injector.clh
+[+] Trojan/Injector.cli
+[+] Trojan/Linux.Gafgyt.r
+[+] Trojan/Loader.ms
+[+] Trojan/MSIL.Obfuscated.jx
+[+] Trojan/Obfuscated.nt
+[+] Trojan/Obfuscated.nu
+[+] Trojan/PS.Runner.u
+[+] Trojan/ShellLoader.ahg
+[+] Trojan/ShellLoader.ahh
+[+] TrojanDownloader/Agent.blq
+[+] TrojanDownloader/Agent.bls
+[+] TrojanDownloader/HTML.Agent.bh
+[+] TrojanDownloader/JS.Agent.if
+[+] TrojanDownloader/Linux.Agent.du
+[+] TrojanDownloader/VBS.Agent.kd
+[+] TrojanDownloader/W64.Agent.co
+[+] TrojanSpy/JS.Stealer.bh
+[+] TrojanSpy/MSIL.Formbook.bd
+[+] TrojanSpy/MSIL.Formbook.be
+[+] TrojanSpy/MSIL.Formbook.bf
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 43 | 移除遥测定义: 37
+</summary>
+
+```
+[+] Backdoor/Linux.Mirai.kx!submit
+[+] Backdoor/Lotok.oi!submit
+[+] Backdoor/Lotok.oj!submit
+[+] HEUR:Trojan/Injector.clj!submit
+[+] HEUR:Trojan/KillWin.g!submit
+[+] HEUR:TrojanDownloader/Linux.Mirai.bv!submit
+[+] HEUR:TrojanSpy/OSX.Amos.c!submit
+[+] HVM:Backdoor/Lotok.ce!submit
+[+] HVM:Trojan/ShellLoader.cj!submit
+[+] Trojan/Autoit.Injector.ds!submit
+[+] Trojan/BAT.Agent.gq!submit
+[+] Trojan/BAT.Runner.bn!submit
+[+] Trojan/BAT.Runner.bo!submit
+[+] Trojan/Clipboard.c!submit
+[+] Trojan/DLLHijack.z!submit
+[+] Trojan/DllHijack.aa!submit
+[+] Trojan/DllHijack.z!submit
+[+] Trojan/FakeApp.abb!submit
+[+] Trojan/FakeApp.abm!submit
+[+] Trojan/FakeApp.abn!submit
+[+] Trojan/HiJack.yk!submit
+[+] Trojan/JS.Obfuscated.dc!submit
+[+] Trojan/KillMBR.cm!submit
+[+] Trojan/Linux.Mirai.gi!submit
+[+] Trojan/Linux.Mirai.gj!submit
+[+] Trojan/Loader.mt!submit
+[+] Trojan/MSIL.Obfuscated.jy!submit
+[+] Trojan/Obfuscated.nv!submit
+[+] Trojan/PS.Loader.n!submit
+[+] Trojan/ShellLoader.ahi!submit
+[+] Trojan/ShellLoader.ahj!submit
+[+] Trojan/W64.Agent.gk!submit
+[+] Trojan/W64.Rozena.p!submit
+[+] TrojanDownloader/Agent.blt!submit
+[+] TrojanDownloader/HTML.Agent.bi!submit
+[+] TrojanDownloader/JS.Agent.gc!submit
+[+] TrojanDownloader/Linux.Agent.dv!submit
+[+] TrojanDropper/Maloader.n!submit
+[+] TrojanDropper/VBS.Agent.eg!submit
+[+] TrojanDropper/W64.Agent.ca!submit
+[+] TrojanSpy/Stealer.ti!submit
+[+] TrojanSpy/W64.PwStealer.e!submit
+[+] TrojanSpy/W64.Stealer.y!submit
+[-] Backdoor/Agent.rc!submit
+[-] Backdoor/CobaltStrike.oz!submit
+[-] Backdoor/Ghost.ca!submit
+[-] Backdoor/Linux.Lotok.a!submit
+[-] Backdoor/Lotok.of!submit
+[-] Backdoor/Lotok.og!submit
+[-] Backdoor/Lotok.oh!submit
+[-] HEUR:Worm/BAT.Autorun.f!submit
+[-] HackTool/Linux.BotWarden.a!submit
+[-] Ransom/Cerber.ak!submit
+[-] Trojan/Agent.clq!submit
+[-] Trojan/DLLHijack.y!submit
+[-] Trojan/FakeApp.abl!submit
+[-] Trojan/GenCBL.a!submit
+[-] Trojan/GenCBL.b!submit
+[-] Trojan/HTML.Phishing.he!submit
+[-] Trojan/Injector.clh!submit
+[-] Trojan/Injector.cli!submit
+[-] Trojan/Linux.Gafgyt.r!submit
+[-] Trojan/Loader.ms!submit
+[-] Trojan/MSIL.Obfuscated.jx!submit
+[-] Trojan/Obfuscated.nt!submit
+[-] Trojan/Obfuscated.nu!submit
+[-] Trojan/PS.Runner.u!submit
+[-] Trojan/ShellLoader.ahg!submit
+[-] Trojan/ShellLoader.ahh!submit
+[-] TrojanDownloader/Agent.blq!submit
+[-] TrojanDownloader/Agent.bls!submit
+[-] TrojanDownloader/HTML.Agent.bh!submit
+[-] TrojanDownloader/JS.Agent.if!submit
+[-] TrojanDownloader/Linux.Agent.du!submit
+[-] TrojanDownloader/VBS.Agent.kd!submit
+[-] TrojanDownloader/W64.Agent.co!submit
+[-] TrojanSpy/JS.Stealer.bh!submit
+[-] TrojanSpy/MSIL.Formbook.bd!submit
+[-] TrojanSpy/MSIL.Formbook.be!submit
+[-] TrojanSpy/MSIL.Formbook.bf!submit
+```
+
+</details>
+
+#### 关键哈希特征项变更 ([crithash.txt](data/1768217225.crithash.txt))
+
+<details>
+<summary>
+新增正式定义: 8
+</summary>
+
+```
+[+] Backdoor/OSX.NukeSped.a!crit
+[+] HackTool/Linux.Usurper.a!crit
+[+] Trojan/Python.Agent.bt!crit
+[+] Trojan/SCR.ShellCode.e!crit
+[+] Trojan/SCR.ShellCode.f!crit
+[+] Trojan/W32.Injector.clh!crit
+[+] TrojanDownloader/JS.Agent.c!crit
+[+] Worm/BAT.Runner.bp!crit
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 39 | 移除遥测定义: 11
+</summary>
+
+```
+[+] Adware/Android.PornTool.i!crit!submit
+[+] Backdoor/PHP.WebShell.d!crit!submit
+[+] Backdoor/PHP.WebShell.s!crit!submit
+[+] Backdoor/PS.ReverseShell.f!crit!submit
+[+] Backdoor/W32.Lotok.aa!crit!submit
+[+] Backdoor/W32.Lotok.x!crit!submit
+[+] Backdoor/W32.Lotok.xe!crit!submit
+[+] Backdoor/W32.Lotok.y!crit!submit
+[+] HEUR:Backdoor/W64.Lotok.a!crit!submit
+[+] HackTool/PS.BruteForce.a!crit!submit
+[+] HackTool/W32.Scrambler.a!crit!submit
+[+] Trojan/MSIL.Obfuscated.ao!crit!submit
+[+] Trojan/PS.CoinMiner.a!crit!submit
+[+] Trojan/PS.Loader.d!crit!submit
+[+] Trojan/SCR.CoinMiner.a!crit!submit
+[+] Trojan/SCR.ShellCode.g!crit!submit
+[+] Trojan/SCR.ShellCode.h!crit!submit
+[+] Trojan/SCR.ShellCode.i!crit!submit
+[+] Trojan/SCR.Shellcode.h!crit!submit
+[+] Trojan/W32.BypassUAC.a!crit!submit
+[+] Trojan/W32.Injector.r!crit!submit
+[+] Trojan/W32.Injector.s!crit!submit
+[+] Trojan/W32.ShellLoader.m!crit!submit
+[+] Trojan/W32.ShellLoader.n!crit!submit
+[+] Trojan/W32.ULPM.a!crit!submit
+[+] Trojan/W64.Agent.gk!crit!submit
+[+] Trojan/W64.Injector.a!crit!submit
+[+] Trojan/W64.Obfuscated.nw!crit!submit
+[+] TrojanDownloader/MSIL.Runner.c!crit!submit
+[+] TrojanDownloader/PS.Runner.p!crit!submit
+[+] TrojanDownloader/VBS.Runner.d!crit!submit
+[+] TrojanDropper/MSIL.Starter.a!crit!submit
+[+] TrojanDropper/MSIL.Starter.b!crit!submit
+[+] TrojanDropper/PS.Runner.c!crit!submit
+[+] TrojanDropper/VBS.Runner.c!crit!submit
+[+] TrojanDropper/W64.Runner.b!crit!submit
+[+] TrojanSpy/PS.Stealer.i!crit!submit
+[+] TrojanSpy/VBS.Stealer.a!crit!submit
+[+] TrojanSpy/W32.Banker.b!crit!submit
+[-] Backdoor/OSX.NukeSped.a!crit!submit
+[-] Backdoor/W32.Lotok.u!crit!submit
+[-] Backdoor/W32.Lotok.v!crit!submit
+[-] HackTool/Linux.Usurper.a!crit!submit
+[-] Trojan/Python.Agent.bt!crit!submit
+[-] Trojan/SCR.ShellCode.e!crit!submit
+[-] Trojan/SCR.ShellCode.f!crit!submit
+[-] Trojan/W32.Injector.clh!crit!submit
+[-] Trojan/W32.ShellLoader.l!crit!submit
+[-] TrojanDownloader/JS.Agent.c!crit!submit
+[-] Worm/BAT.Runner.bp!crit!submit
+```
+
+</details>
+
+#### 行为特征项变更 ([behav.txt](data/1768217225.behav.txt))
+
+<details>
+<summary>
+新增: 6 | 移除: 4
+</summary>
+
+```
+[+] ADV:Ransom/Genalocker.ZFA!submit
+[+] ADV:Ransom/Genalocker.ZFB!submit
+[+] MEMSCAN/Lotok.A!submit
+[+] MEMSCAN/SpecialDir.C
+[+] TrojanDropper/MalSetup.OCA!submit
+[+] TrojanDropper/MalSetup.PB!submit
+[-] ADV:Ransom/Genalocker.ZEA!submit
+[-] ADV:Ransom/Genalocker.ZEB!submit
+[-] TrojanDropper/MalSetup.OA!submit
+[-] TrojanDropper/MalSetup.PA!submit
+```
+
+</details>
+
+#### 黑名单哈希变更 ([troj.txt](data/1768217225.troj.txt))
+
+新增: 42
+
+#### 白名单哈希变更 ([hwl.txt](data/1768217225.hwl.txt))
+
+新增: 2
+
+</details>
 <details>
 <summary><b>1768128066</b> - 2026-01-11 10:41:06 UTC</summary>
 

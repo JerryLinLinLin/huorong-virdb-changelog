@@ -1,0 +1,10 @@
+[+] ADV:Ransom/Genalocker.ZFA!submit
+[+] ADV:Ransom/Genalocker.ZFB!submit
+[+] MEMSCAN/Lotok.A!submit
+[+] MEMSCAN/SpecialDir.C
+[+] TrojanDropper/MalSetup.OCA!submit
+[+] TrojanDropper/MalSetup.PB!submit
+[-] ADV:Ransom/Genalocker.ZEA!submit
+[-] ADV:Ransom/Genalocker.ZEB!submit
+[-] TrojanDropper/MalSetup.OA!submit
+[-] TrojanDropper/MalSetup.PA!submit
