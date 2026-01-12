@@ -78,6 +78,7 @@
 [-] Backdoor/Lotok.oa!submit
 [-] Backdoor/Python.Agent.n!submit
 [-] Backdoor/Remcos.ax!submit
+[-] Exploit/HTML.CVE-2025-54100.a!submit
 [-] HVM:Backdoor/Lotok.cd!submit
 [-] HVM:TrojanDropper/W64.Agent.ca!submit
 [-] HackTool/Rdp2Tcp.a!submit

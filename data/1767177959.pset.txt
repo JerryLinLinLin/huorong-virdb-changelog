@@ -6,7 +6,6 @@
 [+] HEUR:Trojan/ShellLoader.agv
 [+] HVM:Backdoor/Lotok.cf
 [+] HVM:Trojan/Injector.bo!submit
-[+] HackTool/Python.Winpwnage.a
 [+] Ransom/Filecoder.ei!submit
 [+] Rootkit/MiniFilter.b
 [+] Trojan/Agent.cln!submit
@@ -63,7 +62,6 @@
 [-] Backdoor/Lotok.nq!submit
 [-] HEUR:Trojan/ShellLoader.agv!submit
 [-] HVM:Backdoor/Lotok.cf!submit
-[-] HackTool/Python.Winpwnage.a!submit
 [-] Rootkit/MiniFilter.b!submit
 [-] Trojan/BAT.KillWin.bd!submit
 [-] Trojan/BAT.Runner.bm!submit

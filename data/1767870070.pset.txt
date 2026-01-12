@@ -15,6 +15,7 @@
 [+] HVM:Backdoor/Lotok.bx
 [+] HVM:Backdoor/Lotok.cd!submit
 [+] HVM:TrojanDropper/W64.Agent.ca!submit
+[+] HackTool/Python.Winpwnage.a
 [+] HackTool/Rdp2Tcp.a!submit
 [+] Ransom/LockFile.ri
 [+] Trojan/Agent.clp

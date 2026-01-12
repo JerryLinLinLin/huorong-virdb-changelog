@@ -41,6 +41,7 @@ from create_changelog import (
     get_malware_hashes,
     get_whitelist_hashes,
     get_behavior_names,
+    get_crithash_names,
     get_date_from_folder,
     get_virus_category,
     get_category_distribution,
@@ -185,6 +186,11 @@ def load_virdb_info(virdb_path: Path) -> Optional[VirDBInfo]:
     behavior_names = get_behavior_names(virdb_path)
     print(f"    Found {len(behavior_names):,} behavior names")
     
+    # Get crithash names
+    print(f"    Extracting crithash names...")
+    crithash_names = get_crithash_names(virdb_path)
+    print(f"    Found {len(crithash_names):,} crithash names")
+    
     return VirDBInfo(
         path=virdb_path,
         folder_name=folder_name,
@@ -200,7 +206,8 @@ def load_virdb_info(virdb_path: Path) -> Optional[VirDBInfo]:
         virus_names=virus_names,
         malware_hashes=malware_hashes,
         whitelist_hashes=whitelist_hashes,
-        behavior_names=behavior_names
+        behavior_names=behavior_names,
+        crithash_names=crithash_names
     )
 
 
@@ -219,6 +226,8 @@ def generate_single_changelog_entry(
         removed_whitelist_hashes = []
         new_behavior_names = sorted(current.behavior_names)
         removed_behavior_names = []
+        all_new_crithash_names = sorted(current.crithash_names)
+        all_removed_crithash_names = []
     else:
         all_new_names = sorted(current.virus_names - previous.virus_names)
         all_removed_names = sorted(previous.virus_names - current.virus_names)
@@ -228,10 +237,16 @@ def generate_single_changelog_entry(
         removed_whitelist_hashes = sorted(previous.whitelist_hashes - current.whitelist_hashes)
         new_behavior_names = sorted(current.behavior_names - previous.behavior_names)
         removed_behavior_names = sorted(previous.behavior_names - current.behavior_names)
+        all_new_crithash_names = sorted(current.crithash_names - previous.crithash_names)
+        all_removed_crithash_names = sorted(previous.crithash_names - current.crithash_names)
     
     # Split names into regular and telemetry
     new_names, new_names_telemetry = split_names_by_telemetry(all_new_names)
     removed_names, removed_names_telemetry = split_names_by_telemetry(all_removed_names)
+    
+    # Split crithash names into regular and telemetry
+    new_crithash_names, new_crithash_names_telemetry = split_names_by_telemetry(all_new_crithash_names)
+    removed_crithash_names, removed_crithash_names_telemetry = split_names_by_telemetry(all_removed_crithash_names)
     
     date_str = get_date_from_folder(current.folder_name) or current.version_datetime.strftime('%Y-%m-%d')
     
@@ -250,10 +265,15 @@ def generate_single_changelog_entry(
         removed_whitelist_hashes=removed_whitelist_hashes,
         new_behavior_names=new_behavior_names,
         removed_behavior_names=removed_behavior_names,
+        new_crithash_names=new_crithash_names,
+        removed_crithash_names=removed_crithash_names,
+        new_crithash_names_telemetry=new_crithash_names_telemetry,
+        removed_crithash_names_telemetry=removed_crithash_names_telemetry,
         total_names=len(current.virus_names),
         total_malware_hashes=len(current.malware_hashes),
         total_whitelist_hashes=len(current.whitelist_hashes),
         total_behavior_names=len(current.behavior_names),
+        total_crithash_names=len(current.crithash_names),
         stats={
             'pset_records': current.pset_records,
             'troj_hashes': current.troj_hashes,
@@ -417,6 +437,32 @@ def write_single_data_file(entry: ChangelogEntry, virdb: VirDBInfo) -> None:
             full_files += 1
             print(f"    Written: {full_hwl_file.name}.7z")
     
+    # Write crithash names file if there are changes (include both regular and telemetry)
+    all_new_crithash = entry.new_crithash_names + entry.new_crithash_names_telemetry
+    all_removed_crithash = entry.removed_crithash_names + entry.removed_crithash_names_telemetry
+    if all_new_crithash or all_removed_crithash:
+        crithash_file = DATA_DIR / f"{version}.crithash.txt"
+        crithash_lines = []
+        
+        for name in sorted(all_new_crithash):
+            crithash_lines.append(f"[+] {name}")
+        for name in sorted(all_removed_crithash):
+            crithash_lines.append(f"[-] {name}")
+        
+        with open(crithash_file, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(crithash_lines))
+        incremental_files += 1
+        print(f"    Written: {crithash_file.name}")
+    
+    # Write full crithash names snapshot (compressed)
+    if virdb.crithash_names:
+        full_crithash_file = DATA_DIR / f"{version}.crithash.full.txt"
+        with open(full_crithash_file, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(sorted(virdb.crithash_names)))
+        if compress_with_7z(full_crithash_file):
+            full_files += 1
+            print(f"    Written: {full_crithash_file.name}.7z")
+    
     print(f"  Written {incremental_files} incremental + {full_files} compressed full snapshot files")
 
 
@@ -500,6 +546,10 @@ def update_changelog(new_virdb_path: Path) -> bool:
     print(f"  Removed regular detections: {len(new_entry.removed_names):,}")
     print(f"  New telemetry detections: {len(new_entry.new_names_telemetry):,}")
     print(f"  Removed telemetry detections: {len(new_entry.removed_names_telemetry):,}")
+    print(f"  New regular crithash: {len(new_entry.new_crithash_names):,}")
+    print(f"  Removed regular crithash: {len(new_entry.removed_crithash_names):,}")
+    print(f"  New telemetry crithash: {len(new_entry.new_crithash_names_telemetry):,}")
+    print(f"  Removed telemetry crithash: {len(new_entry.removed_crithash_names_telemetry):,}")
     print(f"  New behavior signatures: {len(new_entry.new_behavior_names):,}")
     print(f"  Removed behavior signatures: {len(new_entry.removed_behavior_names):,}")
     print(f"  New malware hashes: {len(new_entry.new_malware_hashes):,}")
@@ -596,6 +646,78 @@ def format_single_changelog_entry(entry: ChangelogEntry, is_oldest: bool = False
                 for name in entry.new_names_telemetry:
                     lines.append(f"[+] {name}")
                 for name in entry.removed_names_telemetry:
+                    lines.append(f"[-] {name}")
+                lines.append("```")
+                lines.append("")
+                lines.append("</details>")
+                lines.append("")
+    
+    # Critical hash signatures (关键哈希特征项) - show with foldable details like pset
+    has_crithash_regular = entry.new_crithash_names or entry.removed_crithash_names
+    has_crithash_telemetry = entry.new_crithash_names_telemetry or entry.removed_crithash_names_telemetry
+    
+    if has_crithash_regular or has_crithash_telemetry:
+        lines.append(f"#### 关键哈希特征项变更 ([crithash.txt](data/{entry.version_timestamp}.crithash.txt))")
+        lines.append("")
+        
+        if is_oldest:
+            # Oldest entry: just show counts without foldable details
+            if has_crithash_regular:
+                summary_parts = []
+                if entry.new_crithash_names:
+                    summary_parts.append(f"新增: {len(entry.new_crithash_names):,}")
+                if entry.removed_crithash_names:
+                    summary_parts.append(f"移除: {len(entry.removed_crithash_names):,}")
+                lines.append(f"**正式定义**: {' | '.join(summary_parts)}")
+                lines.append("")
+            if has_crithash_telemetry:
+                summary_parts = []
+                if entry.new_crithash_names_telemetry:
+                    summary_parts.append(f"新增: {len(entry.new_crithash_names_telemetry):,}")
+                if entry.removed_crithash_names_telemetry:
+                    summary_parts.append(f"移除: {len(entry.removed_crithash_names_telemetry):,}")
+                lines.append(f"**遥测定义**: {' | '.join(summary_parts)}")
+                lines.append("")
+        else:
+            # Other entries: show foldable details
+            # Regular crithash definitions section
+            if has_crithash_regular:
+                lines.append("<details>")
+                lines.append("<summary>")
+                summary_parts = []
+                if entry.new_crithash_names:
+                    summary_parts.append(f"新增正式定义: {len(entry.new_crithash_names):,}")
+                if entry.removed_crithash_names:
+                    summary_parts.append(f"移除正式定义: {len(entry.removed_crithash_names):,}")
+                lines.append(" | ".join(summary_parts))
+                lines.append("</summary>")
+                lines.append("")
+                lines.append("```")
+                for name in entry.new_crithash_names:
+                    lines.append(f"[+] {name}")
+                for name in entry.removed_crithash_names:
+                    lines.append(f"[-] {name}")
+                lines.append("```")
+                lines.append("")
+                lines.append("</details>")
+                lines.append("")
+            
+            # Telemetry crithash definitions section
+            if has_crithash_telemetry:
+                lines.append("<details>")
+                lines.append("<summary>")
+                summary_parts = []
+                if entry.new_crithash_names_telemetry:
+                    summary_parts.append(f"新增遥测定义: {len(entry.new_crithash_names_telemetry):,}")
+                if entry.removed_crithash_names_telemetry:
+                    summary_parts.append(f"移除遥测定义: {len(entry.removed_crithash_names_telemetry):,}")
+                lines.append(" | ".join(summary_parts))
+                lines.append("</summary>")
+                lines.append("")
+                lines.append("```")
+                for name in entry.new_crithash_names_telemetry:
+                    lines.append(f"[+] {name}")
+                for name in entry.removed_crithash_names_telemetry:
                     lines.append(f"[-] {name}")
                 lines.append("```")
                 lines.append("")
@@ -710,6 +832,13 @@ def update_readme_incrementally(
     content = re.sub(
         r'- \*\*特征项总数\*\*: [\d,]+',
         f'- **特征项总数**: {new_entry.total_names:,}',
+        content
+    )
+
+    # Update 关键哈希特征项总数
+    content = re.sub(
+        r'- \*\*关键哈希特征项总数\*\*: [\d,]+',
+        f'- **关键哈希特征项总数**: {new_entry.total_crithash_names:,}',
         content
     )
 

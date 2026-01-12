@@ -20,7 +20,6 @@
 [+] HVM:Backdoor/Lotok.cf!submit
 [+] HVM:Trojan/ShellLoader.ci
 [+] HackTool/Python.RemoteExec.a
-[+] HackTool/Python.Winpwnage.a!submit
 [+] Hacktool/CoinMiner
 [+] Rootkit/Inject.b
 [+] Rootkit/MiniFilter.b!submit
@@ -28,6 +27,7 @@
 [+] Trojan/BAT.Agent.gp
 [+] Trojan/BAT.Injector.d
 [+] Trojan/BAT.Injector.e
+[+] Trojan/BAT.KillWin.ba
 [+] Trojan/BAT.KillWin.bd!submit
 [+] Trojan/BAT.Loader.h
 [+] Trojan/BAT.Runner.bm!submit

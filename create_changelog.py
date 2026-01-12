@@ -21,7 +21,7 @@ from extract_virdb import find_7z
 
 
 # CLI tool paths
-CLI_TOOL = Path(__file__).parent / "bin" / "huorong_virdb_cli-windows-x64.exe"
+CLI_TOOL = Path(__file__).parent / "bin" / "huorong_virdb_cli.exe"
 BEHAV_CLI_TOOL = Path(__file__).parent / "bin" / "huorong_behavdb_cli.exe"
 VIRDB_DIR = Path(__file__).parent / "virdb"
 README_PATH = Path(__file__).parent / "README.md"
@@ -46,6 +46,7 @@ class VirDBInfo:
     malware_hashes: Set[str]
     whitelist_hashes: Set[str]
     behavior_names: Set[str]
+    crithash_names: Set[str]
 
 
 @dataclass
@@ -65,10 +66,15 @@ class ChangelogEntry:
     removed_whitelist_hashes: List[str]
     new_behavior_names: List[str]
     removed_behavior_names: List[str]
+    new_crithash_names: List[str]  # Regular crithash names
+    removed_crithash_names: List[str]
+    new_crithash_names_telemetry: List[str]  # Crithash names containing !submit
+    removed_crithash_names_telemetry: List[str]
     total_names: int
     total_malware_hashes: int
     total_whitelist_hashes: int
     total_behavior_names: int
+    total_crithash_names: int
     stats: dict
 
 
@@ -240,6 +246,23 @@ def get_whitelist_hashes(virdb_path: Path) -> Set[str]:
     return set()
 
 
+def get_crithash_names(virdb_path: Path) -> Set[str]:
+    """Extract all critical hash detection names from a virdb (crithash.db.vfs)."""
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
+        temp_path = Path(f.name)
+    
+    try:
+        success, _ = run_cli(["crithash", "--names", str(virdb_path), "-o", str(temp_path)])
+        if success and temp_path.exists():
+            with open(temp_path, 'r', encoding='utf-8') as f:
+                names = set(line.strip() for line in f if line.strip())
+                return names
+    finally:
+        if temp_path.exists():
+            temp_path.unlink()
+    return set()
+
+
 def run_behav_cli(args: List[str]) -> tuple[bool, str]:
     """
     Run the huorong_behavdb_cli tool.
@@ -387,6 +410,11 @@ def load_virdb_info(virdb_path: Path) -> Optional[VirDBInfo]:
     behavior_names = get_behavior_names(virdb_path)
     print(f"    Found {len(behavior_names):,} behavior names")
     
+    # Get crithash names
+    print(f"    Extracting crithash names...")
+    crithash_names = get_crithash_names(virdb_path)
+    print(f"    Found {len(crithash_names):,} crithash names")
+    
     return VirDBInfo(
         path=virdb_path,
         folder_name=folder_name,
@@ -402,7 +430,8 @@ def load_virdb_info(virdb_path: Path) -> Optional[VirDBInfo]:
         virus_names=virus_names,
         malware_hashes=malware_hashes,
         whitelist_hashes=whitelist_hashes,
-        behavior_names=behavior_names
+        behavior_names=behavior_names,
+        crithash_names=crithash_names
     )
 
 
@@ -421,6 +450,8 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
             removed_whitelist_hashes = []
             new_behavior_names = sorted(current.behavior_names)
             removed_behavior_names = []
+            all_new_crithash_names = sorted(current.crithash_names)
+            all_removed_crithash_names = []
         else:
             previous = versions[i - 1]
             all_new_names = sorted(current.virus_names - previous.virus_names)
@@ -431,10 +462,16 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
             removed_whitelist_hashes = sorted(previous.whitelist_hashes - current.whitelist_hashes)
             new_behavior_names = sorted(current.behavior_names - previous.behavior_names)
             removed_behavior_names = sorted(previous.behavior_names - current.behavior_names)
+            all_new_crithash_names = sorted(current.crithash_names - previous.crithash_names)
+            all_removed_crithash_names = sorted(previous.crithash_names - current.crithash_names)
         
         # Split names into regular and telemetry
         new_names, new_names_telemetry = split_names_by_telemetry(all_new_names)
         removed_names, removed_names_telemetry = split_names_by_telemetry(all_removed_names)
+        
+        # Split crithash names into regular and telemetry
+        new_crithash_names, new_crithash_names_telemetry = split_names_by_telemetry(all_new_crithash_names)
+        removed_crithash_names, removed_crithash_names_telemetry = split_names_by_telemetry(all_removed_crithash_names)
         
         date_str = get_date_from_folder(current.folder_name) or current.version_datetime.strftime('%Y-%m-%d')
         
@@ -453,10 +490,15 @@ def generate_changelog(versions: List[VirDBInfo]) -> List[ChangelogEntry]:
             removed_whitelist_hashes=removed_whitelist_hashes,
             new_behavior_names=new_behavior_names,
             removed_behavior_names=removed_behavior_names,
+            new_crithash_names=new_crithash_names,
+            removed_crithash_names=removed_crithash_names,
+            new_crithash_names_telemetry=new_crithash_names_telemetry,
+            removed_crithash_names_telemetry=removed_crithash_names_telemetry,
             total_names=len(current.virus_names),
             total_malware_hashes=len(current.malware_hashes),
             total_whitelist_hashes=len(current.whitelist_hashes),
             total_behavior_names=len(current.behavior_names),
+            total_crithash_names=len(current.crithash_names),
             stats={
                 'pset_records': current.pset_records,
                 'troj_hashes': current.troj_hashes,
@@ -583,6 +625,31 @@ def write_data_files(entries: List[ChangelogEntry], versions: List[VirDBInfo]) -
                 f.write('\n'.join(sorted(virdb.whitelist_hashes)))
             if compress_with_7z(full_hwl_file):
                 full_files += 1
+        
+        # Write crithash names file if there are changes (include both regular and telemetry)
+        all_new_crithash = entry.new_crithash_names + entry.new_crithash_names_telemetry
+        all_removed_crithash = entry.removed_crithash_names + entry.removed_crithash_names_telemetry
+        has_crithash_changes = all_new_crithash or all_removed_crithash
+        if has_crithash_changes:
+            crithash_file = DATA_DIR / f"{version}.crithash.txt"
+            crithash_lines = []
+            
+            for name in sorted(all_new_crithash):
+                crithash_lines.append(f"[+] {name}")
+            for name in sorted(all_removed_crithash):
+                crithash_lines.append(f"[-] {name}")
+            
+            with open(crithash_file, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(crithash_lines))
+            incremental_files += 1
+        
+        # Write full crithash names snapshot (compressed)
+        if virdb and virdb.crithash_names:
+            full_crithash_file = DATA_DIR / f"{version}.crithash.full.txt"
+            with open(full_crithash_file, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(sorted(virdb.crithash_names)))
+            if compress_with_7z(full_crithash_file):
+                full_files += 1
     
     print(f"  Written {incremental_files} incremental + {full_files} compressed full snapshot files to {DATA_DIR}")
 
@@ -594,7 +661,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
     # Header
     lines.append("# 火绒病毒库更新日志")
     lines.append("")
-    lines.append("本仓库跟踪[火绒安全软件](https://www.huorong.cn/)病毒库的变更，通过读取`pset.db,troj.db,hwl.db,behav.db`自动生成与上一版本相比新增的特征项/报毒名, 黑名单哈希和白名单哈希。")
+    lines.append("本仓库跟踪[火绒安全软件](https://www.huorong.cn/)病毒库的变更，通过读取`pset.db,troj.db,hwl.db,behav.db,crithash.db`自动生成与上一版本相比新增的特征项/报毒名, 黑名单哈希和白名单哈希。")
     lines.append("")
     lines.append("> **免责声明**：本项目非火绒官方出品，仅供学习和技术交流使用。作者不对使用本项目造成的任何后果负责。")
     lines.append("")
@@ -605,6 +672,7 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
         latest = entries[-1]
         lines.append(f"- **最新版本**: `{latest.version_timestamp}` ({latest.version_datetime.strftime('%Y-%m-%d %H:%M:%S UTC')})")
         lines.append(f"- **特征项总数**: {latest.total_names:,}")
+        lines.append(f"- **关键哈希特征项总数**: {latest.total_crithash_names:,}")
         lines.append(f"- **行为特征项总数**: {latest.total_behavior_names:,}")
         lines.append(f"- **黑名单哈希总数**: {latest.total_malware_hashes:,}")
         lines.append(f"- **白名单哈希总数**: {latest.total_whitelist_hashes:,}")
@@ -709,6 +777,80 @@ def format_readme(entries: List[ChangelogEntry], latest_virus_names: Set[str] = 
                     for name in entry.new_names_telemetry:
                         lines.append(f"[+] {name}")
                     for name in entry.removed_names_telemetry:
+                        lines.append(f"[-] {name}")
+                    lines.append("```")
+                    lines.append("")
+                    lines.append("</details>")
+                    lines.append("")
+        
+        # Critical hash signatures (关键哈希特征项) - show with foldable details like pset
+        has_crithash_regular_changes = entry.new_crithash_names or entry.removed_crithash_names
+        has_crithash_telemetry_changes = entry.new_crithash_names_telemetry or entry.removed_crithash_names_telemetry
+        
+        if has_crithash_regular_changes or has_crithash_telemetry_changes:
+            lines.append(f"#### 关键哈希特征项变更 ([crithash.txt](data/{entry.version_timestamp}.crithash.txt))")
+            lines.append("")
+            
+            # Regular crithash definitions (正式定义)
+            if has_crithash_regular_changes:
+                if is_oldest:
+                    # Oldest entry: just show counts without foldable details
+                    summary_parts = []
+                    if entry.new_crithash_names:
+                        summary_parts.append(f"新增正式定义: {len(entry.new_crithash_names):,}")
+                    if entry.removed_crithash_names:
+                        summary_parts.append(f"移除正式定义: {len(entry.removed_crithash_names):,}")
+                    lines.append(" | ".join(summary_parts))
+                    lines.append("")
+                else:
+                    # Other entries: show foldable details
+                    lines.append("<details>")
+                    lines.append("<summary>")
+                    summary_parts = []
+                    if entry.new_crithash_names:
+                        summary_parts.append(f"新增正式定义: {len(entry.new_crithash_names):,}")
+                    if entry.removed_crithash_names:
+                        summary_parts.append(f"移除正式定义: {len(entry.removed_crithash_names):,}")
+                    lines.append(" | ".join(summary_parts))
+                    lines.append("</summary>")
+                    lines.append("")
+                    lines.append("```")
+                    for name in entry.new_crithash_names:
+                        lines.append(f"[+] {name}")
+                    for name in entry.removed_crithash_names:
+                        lines.append(f"[-] {name}")
+                    lines.append("```")
+                    lines.append("")
+                    lines.append("</details>")
+                    lines.append("")
+            
+            # Telemetry crithash definitions (遥测定义)
+            if has_crithash_telemetry_changes:
+                if is_oldest:
+                    # Oldest entry: just show counts without foldable details
+                    summary_parts = []
+                    if entry.new_crithash_names_telemetry:
+                        summary_parts.append(f"新增遥测定义: {len(entry.new_crithash_names_telemetry):,}")
+                    if entry.removed_crithash_names_telemetry:
+                        summary_parts.append(f"移除遥测定义: {len(entry.removed_crithash_names_telemetry):,}")
+                    lines.append(" | ".join(summary_parts))
+                    lines.append("")
+                else:
+                    # Other entries: show foldable details
+                    lines.append("<details>")
+                    lines.append("<summary>")
+                    summary_parts = []
+                    if entry.new_crithash_names_telemetry:
+                        summary_parts.append(f"新增遥测定义: {len(entry.new_crithash_names_telemetry):,}")
+                    if entry.removed_crithash_names_telemetry:
+                        summary_parts.append(f"移除遥测定义: {len(entry.removed_crithash_names_telemetry):,}")
+                    lines.append(" | ".join(summary_parts))
+                    lines.append("</summary>")
+                    lines.append("")
+                    lines.append("```")
+                    for name in entry.new_crithash_names_telemetry:
+                        lines.append(f"[+] {name}")
+                    for name in entry.removed_crithash_names_telemetry:
                         lines.append(f"[-] {name}")
                     lines.append("```")
                     lines.append("")

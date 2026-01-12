@@ -25338,7 +25338,6 @@
 [+] Trojan/BAT.KillWin.ay
 [+] Trojan/BAT.KillWin.az
 [+] Trojan/BAT.KillWin.b
-[+] Trojan/BAT.KillWin.ba
 [+] Trojan/BAT.KillWin.bb
 [+] Trojan/BAT.KillWin.c
 [+] Trojan/BAT.KillWin.d
