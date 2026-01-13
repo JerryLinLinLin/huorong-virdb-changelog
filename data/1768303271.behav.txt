@@ -1,0 +1,2 @@
+[+] TrojanDropper/MalSetup.OCB!submit
+[+] TrojanDropper/MalSetup.OCC!submit
