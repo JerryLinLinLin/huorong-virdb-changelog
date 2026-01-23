@@ -1,0 +1,4 @@
+[+] ADV:Ransom/Genalocker.ZGA!submit
+[+] ADV:Ransom/Genalocker.ZGB!submit
+[-] ADV:Ransom/Genalocker.ZFA!submit
+[-] ADV:Ransom/Genalocker.ZFB!submit
