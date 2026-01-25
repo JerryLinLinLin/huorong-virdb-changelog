@@ -2,7 +2,7 @@ name: Daily VirDB Update
 
 on:
   schedule:
-    - cron: '0 14 * * *'
+    - cron: '0 15 * * *'
   workflow_dispatch:  # Allow manual trigger
 
 permissions:
