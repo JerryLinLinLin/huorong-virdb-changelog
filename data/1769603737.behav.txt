@@ -1,0 +1,2 @@
+[+] Backdoor/Lotok.XX!submit
+[+] TrojanDownloader/Agent.BLO!submit
