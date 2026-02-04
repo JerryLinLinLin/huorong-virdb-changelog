@@ -1,0 +1,3 @@
+[+] TrojanDropper/MalSetup.OCE!submit
+[+] TrojanDropper/MalSetup.Q
+[-] TrojanDropper/MalSetup.OCD!submit
