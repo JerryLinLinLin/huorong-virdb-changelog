@@ -1,0 +1,4 @@
+[-] Software:OS/Quark.A#夸克!submit
+[-] TrojanDropper/MalSetup.OCA!submit
+[-] TrojanDropper/MalSetup.OCB!submit
+[-] TrojanDropper/MalSetup.OCC!submit
