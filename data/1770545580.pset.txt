@@ -1,0 +1,3 @@
+[-] Backdoor/Lotok.ad!submit
+[-] HackTool/ProxyTool.f!submit
+[-] Trojan/Loader.nk!submit

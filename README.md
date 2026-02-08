@@ -6,22 +6,22 @@
 
 ## 概览
 
-- **最新版本**: `1770466842` (2026-02-07 12:20:42 UTC)
-- **特征项总数**: 67,331
+- **最新版本**: `1770545580` (2026-02-08 10:13:00 UTC)
+- **特征项总数**: 67,328
 - **关键哈希特征项总数**: 81,077
 - **行为特征项总数**: 913
-- **黑名单哈希总数**: 151,970
-- **白名单哈希总数**: 123,470
-- **已跟踪版本数**: 44
+- **黑名单哈希总数**: 152,000
+- **白名单哈希总数**: 123,471
+- **已跟踪版本数**: 45
 
 ## 特征项分类分布
 
 ```mermaid
 pie showData
     title Top 10
-    "Trojan" : 24246
+    "Trojan" : 24245
     "TrojanDownloader" : 9854
-    "Backdoor" : 6533
+    "Backdoor" : 6532
     "TrojanSpy" : 6106
     "OMacro" : 3394
     "Virus" : 2820
@@ -29,7 +29,7 @@ pie showData
     "Adware" : 2345
     "VirTool" : 2299
     "Ransom" : 2006
-    "Other" : 4973
+    "Other" : 4972
 ```
 
 
@@ -37,6 +37,33 @@ pie showData
 
 ## 更新日志
 
+<details>
+<summary><b>1770545580</b> - 2026-02-08 10:13:00 UTC</summary>
+
+#### 特征项变更 ([pset.txt](data/1770545580.pset.txt))
+
+<details>
+<summary>
+移除遥测定义: 3
+</summary>
+
+```
+[-] Backdoor/Lotok.ad!submit
+[-] HackTool/ProxyTool.f!submit
+[-] Trojan/Loader.nk!submit
+```
+
+</details>
+
+#### 黑名单哈希变更 ([troj.txt](data/1770545580.troj.txt))
+
+新增: 30
+
+#### 白名单哈希变更 ([hwl.txt](data/1770545580.hwl.txt))
+
+新增: 1
+
+</details>
 <details>
 <summary><b>1770466842</b> - 2026-02-07 12:20:42 UTC</summary>
 
