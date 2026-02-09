@@ -6,30 +6,30 @@
 
 ## 概览
 
-- **最新版本**: `1770545580` (2026-02-08 10:13:00 UTC)
-- **特征项总数**: 67,328
-- **关键哈希特征项总数**: 81,077
-- **行为特征项总数**: 913
-- **黑名单哈希总数**: 152,000
+- **最新版本**: `1770639101` (2026-02-09 12:11:41 UTC)
+- **特征项总数**: 67,374
+- **关键哈希特征项总数**: 81,113
+- **行为特征项总数**: 914
+- **黑名单哈希总数**: 152,054
 - **白名单哈希总数**: 123,471
-- **已跟踪版本数**: 45
+- **已跟踪版本数**: 46
 
 ## 特征项分类分布
 
 ```mermaid
 pie showData
     title Top 10
-    "Trojan" : 24245
-    "TrojanDownloader" : 9854
-    "Backdoor" : 6532
-    "TrojanSpy" : 6106
-    "OMacro" : 3394
+    "Trojan" : 24276
+    "TrojanDownloader" : 9858
+    "Backdoor" : 6533
+    "TrojanSpy" : 6109
+    "OMacro" : 3395
     "Virus" : 2820
-    "TrojanDropper" : 2755
+    "TrojanDropper" : 2759
     "Adware" : 2345
     "VirTool" : 2299
-    "Ransom" : 2006
-    "Other" : 4972
+    "Ransom" : 2007
+    "Other" : 4973
 ```
 
 
@@ -37,6 +37,271 @@ pie showData
 
 ## 更新日志
 
+<details>
+<summary><b>1770639101</b> - 2026-02-09 12:11:41 UTC</summary>
+
+#### 特征项变更 ([pset.txt](data/1770639101.pset.txt))
+
+<details>
+<summary>
+新增正式定义: 38 | 移除正式定义: 1
+</summary>
+
+```
+[+] HVM:Trojan/W64.Agent.he
+[+] HVM:TrojanSpy/W64.Stealer.ad
+[+] HVM:TrojanSpy/W64.Stealer.ae
+[+] Ransom/LockScreen.db
+[+] Ransom/Trigona.b
+[+] Trojan/Agent.cmb
+[+] Trojan/Agent.cmd
+[+] Trojan/BAT.Loader.s
+[+] Trojan/FakeApp.aed
+[+] Trojan/FakeApp.aee
+[+] Trojan/FakeApp.aef
+[+] Trojan/Injector.cme
+[+] Trojan/JS.Obfuscated.dp
+[+] Trojan/Loader.no
+[+] Trojan/Loader.np
+[+] Trojan/Loader.nq
+[+] Trojan/Loader.nr
+[+] Trojan/Obfuscated.oc
+[+] Trojan/PS.Obfuscator.d
+[+] Trojan/Python.Loader.q
+[+] Trojan/Python.Loader.r
+[+] Trojan/ShellLoader.aix
+[+] Trojan/ShellLoader.aiy
+[+] Trojan/ShellLoader.aiz
+[+] Trojan/W64.Agent.hd
+[+] Trojan/W64.Injector.ck
+[+] TrojanDownloader/BAT.Agent.gh
+[+] TrojanDownloader/HTML.Agent.bl
+[+] TrojanDownloader/PS.Agent.fr
+[+] TrojanDownloader/Python.Agent.bi
+[+] TrojanDownloader/VBS.Agent.kl
+[+] TrojanDropper/Agent.alx
+[+] TrojanDropper/Agent.aly
+[+] TrojanDropper/JS.Agent.cf
+[+] TrojanDropper/MSIL.Agent.jz
+[+] TrojanSpy/Android.Banker.ar
+[+] TrojanSpy/Android.Banker.as
+[+] TrojanSpy/W64.Stealer.ad
+[-] Trojan/JS.Obfuscated.dm
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 48 | 移除遥测定义: 39
+</summary>
+
+```
+[+] Backdoor/Agent.rh!submit
+[+] Backdoor/Linux.Marai.b!submit
+[+] Exploit/Vulndriver!submit
+[+] HEUR:TrojanSpy/OSX.Stealer.v!submit
+[+] HVM:Ransom/LockFile.m!submit
+[+] HVM:TrojanDropper/W64.Agent.cd!submit
+[+] OMacro/Downloader.bow!submit
+[+] Trojan/BAT.Loader.t!submit
+[+] Trojan/BAT.Obfuscated.au!submit
+[+] Trojan/BAT.Runner.bw!submit
+[+] Trojan/CoinMiner.lc!submit
+[+] Trojan/DDoS.af!submit
+[+] Trojan/FakeApp.aeg!submit
+[+] Trojan/FakeApp.aeh!submit
+[+] Trojan/FakeApp.aei!submit
+[+] Trojan/Injector.cmf!submit
+[+] Trojan/KillMBR.cp!submit
+[+] Trojan/KillWin.dm!submit
+[+] Trojan/Linux.Agent.do!submit
+[+] Trojan/Linux.Flooder.i!submit
+[+] Trojan/Linux.Mirai.gy!submit
+[+] Trojan/Linux.Mirai.gz!submit
+[+] Trojan/Linux.Mirai.ha!submit
+[+] Trojan/Linux.Mirai.hb!submit
+[+] Trojan/Linux.Mirai.hc!submit
+[+] Trojan/Linux.Mirai.hd!submit
+[+] Trojan/Loader.ns!submit
+[+] Trojan/MSIL.Agent.aam!submit
+[+] Trojan/MSIL.Obfuscated.kq!submit
+[+] Trojan/MSIL.Obfuscated.kr!submit
+[+] Trojan/PS.Obfuscated.p!submit
+[+] Trojan/Python.Loader.s!submit
+[+] Trojan/Python.ShellLoader.df!submit
+[+] Trojan/ShellLoader.aja!submit
+[+] Trojan/Turla.g!submit
+[+] Trojan/W64.Agent.he!submit
+[+] Trojan/W64.Agent.hg!submit
+[+] Trojan/W64.Loader.ap!submit
+[+] Trojan/W64.Loader.aq!submit
+[+] TrojanDownloader/BAT.Agent.gi!submit
+[+] TrojanDownloader/Linux.Agent.ei!submit
+[+] TrojanDownloader/W64.Agent.cy!submit
+[+] TrojanDownloader/W64.Agent.cz!submit
+[+] TrojanDropper/Agent.alz!submit
+[+] TrojanDropper/Agent.ama!submit
+[+] TrojanDropper/CoinMiner.i!submit
+[+] TrojanSpy/MSIL.Stealer.kv!submit
+[+] TrojanSpy/Stealer.tm!submit
+[-] HVM:Backdoor/Lotok.cp!submit
+[-] HVM:Trojan/W64.Agent.he!submit
+[-] HVM:TrojanSpy/W64.Stealer.ad!submit
+[-] HVM:TrojanSpy/W64.Stealer.ae!submit
+[-] Ransom/LockScreen.db!submit
+[-] Ransom/Trigona.b!submit
+[-] Trojan/Agent.cmb!submit
+[-] Trojan/Agent.cmd!submit
+[-] Trojan/BAT.Loader.s!submit
+[-] Trojan/FakeApp.aed!submit
+[-] Trojan/FakeApp.aee!submit
+[-] Trojan/FakeApp.aef!submit
+[-] Trojan/Injector.cme!submit
+[-] Trojan/JS.Obfuscated.dp!submit
+[-] Trojan/Loader.no!submit
+[-] Trojan/Loader.np!submit
+[-] Trojan/Loader.nq!submit
+[-] Trojan/Loader.nr!submit
+[-] Trojan/Obfuscated.oc!submit
+[-] Trojan/PS.Obfuscator.d!submit
+[-] Trojan/Python.Loader.q!submit
+[-] Trojan/Python.Loader.r!submit
+[-] Trojan/ShellLoader.aix!submit
+[-] Trojan/ShellLoader.aiy!submit
+[-] Trojan/ShellLoader.aiz!submit
+[-] Trojan/W64.Agent.hd!submit
+[-] Trojan/W64.Injector.ck!submit
+[-] TrojanDownloader/BAT.Agent.gh!submit
+[-] TrojanDownloader/HTML.Agent.bl!submit
+[-] TrojanDownloader/PS.Agent.fr!submit
+[-] TrojanDownloader/Python.Agent.bi!submit
+[-] TrojanDownloader/VBS.Agent.kl!submit
+[-] TrojanDropper/Agent.alx!submit
+[-] TrojanDropper/Agent.aly!submit
+[-] TrojanDropper/JS.Agent.cf!submit
+[-] TrojanDropper/MSIL.Agent.jz!submit
+[-] TrojanSpy/Android.Banker.ar!submit
+[-] TrojanSpy/Android.Banker.as!submit
+[-] TrojanSpy/W64.Stealer.ad!submit
+```
+
+</details>
+
+#### 关键哈希特征项变更 ([crithash.txt](data/1770639101.crithash.txt))
+
+<details>
+<summary>
+新增正式定义: 17
+</summary>
+
+```
+[+] Backdoor/W32.Lotok.ad!crit
+[+] Backdoor/W32.Lotok.ae!crit
+[+] Backdoor/W32.Lotok.ag!crit
+[+] Backdoor/W32.Lotok.ah!crit
+[+] Exploit/SCR.CVE-2026-21509.b!crit
+[+] Trojan/.JS.Obfuscated.a!crit
+[+] Trojan/Linux.Agent.gvi!crit
+[+] Trojan/MSIL.Obfuscated.ay!crit
+[+] Trojan/SCR.Runner.d!crit
+[+] Trojan/SCR.Runner.e!crit
+[+] Trojan/SCR.ShellCode.p!crit
+[+] Trojan/W32.FakeApp.m!crit
+[+] Trojan/W32.Loader.n!crit
+[+] TrojanDownloader/SCR.Agent.a!crit
+[+] TrojanDropper/AutoIT.Agent.a!crit
+[+] TrojanDropper/BAT.Agent.e!crit
+[+] TrojanDropper/JAVA.Agent.c!crit
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 38 | 移除遥测定义: 19
+</summary>
+
+```
+[+] Backdoor/Android.ShellLoader.a!crit!submit
+[+] Backdoor/Android.ShellLoader.b!crit!submit
+[+] Exploit/Linux.CVE-2025-21756.a!crit!submit
+[+] Exploit/SCR.CVE-2017-0199.c!crit!submit
+[+] Trojan/.JS.Obfuscated.b!crit!submit
+[+] Trojan/JS.Obfuscated.n!crit!submit
+[+] Trojan/Linux.Agent.gvj!crit!submit
+[+] Trojan/Linux.Mirai.l!crit!submit
+[+] Trojan/Linux.Mirai.m!crit!submit
+[+] Trojan/Linux.Mirai.n!crit!submit
+[+] Trojan/MSIL.Obfuscated.az!crit!submit
+[+] Trojan/MSIL.Obfuscated.ba!crit!submit
+[+] Trojan/MSIL.Obfuscated.bb!crit!submit
+[+] Trojan/NSIS.Injector.ao!crit!submit
+[+] Trojan/PS.Loader.f!crit!submit
+[+] Trojan/PS.Obfuscator.fu!crit!submit
+[+] Trojan/Python.KillMBR.cp!crit!submit
+[+] Trojan/Python.KillMBR.cq!crit!submit
+[+] Trojan/Python.KillMBR.cr!crit!submit
+[+] Trojan/Python.KillMBR.cs!crit!submit
+[+] Trojan/SCR.ShellCode.q!crit!submit
+[+] Trojan/SCR.ShellCode.r!crit!submit
+[+] Trojan/SCR.ShellCode.s!crit!submit
+[+] Trojan/SCR.ShellLoader.c!crit!submit
+[+] Trojan/W32.FakeApp.n!crit!submit
+[+] Trojan/W32.FakeApp.o!crit!submit
+[+] Trojan/W32.FakeApp.p!crit!submit
+[+] Trojan/W32.FakeApp.q!crit!submit
+[+] Trojan/W32.HiJack.r!crit!submit
+[+] Trojan/W32.Loader.o!crit!submit
+[+] Trojan/W32.Loader.p!crit!submit
+[+] Trojan/W32.Obfuscated.g!crit!submit
+[+] Trojan/W32.ShellLoader.akf!crit!submit
+[+] TrojanDownloader/Android.Agent.a!crit!submit
+[+] TrojanDownloader/JAVA.Agent.a!crit!submit
+[+] TrojanDownloader/PS.Agent.bz!crit!submit
+[+] TrojanSpy/Android.Banker.c!crit!submit
+[+] TrojanSpy/Android.Banker.d!crit!submit
+[-] Backdoor/W32.Lotok.ad!crit!submit
+[-] Backdoor/W32.Lotok.ae!crit!submit
+[-] Backdoor/W32.Lotok.af!crit!submit
+[-] Backdoor/W32.Lotok.ag!crit!submit
+[-] Exploit/SCR.CVE-2026-21509.b!crit!submit
+[-] Trojan/.JS.Obfuscated.a!crit!submit
+[-] Trojan/Linux.Agent.gvi!crit!submit
+[-] Trojan/MSIL.Obfuscated.ay!crit!submit
+[-] Trojan/SCR.Runner.d!crit!submit
+[-] Trojan/SCR.Runner.e!crit!submit
+[-] Trojan/SCR.ShellCode.p!crit!submit
+[-] Trojan/W32.Agent.ah!crit!submit
+[-] Trojan/W32.FakeApp.m!crit!submit
+[-] Trojan/W32.Loader.n!crit!submit
+[-] Trojan/W32.ShellLoader.ake!crit!submit
+[-] TrojanDownloader/SCR.Agent.a!crit!submit
+[-] TrojanDropper/AutoIT.Agent.a!crit!submit
+[-] TrojanDropper/BAT.Agent.e!crit!submit
+[-] TrojanDropper/JAVA.Agent.c!crit!submit
+```
+
+</details>
+
+#### 行为特征项变更 ([behav.txt](data/1770639101.behav.txt))
+
+<details>
+<summary>
+新增: 1
+</summary>
+
+```
+[+] Software:OS/SouGouExt.A#搜狗扩展安装!submit
+```
+
+</details>
+
+#### 黑名单哈希变更 ([troj.txt](data/1770639101.troj.txt))
+
+新增: 54
+
+</details>
 <details>
 <summary><b>1770545580</b> - 2026-02-08 10:13:00 UTC</summary>
 
