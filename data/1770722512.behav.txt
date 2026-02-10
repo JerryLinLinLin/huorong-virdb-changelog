@@ -1,0 +1,5 @@
+[+] Software:OS/Gooxion.a#固信终端
+[+] Software:OS/SouGouExt.A#搜狗PDF!submit
+[+] Software:OS/SouGouExt.A#搜狗扩展安装
+[-] Software:OS/Gooxion.a#固信终端安全
+[-] Software:OS/SouGouExt.A#搜狗扩展安装!submit
