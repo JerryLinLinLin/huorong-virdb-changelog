@@ -6,30 +6,30 @@
 
 ## 概览
 
-- **最新版本**: `1770894111` (2026-02-12 11:01:51 UTC)
-- **特征项总数**: 67,508
-- **关键哈希特征项总数**: 81,273
+- **最新版本**: `1771059400` (2026-02-14 08:56:40 UTC)
+- **特征项总数**: 67,530
+- **关键哈希特征项总数**: 81,392
 - **行为特征项总数**: 916
-- **黑名单哈希总数**: 152,397
+- **黑名单哈希总数**: 152,519
 - **白名单哈希总数**: 123,471
-- **已跟踪版本数**: 49
+- **已跟踪版本数**: 50
 
 ## 特征项分类分布
 
 ```mermaid
 pie showData
     title Top 10
-    "Trojan" : 24347
-    "TrojanDownloader" : 9886
-    "Backdoor" : 6537
-    "TrojanSpy" : 6118
+    "Trojan" : 24353
+    "TrojanDownloader" : 9893
+    "Backdoor" : 6541
+    "TrojanSpy" : 6121
     "OMacro" : 3396
     "Virus" : 2820
-    "TrojanDropper" : 2769
+    "TrojanDropper" : 2770
     "Adware" : 2345
     "VirTool" : 2299
     "Ransom" : 2011
-    "Other" : 4980
+    "Other" : 4981
 ```
 
 
@@ -37,6 +37,361 @@ pie showData
 
 ## 更新日志
 
+<details>
+<summary><b>1771059400</b> - 2026-02-14 08:56:40 UTC</summary>
+
+#### 特征项变更 ([pset.txt](data/1771059400.pset.txt))
+
+<details>
+<summary>
+新增正式定义: 39
+</summary>
+
+```
+[+] Backdoor/JS.WebShell.m
+[+] Backdoor/JS.WebShell.n
+[+] Backdoor/JS.WebShell.o
+[+] HEUR:OMacro/Downloader.eh
+[+] HEUR:Trojan/JS.Runner.t
+[+] HVM:Ransom/W64.LockFile.n
+[+] HVM:TrojanSpy/W64.Stealer.ag
+[+] HackTool/AmsiBypass
+[+] Trojan/Agent.cjy
+[+] Trojan/BAT.Obfuscator.a
+[+] Trojan/BAT.Obfuscator.b
+[+] Trojan/BAT.Runner.bk
+[+] Trojan/BAT.Shutdown.f
+[+] Trojan/FakeApp.aer
+[+] Trojan/FakeApp.aes
+[+] Trojan/FakeApp.aet
+[+] Trojan/FakeApp.aeu
+[+] Trojan/HiJack.yn
+[+] Trojan/Injector.cmg
+[+] Trojan/JS.Agent.gn
+[+] Trojan/Loader.nv
+[+] Trojan/MSIL.Obfuscated.ku
+[+] Trojan/NSIS.Injector.g
+[+] Trojan/PS.Loader.w
+[+] Trojan/PS.Obfuscator.e
+[+] Trojan/W64.Agent.hf
+[+] Trojan/W64.Agent.hh
+[+] TrojanDownloader/Agent.bmg
+[+] TrojanDownloader/Agent.bmh
+[+] TrojanDownloader/BAT.Agent.gi
+[+] TrojanDownloader/LNK.Agent.hg
+[+] TrojanDownloader/PS.Agent.fy
+[+] TrojanDropper/Agent.amc
+[+] TrojanDropper/JS.Agent.cg
+[+] TrojanDropper/MSIL.Agent.kb
+[+] TrojanDropper/Maloader.p
+[+] TrojanDropper/PS.Agent.aa
+[+] TrojanSpy/MSIL.Stealer.kw
+[+] TrojanSpy/Stealer.tn
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 27 | 移除遥测定义: 44
+</summary>
+
+```
+[+] Backdoor/Lotok.oq!submit
+[+] HVM:Backdoor/Lotok.cq!submit
+[+] Trojan/Agent.cmg!submit
+[+] Trojan/FakeApp.aev!submit
+[+] Trojan/FakeApp.aew!submit
+[+] Trojan/FakeApp.kn!submit
+[+] Trojan/HiJack.yn!submit
+[+] Trojan/KillWin.do!submit
+[+] Trojan/KillWin.dp!submit
+[+] Trojan/LNK.Starter.dc!submit
+[+] Trojan/Obfuscated.oe!submit
+[+] Trojan/Skills.a!submit
+[+] Trojan/Skills.b!submit
+[+] TrojanDownloader/Agent.bmi!submit
+[+] TrojanDownloader/Agent.bmj!submit
+[+] TrojanDownloader/Agent.bmk!submit
+[+] TrojanDownloader/Agent.bml!submit
+[+] TrojanDownloader/Agent.bmm!submit
+[+] TrojanDownloader/PS.Netloader.lu!submit
+[+] TrojanDropper/Agent.abv!submit
+[+] TrojanDropper/Agent.ajs!submit
+[+] TrojanDropper/Agent.amd!submit
+[+] TrojanDropper/Agent.ame!submit
+[+] TrojanDropper/Agent.zn!submit
+[+] TrojanSpy/AutoIT.Stealer.l!submit
+[+] TrojanSpy/AutoIT.Stealer.m!submit
+[+] TrojanSpy/AutoIT.Stealer.n!submit
+[-] Backdoor/JS.WebShell.m!submit
+[-] HEUR:OMacro/Downloader.eh!submit
+[-] HEUR:Trojan/JS.Runner.t!submit
+[-] HEUR:Trojan/Obfuscated.i!submit
+[-] HVM:Ransom/W64.LockFile.n!submit
+[-] HVM:TrojanSpy/W64.Stealer.ag!submit
+[-] Trojan/Agent.cjy!submit
+[-] Trojan/BAT.Obfuscator.a!submit
+[-] Trojan/BAT.Obfuscator.b!submit
+[-] Trojan/BAT.Runner.bk!submit
+[-] Trojan/BAT.Runner.bw!submit
+[-] Trojan/BAT.Shutdown.f!submit
+[-] Trojan/FakeApp.aai!submit
+[-] Trojan/FakeApp.aer!submit
+[-] Trojan/FakeApp.aes!submit
+[-] Trojan/FakeApp.aet!submit
+[-] Trojan/FakeApp.aeu!submit
+[-] Trojan/FakeApp.yl!submit
+[-] Trojan/HiJack.ud!submit
+[-] Trojan/Injector.cmg!submit
+[-] Trojan/JS.Agent.gn!submit
+[-] Trojan/LNK.Runner.bl!submit
+[-] Trojan/Loader.nv!submit
+[-] Trojan/MSIL.Obfuscated.ku!submit
+[-] Trojan/NSIS.Injector.g!submit
+[-] Trojan/PS.Loader.w!submit
+[-] Trojan/PS.Obfuscator.e!submit
+[-] Trojan/W64.Agent.hf!submit
+[-] Trojan/W64.Agent.hh!submit
+[-] TrojanDownloader/Agent.bmg!submit
+[-] TrojanDownloader/Agent.bmh!submit
+[-] TrojanDownloader/BAT.Agent.gi!submit
+[-] TrojanDownloader/PS.Agent.fy!submit
+[-] TrojanDropper/Agent.ajy!submit
+[-] TrojanDropper/Agent.akw!submit
+[-] TrojanDropper/Agent.alf!submit
+[-] TrojanDropper/Agent.alq!submit
+[-] TrojanDropper/Agent.amc!submit
+[-] TrojanDropper/JS.Agent.cg!submit
+[-] TrojanDropper/MSIL.Agent.kb!submit
+[-] TrojanDropper/Maloader.p!submit
+[-] TrojanDropper/PS.Agent.aa!submit
+[-] TrojanSpy/MSIL.Stealer.kw!submit
+[-] TrojanSpy/Stealer.tn!submit
+```
+
+</details>
+
+#### 关键哈希特征项变更 ([crithash.txt](data/1771059400.crithash.txt))
+
+<details>
+<summary>
+新增正式定义: 36
+</summary>
+
+```
+[+] Backdoor/JS.WebShell.b!crit
+[+] Backdoor/JS.WebShell.c!crit
+[+] Backdoor/JS.WebShell.d!crit
+[+] Backdoor/JS.WebShell.e!crit
+[+] Backdoor/JS.WebShell.f!crit
+[+] Backdoor/JS.WebShell.g!crit
+[+] Backdoor/JS.WebShell.h!crit
+[+] Backdoor/JS.WebShell.i!crit
+[+] Backdoor/JS.WebShell.j!crit
+[+] Backdoor/JS.WebShell.k!crit
+[+] Backdoor/JS.WebShell.l!crit
+[+] Backdoor/JS.WebShell.m!crit
+[+] Backdoor/JS.WebShell.n!crit
+[+] Backdoor/JS.WebShell.o!crit
+[+] Backdoor/JS.WebShell.p!crit
+[+] Backdoor/JS.WebShell.q!crit
+[+] Backdoor/W32.Lotok.ak!crit
+[+] Backdoor/W32.Lotok.al!crit
+[+] Backdoor/W32.Lotok.am!crit
+[+] Joke/SCR.Agent.a!crit
+[+] OMacro/SRC.Loader.a!crit
+[+] Trojan/HTML.Injector.a!crit
+[+] Trojan/Linux.Dknife.a!crit
+[+] Trojan/Linux.Mirai.aa!crit
+[+] Trojan/Linux.Mirai.ab!crit
+[+] Trojan/MSIL.Injector.o!crit
+[+] Trojan/MSIL.Obfuscated.bf!crit
+[+] Trojan/PS.Loader.h!crit
+[+] Trojan/SCR.Agent.a!crit
+[+] Trojan/SCR.ShellLoader.a!crit
+[+] Trojan/W32.ShellLoader.am!crit
+[+] TrojanDownloader/JS.Netloader.g!crit
+[+] TrojanDownloader/Linux.Agent.aa!crit
+[+] TrojanDownloader/Linux.Agent.ab!crit
+[+] TrojanDownloader/PS.Agent.ca!crit
+[+] TrojanDownloader/PS.Agent.cb!crit
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 120 | 移除遥测定义: 37
+</summary>
+
+```
+[+] Backdoor/.WebShell.ey!crit!submit
+[+] Backdoor/.WebShell.fj!crit!submit
+[+] Backdoor/BAT.WebShell.ez!crit!submit
+[+] Backdoor/HTML.WebShell.b!crit!submit
+[+] Backdoor/HTML.WebShell.c!crit!submit
+[+] Backdoor/HTML.WebShell.d!crit!submit
+[+] Backdoor/HTML.WebShell.dx!crit!submit
+[+] Backdoor/HTML.WebShell.dy!crit!submit
+[+] Backdoor/HTML.WebShell.dz!crit!submit
+[+] Backdoor/HTML.WebShell.e!crit!submit
+[+] Backdoor/HTML.WebShell.ea!crit!submit
+[+] Backdoor/HTML.WebShell.eb!crit!submit
+[+] Backdoor/HTML.WebShell.ec!crit!submit
+[+] Backdoor/HTML.WebShell.ed!crit!submit
+[+] Backdoor/HTML.WebShell.ee!crit!submit
+[+] Backdoor/HTML.WebShell.eh!crit!submit
+[+] Backdoor/HTML.WebShell.en!crit!submit
+[+] Backdoor/HTML.WebShell.ep!crit!submit
+[+] Backdoor/HTML.WebShell.eq!crit!submit
+[+] Backdoor/HTML.WebShell.er!crit!submit
+[+] Backdoor/HTML.WebShell.et!crit!submit
+[+] Backdoor/HTML.WebShell.eu!crit!submit
+[+] Backdoor/HTML.WebShell.ev!crit!submit
+[+] Backdoor/HTML.WebShell.ew!crit!submit
+[+] Backdoor/HTML.WebShell.ex!crit!submit
+[+] Backdoor/HTML.WebShell.f!crit!submit
+[+] Backdoor/HTML.WebShell.fa!crit!submit
+[+] Backdoor/HTML.WebShell.fc!crit!submit
+[+] Backdoor/HTML.WebShell.fd!crit!submit
+[+] Backdoor/HTML.WebShell.fe!crit!submit
+[+] Backdoor/HTML.WebShell.ff!crit!submit
+[+] Backdoor/HTML.WebShell.fg!crit!submit
+[+] Backdoor/HTML.WebShell.fh!crit!submit
+[+] Backdoor/HTML.WebShell.fi!crit!submit
+[+] Backdoor/HTML.WebShell.fk!crit!submit
+[+] Backdoor/HTML.WebShell.fl!crit!submit
+[+] Backdoor/HTML.WebShell.fm!crit!submit
+[+] Backdoor/HTML.WebShell.g!crit!submit
+[+] Backdoor/HTML.WebShell.h!crit!submit
+[+] Backdoor/HTML.WebShell.i!crit!submit
+[+] Backdoor/JS.WebShell.a!crit!submit
+[+] Backdoor/JS.WebShell.dx!crit!submit
+[+] Backdoor/JS.WebShell.dy!crit!submit
+[+] Backdoor/JS.WebShell.dz!crit!submit
+[+] Backdoor/JS.WebShell.eb!crit!submit
+[+] Backdoor/JS.WebShell.ec!crit!submit
+[+] Backdoor/JS.WebShell.ed!crit!submit
+[+] Backdoor/JS.WebShell.ee!crit!submit
+[+] Backdoor/JS.WebShell.ef!crit!submit
+[+] Backdoor/JS.WebShell.eg!crit!submit
+[+] Backdoor/JS.WebShell.ei!crit!submit
+[+] Backdoor/JS.WebShell.ej!crit!submit
+[+] Backdoor/JS.WebShell.ek!crit!submit
+[+] Backdoor/JS.WebShell.el!crit!submit
+[+] Backdoor/JS.WebShell.em!crit!submit
+[+] Backdoor/JS.WebShell.eo!crit!submit
+[+] Backdoor/JS.WebShell.ep!crit!submit
+[+] Backdoor/JS.WebShell.eq!crit!submit
+[+] Backdoor/JS.WebShell.es!crit!submit
+[+] Backdoor/JS.WebShell.et!crit!submit
+[+] Backdoor/JS.WebShell.ev!crit!submit
+[+] Backdoor/JS.WebShell.ew!crit!submit
+[+] Backdoor/JS.WebShell.ex!crit!submit
+[+] Backdoor/JS.WebShell.ey!crit!submit
+[+] Backdoor/JS.WebShell.ez!crit!submit
+[+] Backdoor/JS.WebShell.fa!crit!submit
+[+] Backdoor/JS.WebShell.fb!crit!submit
+[+] Backdoor/JS.WebShell.fc!crit!submit
+[+] Backdoor/JS.WebShell.fd!crit!submit
+[+] Backdoor/JS.WebShell.ff!crit!submit
+[+] Backdoor/JS.WebShell.fg!crit!submit
+[+] Backdoor/JS.WebShell.fn!crit!submit
+[+] Backdoor/JS.WebShell.fp!crit!submit
+[+] Backdoor/JS.WebShell.fr!crit!submit
+[+] Backdoor/PHP.WebShell.ak!crit!submit
+[+] Backdoor/PHP.WebShell.al!crit!submit
+[+] Backdoor/PHP.WebShell.am!crit!submit
+[+] Backdoor/PHP.WebShell.an!crit!submit
+[+] Backdoor/PHP.WebShell.er!crit!submit
+[+] Backdoor/PHP.WebShell.eu!crit!submit
+[+] Backdoor/PHP.WebShell.fe!crit!submit
+[+] Backdoor/PHP.WebShell.fh!crit!submit
+[+] Backdoor/VBS.WebShell.b!crit!submit
+[+] Backdoor/VBS.WebShell.c!crit!submit
+[+] Backdoor/VBS.WebShell.d!crit!submit
+[+] Backdoor/VBS.WebShell.e!crit!submit
+[+] Backdoor/VBS.WebShell.es!crit!submit
+[+] Backdoor/VBS.WebShell.f!crit!submit
+[+] Backdoor/VBS.WebShell.fb!crit!submit
+[+] Backdoor/VBS.WebShell.fn!crit!submit
+[+] Backdoor/VBS.WebShell.fq!crit!submit
+[+] Backdoor/VBS.WebShell.g!crit!submit
+[+] Backdoor/VBS.WebShell.h!crit!submit
+[+] Backdoor/VBS.WebShell.i!crit!submit
+[+] Backdoor/VBS.WebShell.j!crit!submit
+[+] Backdoor/VBS.WebShell.k!crit!submit
+[+] Backdoor/VBS.WebShell.l!crit!submit
+[+] Backdoor/VBS.WebShell.m!crit!submit
+[+] Backdoor/VBS.WebShell.n!crit!submit
+[+] Backdoor/VBS.WebShell.o!crit!submit
+[+] Backdoor/VBS.WebShell.p!crit!submit
+[+] Backdoor/VBS.WebShell.q!crit!submit
+[+] Backdoor/VBS.WebShell.r!crit!submit
+[+] Backdoor/VBS.WebShell.s!crit!submit
+[+] Backdoor/VBS.WebShell.t!crit!submit
+[+] Backdoor/VBS.WebShell.u!crit!submit
+[+] Exploit/W32.CVE-2026-21508.a!crit!submit
+[+] HEUR:Trojan/W32.HiJack.b!crit!submit
+[+] Rootkit/W32.Zdriver.a!crit!submit
+[+] Rootkit/W64.Zdriver.a!crit!submit
+[+] Trojan/SCR.ShellCode.t!crit!submit
+[+] Trojan/W32.DDOS.b!crit!submit
+[+] Trojan/W32.FakeApp.t!crit!submit
+[+] Trojan/W32.FakeApp.u!crit!submit
+[+] Trojan/W32.KillAV.a!crit!submit
+[+] Trojan/W32.ShellLoader.akh!crit!submit
+[+] Trojan/W64.DLLHijack.c!crit!submit
+[+] Trojan/W64.Loader.e!crit!submit
+[+] TrojanDownloader/SRC.Agent.a!crit!submit
+[+] TrojanDownloader/SRC.Agent.b!crit!submit
+[-] Backdoor/JS.WebShell.b!crit!submit
+[-] Backdoor/JS.WebShell.c!crit!submit
+[-] Backdoor/JS.WebShell.d!crit!submit
+[-] Backdoor/JS.WebShell.e!crit!submit
+[-] Backdoor/JS.WebShell.f!crit!submit
+[-] Backdoor/JS.WebShell.g!crit!submit
+[-] Backdoor/JS.WebShell.h!crit!submit
+[-] Backdoor/JS.WebShell.i!crit!submit
+[-] Backdoor/JS.WebShell.j!crit!submit
+[-] Backdoor/JS.WebShell.k!crit!submit
+[-] Backdoor/JS.WebShell.l!crit!submit
+[-] Backdoor/JS.WebShell.m!crit!submit
+[-] Backdoor/JS.WebShell.n!crit!submit
+[-] Backdoor/JS.WebShell.o!crit!submit
+[-] Backdoor/JS.WebShell.p!crit!submit
+[-] Backdoor/JS.WebShell.q!crit!submit
+[-] Backdoor/W32.Lotok.aj!crit!submit
+[-] Backdoor/W32.Lotok.ak!crit!submit
+[-] Backdoor/W32.Lotok.am!crit!submit
+[-] HEUR:Trojan/SCR.FakeApp.c!crit!submit
+[-] OMacro/SRC.Loader.a!crit!submit
+[-] Trojan/HTML.Injector.a!crit!submit
+[-] Trojan/Linux.Dknife.a!crit!submit
+[-] Trojan/Linux.Mirai.aa!crit!submit
+[-] Trojan/Linux.Mirai.ab!crit!submit
+[-] Trojan/MSIL.Injector.o!crit!submit
+[-] Trojan/MSIL.Obfuscated.bf!crit!submit
+[-] Trojan/PS.Loader.h!crit!submit
+[-] Trojan/SCR.Agent.a!crit!submit
+[-] Trojan/SCR.Runner.b!crit!submit
+[-] Trojan/SCR.ShellLoader.a!crit!submit
+[-] Trojan/W32.ShellLoader.am!crit!submit
+[-] TrojanDownloader/JS.Netloader.g!crit!submit
+[-] TrojanDownloader/Linux.Agent.aa!crit!submit
+[-] TrojanDownloader/Linux.Agent.ab!crit!submit
+[-] TrojanDownloader/PS.Agent.ca!crit!submit
+[-] TrojanDownloader/PS.Agent.cb!crit!submit
+```
+
+</details>
+
+#### 黑名单哈希变更 ([troj.txt](data/1771059400.troj.txt))
+
+新增: 124 | 移除: 2
+
+</details>
 <details>
 <summary><b>1770894111</b> - 2026-02-12 11:01:51 UTC</summary>
 
