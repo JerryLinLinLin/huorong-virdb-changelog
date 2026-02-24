@@ -44,24 +44,26 @@ def get_latest_installer_url(arch: str = "x64") -> Optional[InstallerInfo]:
     Returns:
         InstallerInfo object with installer details, or None if failed.
     """
-    try:
-        # Follow redirect to get actual URL
-        response = requests.head(REDIRECT_URL, allow_redirects=True, timeout=10)
-        actual_url = response.url
-        
-        # Parse the URL to extract info
-        info = parse_installer_url(actual_url)
-        
-        if info and info.arch != arch:
-            # Construct URL for requested architecture
-            new_url = actual_url.replace(f"-{info.arch}-", f"-{arch}-")
-            info = parse_installer_url(new_url)
-            
-        return info
-        
-    except requests.RequestException as e:
-        print(f"Error fetching latest installer URL: {e}")
-        return None
+    for attempt in range(1, 4):
+        try:
+            # Follow redirect to get actual URL
+            response = requests.head(REDIRECT_URL, allow_redirects=True, timeout=30)
+            actual_url = response.url
+
+            # Parse the URL to extract info
+            info = parse_installer_url(actual_url)
+
+            if info and info.arch != arch:
+                # Construct URL for requested architecture
+                new_url = actual_url.replace(f"-{info.arch}-", f"-{arch}-")
+                info = parse_installer_url(new_url)
+
+            return info
+        except requests.RequestException as e:
+            if attempt == 3:
+                print(f"Error fetching latest installer URL after 3 attempts: {e}")
+
+    return None
 
 
 def parse_installer_url(url: str) -> Optional[InstallerInfo]:
@@ -259,33 +261,40 @@ def download_installer(
     output_dir.mkdir(parents=True, exist_ok=True)
     
     output_path = output_dir / installer.filename
-    
-    try:
-        print(f"Downloading: {installer.filename}")
-        response = requests.get(installer.url, stream=True, timeout=30)
-        response.raise_for_status()
-        
-        total_size = int(response.headers.get("content-length", 0))
-        downloaded = 0
-        
-        with open(output_path, "wb") as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
-                downloaded += len(chunk)
-                
-                if show_progress and total_size > 0:
-                    percent = (downloaded / total_size) * 100
-                    print(f"\rProgress: {percent:.1f}% ({downloaded}/{total_size} bytes)", end="")
-        
-        if show_progress:
-            print()  # New line after progress
-            
-        print(f"Downloaded: {output_path}")
-        return output_path
-        
-    except requests.RequestException as e:
-        print(f"Error downloading {installer.filename}: {e}")
-        return None
+
+    for attempt in range(1, 4):
+        try:
+            print(f"Downloading: {installer.filename} (attempt {attempt}/3)")
+            response = requests.get(installer.url, stream=True, timeout=60)
+            response.raise_for_status()
+
+            total_size = int(response.headers.get("content-length", 0))
+            downloaded = 0
+
+            with open(output_path, "wb") as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+                    downloaded += len(chunk)
+
+                    if show_progress and total_size > 0:
+                        percent = (downloaded / total_size) * 100
+                        print(f"\rProgress: {percent:.1f}% ({downloaded}/{total_size} bytes)", end="")
+
+            if show_progress:
+                print()  # New line after progress
+
+            print(f"Downloaded: {output_path}")
+            return output_path
+
+        except requests.RequestException as e:
+            if output_path.exists():
+                output_path.unlink(missing_ok=True)
+
+            if attempt == 3:
+                print(f"Error downloading {installer.filename} after 3 attempts: {e}")
+                return None
+
+            print(f"Download attempt {attempt} failed: {e}")
 
 
 def download_latest_installer(
