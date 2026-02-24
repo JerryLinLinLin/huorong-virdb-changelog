@@ -6,30 +6,30 @@
 
 ## 概览
 
-- **最新版本**: `1771839344` (2026-02-23 09:35:44 UTC)
-- **特征项总数**: 67,531
-- **关键哈希特征项总数**: 81,392
+- **最新版本**: `1771927914` (2026-02-24 10:11:54 UTC)
+- **特征项总数**: 67,581
+- **关键哈希特征项总数**: 81,412
 - **行为特征项总数**: 916
-- **黑名单哈希总数**: 152,789
-- **白名单哈希总数**: 123,475
-- **已跟踪版本数**: 59
+- **黑名单哈希总数**: 152,824
+- **白名单哈希总数**: 123,476
+- **已跟踪版本数**: 60
 
 ## 特征项分类分布
 
 ```mermaid
 pie showData
     title Top 10
-    "Trojan" : 24353
-    "TrojanDownloader" : 9893
-    "Backdoor" : 6541
+    "Trojan" : 24391
+    "TrojanDownloader" : 9898
+    "Backdoor" : 6542
     "TrojanSpy" : 6121
     "OMacro" : 3396
     "Virus" : 2820
-    "TrojanDropper" : 2770
+    "TrojanDropper" : 2772
     "Adware" : 2345
     "VirTool" : 2299
-    "Ransom" : 2011
-    "Other" : 4982
+    "Ransom" : 2013
+    "Other" : 4984
 ```
 
 
@@ -37,6 +37,196 @@ pie showData
 
 ## 更新日志
 
+<details>
+<summary><b>1771927914</b> - 2026-02-24 10:11:54 UTC</summary>
+
+#### 特征项变更 ([pset.txt](data/1771927914.pset.txt))
+
+<details>
+<summary>
+新增正式定义: 21
+</summary>
+
+```
+[+] Backdoor/Lotok.oq
+[+] HVM:Backdoor/Lotok.cq
+[+] Trojan/Agent.cmg
+[+] Trojan/FakeApp.aev
+[+] Trojan/FakeApp.aew
+[+] Trojan/KillWin.do
+[+] Trojan/KillWin.dp
+[+] Trojan/LNK.Starter.dc
+[+] Trojan/Skills.a
+[+] Trojan/Skills.b
+[+] TrojanDownloader/Agent.bmi
+[+] TrojanDownloader/Agent.bmj
+[+] TrojanDownloader/Agent.bmk
+[+] TrojanDownloader/Agent.bml
+[+] TrojanDownloader/Agent.bmm
+[+] TrojanDropper/Agent.ajs
+[+] TrojanDropper/Agent.amd
+[+] TrojanDropper/Agent.ame
+[+] TrojanSpy/AutoIT.Stealer.l
+[+] TrojanSpy/AutoIT.Stealer.m
+[+] TrojanSpy/AutoIT.Stealer.n
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 50 | 移除遥测定义: 21
+</summary>
+
+```
+[+] HEUR:Trojan/FakeApp.ax!submit
+[+] HVM:Backdoor/Lotok.cr!submit
+[+] HVM:Trojan/Agent.w!submit
+[+] HVM:TrojanDownloader/W64.Agent.de!submit
+[+] HackTool/Python.StealerBuilder.b!submit
+[+] Joke/Popupwindow.a!submit
+[+] Ransom/LockScreen.dc!submit
+[+] Ransom/MSIL.LockFile.dv!submit
+[+] Trojan/FakeApp.aex!submit
+[+] Trojan/FakeApp.aey!submit
+[+] Trojan/FakeApp.aez!submit
+[+] Trojan/FakeApp.afa!submit
+[+] Trojan/FakeApp.afb!submit
+[+] Trojan/FakeApp.afc!submit
+[+] Trojan/FakeApp.afd!submit
+[+] Trojan/FakeApp.afe!submit
+[+] Trojan/FakeApp.aff!submit
+[+] Trojan/FakeApp.afg!submit
+[+] Trojan/FakeApp.afh!submit
+[+] Trojan/FakeApp.afi!submit
+[+] Trojan/FakeApp.afj!submit
+[+] Trojan/Injector.cmh!submit
+[+] Trojan/LNK.Runner.bl!submit
+[+] Trojan/Linux.DDos.f!submit
+[+] Trojan/Linux.Mirai.hg!submit
+[+] Trojan/Linux.Mirai.hh!submit
+[+] Trojan/Linux.Mirai.hi!submit
+[+] Trojan/Loader.nw!submit
+[+] Trojan/Loader.nx!submit
+[+] Trojan/MSIL.Obfuscated.kv!submit
+[+] Trojan/Obfuscated.of!submit
+[+] Trojan/PS.Agent.bu!submit
+[+] Trojan/PS.Loader.x!submit
+[+] Trojan/Ramsay.c!submit
+[+] Trojan/Runner.fr!submit
+[+] Trojan/Runner.fs!submit
+[+] Trojan/Runner.ft!submit
+[+] Trojan/Runner.fu!submit
+[+] Trojan/Runner.fv!submit
+[+] Trojan/Runner.fw!submit
+[+] Trojan/ShellLoader.ajc!submit
+[+] Trojan/ShellLoader.ajd!submit
+[+] TrojanDownloader/HTML.Agent.bm!submit
+[+] TrojanDownloader/JS.Agent.in!submit
+[+] TrojanDownloader/PS.Agent.ga!submit
+[+] TrojanDownloader/PS.Agent.gb!submit
+[+] TrojanDropper/Agent.amf!submit
+[+] TrojanDropper/Agent.amg!submit
+[+] TrojanDropper/BAT.Agent.br!submit
+[+] TrojanDropper/JS.Agent.ch!submit
+[-] Backdoor/Lotok.oq!submit
+[-] HVM:Backdoor/Lotok.cq!submit
+[-] Trojan/FakeApp.aev!submit
+[-] Trojan/FakeApp.aew!submit
+[-] Trojan/FakeApp.kn!submit
+[-] Trojan/LNK.Starter.dc!submit
+[-] Trojan/Skills.a!submit
+[-] Trojan/Skills.b!submit
+[-] TrojanDownloader/Agent.bmi!submit
+[-] TrojanDownloader/Agent.bmj!submit
+[-] TrojanDownloader/Agent.bmk!submit
+[-] TrojanDownloader/Agent.bml!submit
+[-] TrojanDownloader/Agent.bmm!submit
+[-] TrojanDropper/Agent.abv!submit
+[-] TrojanDropper/Agent.ajs!submit
+[-] TrojanDropper/Agent.amd!submit
+[-] TrojanDropper/Agent.ame!submit
+[-] TrojanDropper/Agent.zn!submit
+[-] TrojanSpy/AutoIT.Stealer.l!submit
+[-] TrojanSpy/AutoIT.Stealer.m!submit
+[-] TrojanSpy/AutoIT.Stealer.n!submit
+```
+
+</details>
+
+#### 关键哈希特征项变更 ([crithash.txt](data/1771927914.crithash.txt))
+
+<details>
+<summary>
+新增正式定义: 10
+</summary>
+
+```
+[+] Rootkit/W32.Zdriver.a!crit
+[+] Rootkit/W64.Zdriver.a!crit
+[+] Trojan/SCR.ShellCode.t!crit
+[+] Trojan/W32.FakeApp.t!crit
+[+] Trojan/W32.FakeApp.u!crit
+[+] Trojan/W32.ShellLoader.akh!crit
+[+] Trojan/W64.DLLHijack.c!crit
+[+] Trojan/W64.Loader.e!crit
+[+] TrojanDownloader/SRC.Agent.a!crit
+[+] TrojanDownloader/SRC.Agent.b!crit
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 21 | 移除遥测定义: 11
+</summary>
+
+```
+[+] Backdoor/Linux.Gafgyt.d!crit!submit
+[+] Backdoor/Linux.Mirai.g!crit!submit
+[+] Ransom/Python.LockFile.c!crit!submit
+[+] Trojan/JS.Obfuscated.o!crit!submit
+[+] Trojan/JS.Obfuscated.p!crit!submit
+[+] Trojan/MSIL.Obfuscated.bg!crit!submit
+[+] Trojan/W32.FakeApp.v!crit!submit
+[+] Trojan/W32.FakeApp.w!crit!submit
+[+] Trojan/W32.Obfuscated.h!crit!submit
+[+] Trojan/W32.ShellLoader.aki!crit!submit
+[+] Trojan/W32.ShellLoader.akj!crit!submit
+[+] Trojan/W32.ShellLoader.akk!crit!submit
+[+] Trojan/W64.Agent.l!crit!submit
+[+] Trojan/W64.Injector.l!crit!submit
+[+] Trojan/W64.KillWin.c!crit!submit
+[+] TrojanDownloader/PS.Agent.cc!crit!submit
+[+] TrojanDownloader/PS.Agent.cd!crit!submit
+[+] TrojanDownloader/Ps.Agent.ce!crit!submit
+[+] TrojanDownloader/SRC.Agent.c!crit!submit
+[+] TrojanDownloader/VBS.Agent.c!crit!submit
+[+] TrojanSpy/Python.Clipper.a!crit!submit
+[-] Backdoor/W32.Lotok.al!crit!submit
+[-] Rootkit/W32.Zdriver.a!crit!submit
+[-] Rootkit/W64.Zdriver.a!crit!submit
+[-] Trojan/SCR.ShellCode.t!crit!submit
+[-] Trojan/W32.FakeApp.t!crit!submit
+[-] Trojan/W32.FakeApp.u!crit!submit
+[-] Trojan/W32.ShellLoader.akh!crit!submit
+[-] Trojan/W64.DLLHijack.c!crit!submit
+[-] Trojan/W64.Loader.e!crit!submit
+[-] TrojanDownloader/SRC.Agent.a!crit!submit
+[-] TrojanDownloader/SRC.Agent.b!crit!submit
+```
+
+</details>
+
+#### 黑名单哈希变更 ([troj.txt](data/1771927914.troj.txt))
+
+新增: 35
+
+#### 白名单哈希变更 ([hwl.txt](data/1771927914.hwl.txt))
+
+新增: 1
+
+</details>
 <details>
 <summary><b>1771839344</b> - 2026-02-23 09:35:44 UTC</summary>
 
