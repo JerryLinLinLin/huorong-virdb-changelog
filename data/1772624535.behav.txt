@@ -1,0 +1,6 @@
+[+] Backdoor/Lotok.XX
+[+] Trojan/Runner.FO
+[+] TrojanDownloader/Agent.BLO
+[-] Backdoor/Lotok.XX!submit
+[-] Trojan/Runner.FO!submit
+[-] TrojanDownloader/Agent.BLO!submit
