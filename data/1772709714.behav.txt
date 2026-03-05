@@ -1,0 +1,2 @@
+[+] Ransom/LockFile.AE!submit
+[+] Ransom/LockFile.AF!submit
