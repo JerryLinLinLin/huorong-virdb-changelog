@@ -6,30 +6,30 @@
 
 ## 概览
 
-- **最新版本**: `1772709714` (2026-03-05 11:21:54 UTC)
-- **特征项总数**: 67,870
-- **关键哈希特征项总数**: 81,557
-- **行为特征项总数**: 917
-- **黑名单哈希总数**: 153,313
+- **最新版本**: `1772797013` (2026-03-06 11:36:53 UTC)
+- **特征项总数**: 67,889
+- **关键哈希特征项总数**: 81,568
+- **行为特征项总数**: 918
+- **黑名单哈希总数**: 153,375
 - **白名单哈希总数**: 123,481
-- **已跟踪版本数**: 69
+- **已跟踪版本数**: 70
 
 ## 特征项分类分布
 
 ```mermaid
 pie showData
     title Top 10
-    "Trojan" : 24561
-    "TrojanDownloader" : 9935
-    "Backdoor" : 6552
+    "Trojan" : 24571
+    "TrojanDownloader" : 9936
+    "Backdoor" : 6555
     "TrojanSpy" : 6136
     "OMacro" : 3398
     "Virus" : 2821
-    "TrojanDropper" : 2803
-    "Adware" : 2346
+    "TrojanDropper" : 2806
+    "Adware" : 2345
     "VirTool" : 2299
-    "Ransom" : 2016
-    "Other" : 5003
+    "Ransom" : 2017
+    "Other" : 5005
 ```
 
 
@@ -37,6 +37,197 @@ pie showData
 
 ## 更新日志
 
+<details>
+<summary><b>1772797013</b> - 2026-03-06 11:36:53 UTC</summary>
+
+#### 特征项变更 ([pset.txt](data/1772797013.pset.txt))
+
+<details>
+<summary>
+新增正式定义: 35 | 移除正式定义: 4
+</summary>
+
+```
+[+] Backdoor/Lotok.ot
+[+] HEUR:Trojan/Python.Agent.bx
+[+] HVM:Backdoor/Lotok.ct
+[+] HVM:Backdoor/Lotok.cu
+[+] HackTool/MSIL.AppxPotato.b
+[+] HackTool/RunHidden
+[+] OMacro/Agent.ay
+[+] Ransom/LockFile.ru
+[+] Trojan/Agent.cmk
+[+] Trojan/Agent.cml
+[+] Trojan/BAT.Disabler.f
+[+] Trojan/BAT.KillFiles.m
+[+] Trojan/BAT.KillWin.bi
+[+] Trojan/BypassUAC.f
+[+] Trojan/DDos.ag
+[+] Trojan/FakeApp.agj
+[+] Trojan/FakeApp.agm
+[+] Trojan/FakeApp.agn
+[+] Trojan/FakeApp.ago
+[+] Trojan/FakeApp.agp
+[+] Trojan/FakeApp.agq
+[+] Trojan/FakeApp.agr
+[+] Trojan/FakeApp.ags
+[+] Trojan/HiJack.yp
+[+] Trojan/KillFiles.bh
+[+] Trojan/KillMBR.cs
+[+] Trojan/KillMBR.ct
+[+] Trojan/KillWin.dw
+[+] Trojan/KillWin.dx
+[+] Trojan/LNK.Runner.br
+[+] Trojan/MSIL.DDos.f
+[+] Trojan/Runner.fz
+[+] TrojanDropper/Agent.amy
+[+] TrojanDropper/Agent.amz
+[+] TrojanDropper/Android.Agent.co
+[-] Adware/FackQQBrowse.a
+[-] Trojan/Agent.cdh
+[-] Trojan/MSIL.DDos.d
+[-] TrojanDownloader/LNK.Agent.cq
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 21 | 移除遥测定义: 33
+</summary>
+
+```
+[+] Exploit/Vulndriver.v!submit
+[+] HVM:Backdoor/Lotok.cr!submit
+[+] HVM:Backdoor/Lotok.cv!submit
+[+] HVM:Backdoor/Lotok.cw!submit
+[+] Trojan/Agent.cmm!submit
+[+] Trojan/AutoIT.Obfuscated.j!submit
+[+] Trojan/FakeApp.agt!submit
+[+] Trojan/FakeApp.agu!submit
+[+] Trojan/FakeApp.agv!submit
+[+] Trojan/FakeApp.agw!submit
+[+] Trojan/FakeApp.agx!submit
+[+] Trojan/ShellLoader.ajb!submit
+[+] Trojan/ShellLoader.ajo!submit
+[+] Trojan/ShellLoader.ajp!submit
+[+] Trojan/Skills.c!submit
+[+] Trojan/Skills.d!submit
+[+] TrojanDownloader/Agent.bkq!submit
+[+] TrojanDownloader/Maloader.bu!submit
+[+] TrojanDropper/Agent.ana!submit
+[+] TrojanDropper/Agent.anb!submit
+[+] TrojanDropper/Agent.anc!submit
+[-] Backdoor/Lotok.ot!submit
+[-] HEUR:Trojan/Python.Agent.bx!submit
+[-] HVM:Backdoor/Lotok.ct!submit
+[-] HVM:Backdoor/Lotok.cu!submit
+[-] HackTool/MSIL.AppxPotato.b!submit
+[-] OMacro/Agent.ay!submit
+[-] Trojan/Agent.cmk!submit
+[-] Trojan/Agent.cml!submit
+[-] Trojan/BAT.Disabler.f!submit
+[-] Trojan/BAT.KillFiles.m!submit
+[-] Trojan/BAT.KillWin.bi!submit
+[-] Trojan/BypassUAC.f!submit
+[-] Trojan/DDos.ag!submit
+[-] Trojan/FakeApp.agj!submit
+[-] Trojan/FakeApp.agm!submit
+[-] Trojan/FakeApp.agn!submit
+[-] Trojan/FakeApp.ago!submit
+[-] Trojan/FakeApp.agp!submit
+[-] Trojan/FakeApp.agq!submit
+[-] Trojan/FakeApp.agr!submit
+[-] Trojan/FakeApp.ags!submit
+[-] Trojan/HiJack.yp!submit
+[-] Trojan/KillFiles.bh!submit
+[-] Trojan/KillMBR.cs!submit
+[-] Trojan/KillMBR.ct!submit
+[-] Trojan/KillWin.dw!submit
+[-] Trojan/KillWin.dx!submit
+[-] Trojan/LNK.Runner.br!submit
+[-] Trojan/MSIL.DDos.f!submit
+[-] Trojan/Runner.fz!submit
+[-] TrojanDropper/Agent.amy!submit
+[-] TrojanDropper/Agent.amz!submit
+[-] TrojanDropper/Android.Agent.co!submit
+```
+
+</details>
+
+#### 关键哈希特征项变更 ([crithash.txt](data/1772797013.crithash.txt))
+
+<details>
+<summary>
+新增正式定义: 8
+</summary>
+
+```
+[+] Adware/Android.PornTool.s!crit
+[+] Adware/Android.PornTool.t!crit
+[+] Trojan/PS.Runner.a!crit
+[+] Trojan/W32.FakeApp.ab!crit
+[+] Trojan/W32.FakeApp.ac!crit
+[+] Trojan/W32.ShellLoader.ako!crit
+[+] TrojanDropper/W32.Agent.le!crit
+[+] TrojanDropper/W32.Agent.lf!crit
+```
+
+</details>
+
+<details>
+<summary>
+新增遥测定义: 11 | 移除遥测定义: 8
+</summary>
+
+```
+[+] Backdoor/W64.alphatronBot.a!crit!submit
+[+] Trojan/SCR.Agent.gn!crit!submit
+[+] Trojan/SCR.Agent.go!crit!submit
+[+] Trojan/SCR.ShellLoader.h!crit!submit
+[+] Trojan/W32.Agent.ak!crit!submit
+[+] Trojan/W32.FakeApp.ac!crit!submit
+[+] Trojan/W32.HiJack.aa!crit!submit
+[+] Trojan/W32.HiJack.vv!crit!submit
+[+] Trojan/W32.Obfuscated.i!crit!submit
+[+] Trojan/W32.ShellLoader.akp!crit!submit
+[+] TrojanDropper/W32.Agent.ak!crit!submit
+[-] Adware/Android.PornTool.s!crit!submit
+[-] Adware/Android.PornTool.t!crit!submit
+[-] Trojan/PS.Runner.a!crit!submit
+[-] Trojan/W32.Agent.aj!crit!submit
+[-] Trojan/W32.FakeApp.ab!crit!submit
+[-] Trojan/W32.ShellLoader.ako!crit!submit
+[-] TrojanDropper/W32.Agent.le!crit!submit
+[-] TrojanDropper/W32.Agent.lf!crit!submit
+```
+
+</details>
+
+#### 行为特征项变更 ([behav.txt](data/1772797013.behav.txt))
+
+<details>
+<summary>
+新增: 4 | 移除: 3
+</summary>
+
+```
+[+] Ransom/LockFile.AC
+[+] Ransom/LockFile.AL
+[+] Ransom/LockFile.AM
+[+] Trojan/MEMZ.a!submit
+[-] Ransom/LockFile.AC!submit
+[-] Ransom/LockFile.AE!submit
+[-] Ransom/LockFile.AF!submit
+```
+
+</details>
+
+#### 黑名单哈希变更 ([troj.txt](data/1772797013.troj.txt))
+
+新增: 62
+
+</details>
 <details>
 <summary><b>1772709714</b> - 2026-03-05 11:21:54 UTC</summary>
 

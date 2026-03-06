@@ -1,0 +1,7 @@
+[+] Ransom/LockFile.AC
+[+] Ransom/LockFile.AL
+[+] Ransom/LockFile.AM
+[+] Trojan/MEMZ.a!submit
+[-] Ransom/LockFile.AC!submit
+[-] Ransom/LockFile.AE!submit
+[-] Ransom/LockFile.AF!submit
