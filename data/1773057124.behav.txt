@@ -1,0 +1,4 @@
+[+] Trojan/MEMZ.A
+[+] Trojan/MEMZ.A!submit
+[-] Backdoor/Lotok.TC!submit
+[-] Trojan/MEMZ.a!submit
