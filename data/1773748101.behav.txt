@@ -1,0 +1,4 @@
+[+] Ransom/LockFile.ACC
+[+] Ransom/LockFile.ACD!submit
+[+] Ransom/LockFile.ADA!submit
+[-] Ransom/LockFile.ACC!submit
