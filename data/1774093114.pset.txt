@@ -1,0 +1,2 @@
+[+] HackTool/KillProcess
+[-] Trojan/W64.Agent.ia!submit

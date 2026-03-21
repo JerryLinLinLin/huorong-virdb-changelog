@@ -6,20 +6,20 @@
 
 ## 概览
 
-- **最新版本**: `1774004299` (2026-03-20 10:58:19 UTC)
+- **最新版本**: `1774093114` (2026-03-21 11:38:34 UTC)
 - **特征项总数**: 68,361
 - **关键哈希特征项总数**: 81,752
 - **行为特征项总数**: 924
-- **黑名单哈希总数**: 155,138
+- **黑名单哈希总数**: 155,206
 - **白名单哈希总数**: 123,492
-- **已跟踪版本数**: 84
+- **已跟踪版本数**: 85
 
 ## 特征项分类分布
 
 ```mermaid
 pie showData
     title Top 10
-    "Trojan" : 24828
+    "Trojan" : 24827
     "TrojanDownloader" : 10013
     "Backdoor" : 6582
     "TrojanSpy" : 6161
@@ -29,7 +29,7 @@ pie showData
     "Adware" : 2347
     "VirTool" : 2299
     "Ransom" : 2023
-    "Other" : 5041
+    "Other" : 5042
 ```
 
 
@@ -37,6 +37,38 @@ pie showData
 
 ## 更新日志
 
+<details>
+<summary><b>1774093114</b> - 2026-03-21 11:38:34 UTC</summary>
+
+#### 特征项变更 ([pset.txt](data/1774093114.pset.txt))
+
+<details>
+<summary>
+新增正式定义: 1
+</summary>
+
+```
+[+] HackTool/KillProcess
+```
+
+</details>
+
+<details>
+<summary>
+移除遥测定义: 1
+</summary>
+
+```
+[-] Trojan/W64.Agent.ia!submit
+```
+
+</details>
+
+#### 黑名单哈希变更 ([troj.txt](data/1774093114.troj.txt))
+
+新增: 68
+
+</details>
 <details>
 <summary><b>1774004299</b> - 2026-03-20 10:58:19 UTC</summary>
 
